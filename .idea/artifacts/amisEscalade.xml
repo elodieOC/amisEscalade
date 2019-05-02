@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="amisEscalade:war exploded">
-    <output-path>$PROJECT_DIR$/out/artifacts/amisEscalade_war_exploded</output-path>
+  <artifact type="exploded-war" name="amisEscalade">
+    <output-path>$PROJECT_DIR$/out/artifacts/amisEscalade</output-path>
     <root id="root">
       <element id="javaee-facet-resources" facet="amisEscalade/web/Web" />
       <element id="directory" name="WEB-INF">

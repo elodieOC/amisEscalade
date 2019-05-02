@@ -13,7 +13,9 @@ import java.util.List;
         @org.hibernate.annotations.NamedQuery(name = "findByUserName",
                 query = "from User where username = :username"),
         @org.hibernate.annotations.NamedQuery(name = "findByEmail",
-                query = "from User where email = :email")
+                query = "from User where email = :email"),
+        @org.hibernate.annotations.NamedQuery(name = "findByRole",
+                query = "from User where userRole = :userRole")
 })
 
 public class User {
@@ -38,6 +40,11 @@ public class User {
     @Column(name = "email", unique = true)
     private String email;
 
+
+    @ManyToOne//un user a un userRole / un userRole peut etre a plusieurs user
+    @JoinColumn(name="role_fk")
+    private Role userRole;
+
     @OneToMany (mappedBy = "user") //attribut User user de Spot
     private List<Spot> spots = new ArrayList<>();
 
@@ -50,7 +57,14 @@ public class User {
     }
 
     public User() {
+    }
 
+    public Role getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(Role userRole) {
+        this.userRole = userRole;
     }
 
     public int getId() {
@@ -93,8 +107,17 @@ public class User {
         this.email = email;
     }
 
+
     @Override
     public String toString() {
-        return "User [id=" + id + ", password=" + password + ", username=" + username + ", email=" + email +"]";
+        return "User{" +
+                "id=" + id +
+                ", password='" + password + '\'' +
+                ", passwordConfirm='" + passwordConfirm + '\'' +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", userRole=" + userRole +
+                ", spots=" + spots +
+                '}';
     }
 }

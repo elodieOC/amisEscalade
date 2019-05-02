@@ -17,7 +17,7 @@ import java.util.Properties;
 @Configuration
 @PropertySource("classpath:database.properties")
 @EnableTransactionManagement
-@ComponentScan(basePackages = {"com.elo"})
+@ComponentScan(basePackages = {"com.elo.oc"})
 public class AppContext {
     @Autowired
     private Environment environment;
@@ -27,7 +27,7 @@ public class AppContext {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan(new String[] {"com.elo.entity"});
+        sessionFactory.setPackagesToScan(new String[] {"com.elo.oc.entity"});
         sessionFactory.setHibernateProperties(hibernateProperties());
 
         return sessionFactory;
