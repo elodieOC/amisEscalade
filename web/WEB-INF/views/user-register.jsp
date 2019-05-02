@@ -16,7 +16,8 @@
 
 </head>
 <body>
-<div class="container">
+<c:import url="inc/navbar.jsp" />
+<div class="container d-flex h-100 align-items-center">
     <div class="col-md-offset-2 col-md-7">
         <h2 class="text-center">Ajouter utilisateur</h2>
         <div class="panel panel-info">
