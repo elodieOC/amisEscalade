@@ -41,33 +41,6 @@ public class AdminInfos {
             nonMember.setRoleName("non membre");
             roleService.saveRole(nonMember);
         }
-        if(!userService.findUserWithThisUsername("hellojito").isPresent()){
-            User user = new User();
-            user.setEmail("hellojito@gmail.com");
-            user.setPassword("kignou");
-            user.setPasswordConfirm("kignou");
-            user.setUsername("hellojito");
-            user.setUserRole(roleService.findById(1));
-            userService.saveUser(user);
-
-            User user2 = new User();
-            user2.setEmail("cookie@gmail.com");
-            user2.setPassword("kignou");
-            user2.setPasswordConfirm("kignou");
-            user2.setUsername("cookie");
-            user2.setUserRole(roleService.findById(2));
-            userService.saveUser(user2);
-
-            User user3 = new User();
-            user3.setEmail("loki@gmail.com");
-            user3.setPassword("kignou");
-            user3.setPasswordConfirm("kignou");
-            user3.setUsername("loki");
-            user3.setUserRole(roleService.findById(3));
-            userService.saveUser(user3);
-
-        }
-
 
         List<User> theUsers = userService.getUsers();
         List<Role> theRoles = roleService.getRoles();

@@ -45,6 +45,9 @@ public class User {
     @JoinColumn(name = "role_fk")
     private Role userRole;
 
+    @Transient
+    private String memberOrNot;
+
     @OneToMany (mappedBy = "user") //attribut User user de Spot
     private List<Spot> spots = new ArrayList<>();
 
@@ -59,12 +62,12 @@ public class User {
     public User() {
     }
 
-    public Role getUserRole() {
-        return userRole;
+    public String getMemberOrNot() {
+        return memberOrNot;
     }
 
-    public void setUserRole(Role userRole) {
-        this.userRole = userRole;
+    public void setMemberOrNot(String memberOrNot) {
+        this.memberOrNot = memberOrNot;
     }
 
     public Role getUserRole() {
