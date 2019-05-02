@@ -41,8 +41,8 @@ public class User {
     private String email;
 
 
-    @ManyToOne//un user a un userRole / un userRole peut etre a plusieurs user
-    @JoinColumn(name="role_fk")
+    @ManyToOne //plusieurs user pour un seul role
+    @JoinColumn(name = "role_fk")
     private Role userRole;
 
     @OneToMany (mappedBy = "user") //attribut User user de Spot
@@ -57,6 +57,14 @@ public class User {
     }
 
     public User() {
+    }
+
+    public Role getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(Role userRole) {
+        this.userRole = userRole;
     }
 
     public Role getUserRole() {
