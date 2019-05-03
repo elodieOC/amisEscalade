@@ -13,14 +13,20 @@
 
   <c:import url="inc/headContent.jsp"/>
 </head>
+<c:if test="${ empty sessionScope }">
   <c:import url="inc/navbar.jsp" />
-
+</c:if>
+<c:if test="${ !empty sessionScope }">
+  <c:import url="inc/navbar_connected.jsp" />
+</c:if>
 <header class="masthead">
   <div class="container d-flex h-100 align-items-center">
     <div class="mx-auto text-center">
-      <h1 class="mx-auto my-0 text-uppercase">Les amis de l'escalade!</h1>
+      <div>
+        <img src="<c:url value="/resources/img/logo.JPG" />" >
+      </div>
       <h2 class="text-white-50 mx-auto mt-2 mb-5">Venez partager et échanger sur l'escalade avec la communauté.</h2>
-      <a href="<c:out value="about.jsp" />" class="btn btn-primary js-scroll-trigger">A propos de nous</a>
+      <a href="<c:out value="about.jsp" />" class="btn btn-secondary js-scroll-trigger">A propos de nous</a>
     </div>
   </div>
 </header>

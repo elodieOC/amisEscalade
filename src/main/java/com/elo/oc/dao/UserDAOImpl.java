@@ -1,6 +1,7 @@
 package com.elo.oc.dao;
 
 import com.elo.oc.entity.*;
+import com.elo.oc.service.RoleService;
 import com.elo.oc.utils.Encryption;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -20,6 +21,9 @@ public class UserDAOImpl implements UserDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
+    @Autowired
+    private RoleService roleService;
+
     @Override
     public List < User > getUsers() {
         Session session = sessionFactory.getCurrentSession();
@@ -36,27 +40,13 @@ public class UserDAOImpl implements UserDAO {
         Session currentSession = sessionFactory.getCurrentSession();
         user.setPassword(Encryption.encrypt(user.getPassword()));
 
-        Role userRole = user.getUserRole();
-
-        switch (userRole.getRoleName()){
-            case "admin":
-                UserAdmin userAdmin = new UserAdmin();
-                userAdmin.setUser(user);
-                currentSession.saveOrUpdate(userAdmin);
-                break;
-            case "membre asso":
-                UserAssoMember userAssoMember = new UserAssoMember();
-                userAssoMember.setUser(user);
-                currentSession.saveOrUpdate(userAssoMember);
-                break;
-            case "non membre":
-                UserNonMember userNonMember = new UserNonMember();
-                userNonMember.setUser(user);
-                currentSession.saveOrUpdate(userNonMember);
-                break;
-                default:
-                    break;
+        if(user.getMemberOrNot().equals("no")) {
+            user.setUserRole(roleService.findById(3));
         }
+        else{
+            user.setUserRole(roleService.findById(2));
+        }
+
         currentSession.saveOrUpdate(user);
     }
 

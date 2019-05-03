@@ -2,7 +2,6 @@ package com.elo.oc.controller;
 
 import com.elo.oc.entity.Role;
 import com.elo.oc.entity.User;
-import com.elo.oc.entity.UserAdmin;
 import com.elo.oc.service.RoleService;
 import com.elo.oc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -49,5 +48,18 @@ public class AdminInfos {
         theModel.addAttribute("users", theUsers);
 
         return "admin-infos";
+    }
+
+    @GetMapping("/updateForm")
+    public String showFormForUpdate(@RequestParam("id") int theId, Model theModel) {
+        User theUser = userService.findById(theId);
+        theModel.addAttribute("user", theUser);
+        return "user-register";
+    }
+
+    @GetMapping("/delete")
+    public String deleteCustomer(@RequestParam("id") int theId) {
+        userService.deleteUser(theId);
+        return "redirect:infos";
     }
 }

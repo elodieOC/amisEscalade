@@ -25,14 +25,34 @@
                         <th>Pseudo</th>
                         <th>Email</th>
                         <th>Role</th>
+                        <th>Action</th>
                     </tr>
+
+
                     <c:forEach var="tempUser" items="${users}">
+
+                    <!-- construct an "update" link with user id -->
+                    <c:url var="updateLink" value="/admin/updateForm">
+                        <c:param name="id" value="${tempUser.id}" />
+                    </c:url>
+
+                    <!-- construct an "delete" link with user id -->
+                    <c:url var="deleteLink" value="/admin/delete">
+                        <c:param name="id" value="${tempUser.id}" />
+                    </c:url>
 
                         <tr>
                             <td>${tempUser.username}</td>
                             <td>${tempUser.email}</td>
                             <td>${tempUser.userRole.roleName}</td>
+                            <td>
+                                <!-- display the update link -->
+                                  <a href="${updateLink}">Update</a>
 
+                                <!-- display the delete link -->
+                                | <a href="${deleteLink}"
+                                     onclick="if (!(confirm('Etes vous sûr de vouloir supprimer cet utilisateur?'))) return false">Delete</a>
+                            </td>
                         </tr>
                     </c:forEach>
                 </table>
