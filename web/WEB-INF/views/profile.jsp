@@ -51,13 +51,19 @@
                     </tr>
 
                 </table>
-              <%--  <table class="table table-striped table-bordered">
+               <%--LAZY EXCEPTION
+               <table class="table table-striped table-bordered">
                     <tr>
                         <th>Spots</th>
                     </tr>
+                   <c:if test="${ empty spots }">
+                       <tr><td>Vous n'avez pas encore ajouté de spot</td></tr>
+                   </c:if>
+                   <c:if test="${ !empty spots }">
                     <c:forEach var="spot" items="${spots}" >
                         <tr> <td>${spot.name}</td></tr>
                     </c:forEach>
+                   </c:if>
                     <tr><td>${spots}</td></tr>
                 </table>--%>
             </div>

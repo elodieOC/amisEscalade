@@ -90,6 +90,9 @@ public class Spot {
                 ", name='" + name + '\'' +
                 ", city='" + city + '\'' +
                 ", county='" + county + '\'' +
+                ", user= " +
+                "[id " + user.getId() +"], [name "+user.getUsername()+"], [email "+user.getEmail()+
+                "], [role "+user.getUserRole().getRoleName()+"] "+
                 '}';
     }
 }

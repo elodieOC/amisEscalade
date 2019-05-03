@@ -76,16 +76,23 @@ public class UserController {
     }
 
     @GetMapping("profile/{userId}")
-    public String showUserProfile(@PathVariable("userId") int userId, Model theModel, HttpServletRequest request) {
+    public String showUserProfile(@PathVariable("userId") int userId, User theUser, Model theModel, HttpServletRequest request) {
         /* Récupération de la session depuis la requête */
         HttpSession session = request.getSession();
         if (session.getAttribute("loggedInUserEmail") == null) {
-            return "redirect:login";
+            return "redirect:/user/login";
         } else {
             String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
+            if(!sessionEmail.equals(userService.findById(userId).getEmail())){
+                return "redirect:/user/login";
+            }
+            else {
+                theUser = userService.findById(userId);
+                theModel.addAttribute("user", theUser);
+                theModel.addAttribute("spots", theUser.getSpots());
+                return "profile";
+            }
         }
-        theModel.addAttribute("user", userService.findById(userId));
-        return "profile";
     }
 
     @RequestMapping(value = "/logout")

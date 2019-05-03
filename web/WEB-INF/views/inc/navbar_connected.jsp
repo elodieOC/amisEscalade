@@ -23,11 +23,11 @@
                     <a class="nav-link js-scroll-trigger" href="<c:out value="#" />" >A Propos</a>
                 </li>
                 <li class="nav-item"><a class="nav-link" href="<c:out value="#" />">Les Topos</a></li>
-                <li class="nav-item"><a class="nav-link" href="<c:out value="#" />">Les Spots</a></li>
+                <li class="nav-item"><a class="nav-link" href="<c:out value="./spots/list" />">Les Spots</a></li>
                 <li class="nav-item">
                     <a class="nav-link js-scroll-trigger" href="<c:out value="#" />">Contact</a>
                 </li>
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="<c:out value="./user/profile/" />"><span class="glyphicon glyphicon-user"></span> Mon profil</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="<c:out value="./user/profile" />"><span class="glyphicon glyphicon-user"></span> Mon profil</a></li>
                 <li class="nav-item">
                     <a class="nav-link js-scroll-trigger " href="<c:out value="./user/logout" />">
                         <span class="glyphicon glyphicon-off"></span>

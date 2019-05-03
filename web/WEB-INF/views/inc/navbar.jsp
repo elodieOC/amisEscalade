@@ -23,7 +23,7 @@
                     <a class="nav-link js-scroll-trigger" href="#" >A Propos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="#">Espace Partage</a>
+                    <a class="nav-link js-scroll-trigger" href="<c:out value="./spots/list" />">Les Spots</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link js-scroll-trigger" href="#">Contact</a>
