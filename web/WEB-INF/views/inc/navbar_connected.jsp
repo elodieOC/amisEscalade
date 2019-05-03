@@ -30,7 +30,7 @@
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="<c:out value="./user/profile/" />"><span class="glyphicon glyphicon-user"></span> Mon profil</a></li>
                 <li class="nav-item">
                     <a class="nav-link js-scroll-trigger " href="<c:out value="./user/logout" />">
-                        <span class="glyphicon glyphicon-off">Déconnexion</span>
+                        <span class="glyphicon glyphicon-off"></span>
                     </a>
                 </li>
             </ul>
