@@ -23,38 +23,43 @@
     <c:import url="inc/navbar_connected.jsp" />
 </c:if>
 <div class="wrapper">
-<div class="container align-items-center">
-    <div class="col-md-offset-2 col-md-7">
-        <h2 class="text-center">Connexion</h2>
-        <div class="panel panel-info">
-            <div class="panel-body">
+    <div class="container align-items-center">
+        <div class="col-lg-6 mx-auto">
+            <div class="card bg-light p-4 ">
+                <h2 class="mt-3 mb-3 text-center">Connexion</h2>
                 <form:form action="logUser" cssClass="form-horizontal"  method="post" modelAttribute="user">
 
-                    <div class="form-group">
-                        <label for="username" class="col-md-4 control-label">Pseudo</label>
-                        <form:errors path="username" cssClass="error"/>
-                        <div class="col-md-8">
-                            <form:input path="username" cssClass="form-control" />
+                    <p>
+                        <a href="" class="btn btn-block btn-facebook"> <i class="fab fa-facebook-f"></i>   via facebook</a>
+                    </p>
+                    <p class="divider-text">
+                        <span class="bg-light">OU</span>
+                    </p>
+
+                    <form:errors path="username" cssClass="error"/>
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="password" class="col-md-4 control-label">Mot de passe</label> <form:errors path="password" cssClass="error"/>
-                        <div class="col-md-8">
-                            <form:input type="password" path="password" cssClass="form-control" />
+                        <form:input path="username" cssClass="form-control" placeholder="Pseudo" type="text" />
+                    </div> <!-- form-group// -->
+
+                    <form:errors path="password" cssClass="error"/>
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                         </div>
-                    </div>
+                        <form:input path="password" cssClass="form-control" placeholder="Mot de passe" type="password" />
+                    </div> <!-- form-group// -->
 
                     <div class="form-group">
-                        <!-- Button -->
-                        <div class="col-md-offset-3 col-md-9">
-                            <form:button cssClass="btn btn-primary">Envoyer</form:button>
-                        </div>
-                    </div>
+                        <button type="submit" class="btn btn-primary btn-block"> Connexion  </button>
+                    </div> <!-- form-group// -->
+                    <p class="text-center">Vous n'avez pas de compte? <a href="<c:out value="./register" /> ">Inscription</a> </p>
                 </form:form>
             </div>
         </div>
     </div>
-</div>
 </div>
 </body>
 
