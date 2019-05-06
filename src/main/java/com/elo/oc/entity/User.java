@@ -29,6 +29,7 @@ public class User {
     private String password;
 
     @Transient
+    @NotEmpty
     private String passwordConfirm;
 
     @NotEmpty
@@ -46,6 +47,7 @@ public class User {
     private Role userRole;
 
     @Transient
+    @NotEmpty
     private String memberOrNot;
 
     @OneToMany (mappedBy = "user") //attribut User user de Spot

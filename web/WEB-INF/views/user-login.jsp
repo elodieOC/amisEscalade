@@ -22,7 +22,8 @@
 <c:if test="${ !empty sessionScope }">
     <c:import url="inc/navbar_connected.jsp" />
 </c:if>
-<div class="container d-flex h-100 align-items-center">
+<div class="wrapper">
+<div class="container align-items-center">
     <div class="col-md-offset-2 col-md-7">
         <h2 class="text-center">Connexion</h2>
         <div class="panel panel-info">
@@ -54,5 +55,8 @@
         </div>
     </div>
 </div>
+</div>
 </body>
+
+<c:import url="inc/footer.jsp"/>
 </html>

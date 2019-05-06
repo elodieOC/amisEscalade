@@ -43,7 +43,7 @@ public class UserDAOImpl implements UserDAO {
         if(user.getMemberOrNot().equals("no")) {
             user.setUserRole(roleService.findById(3));
         }
-        else{
+        else if(user.getMemberOrNot().equals("yes")){
             user.setUserRole(roleService.findById(2));
         }
 

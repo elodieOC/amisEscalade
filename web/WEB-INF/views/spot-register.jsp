@@ -21,6 +21,7 @@
 <c:if test="${ !empty sessionScope }">
     <c:import url="inc/navbar_connected.jsp" />
 </c:if>
+<div class="wrapper">
 <div class="container d-flex h-100 align-items-center">
     <div class="col-md-offset-2 col-md-7">
         <h2 class="text-center">Ajouter Spot</h2>
@@ -64,6 +65,9 @@
         </div>
     </div>
 </div>
+</div>
 </body>
+
+<c:import url="inc/footer.jsp"/>
 </html>
 

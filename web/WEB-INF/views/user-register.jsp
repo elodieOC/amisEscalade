@@ -10,7 +10,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
-    <title>Registration Form</title>
+    <title>Inscription</title>
 
     <c:import url="inc/headContent.jsp"/>
 
@@ -22,63 +22,79 @@
 <c:if test="${ !empty sessionScope }">
     <c:import url="inc/navbar_connected.jsp" />
 </c:if>
-<div class="container d-flex h-100 align-items-center">
-    <div class="col-md-offset-2 col-md-7">
-        <h2 class="text-center">Ajouter utilisateur</h2>
-        <div class="panel panel-info">
-            <div class="panel-body">
-                <form:form action="saveUser" cssClass="form-horizontal"  method="post" modelAttribute="user">
+<div class="wrapper">
+    <div class="container align-items-center">
+            <div class="col-lg-6 mx-auto">
+                <div class="card bg-light p-4 ">
+                        <h2 class="mt-3 mb-3 text-center">Création de compte</h2>
 
-                    <!-- need to associate this data with user id -->
-                    <form:hidden path="id" />
+                        <form:form action="saveUser" cssClass="form-horizontal"  method="post" modelAttribute="user">
+                            <!-- need to associate this data with user id -->
+                            <form:hidden path="id" />
+                        <p>
+                            <a href="" class="btn btn-block btn-facebook"> <i class="fab fa-facebook-f"></i>   via facebook</a>
+                        </p>
+                        <p class="divider-text">
+                            <span class="bg-light">OU</span>
+                        </p>
 
-                    <div class="form-group">
-                        <label for="username" class="col-md-6 control-label">Pseudo</label>
-                        <form:errors path="username" cssClass="error"/>
-                        <div class="col-md-9">
-                            <form:input path="username" cssClass="form-control" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="email" class="col-md-6 control-label">Email</label> <form:errors path="email" cssClass="error"/>
-                        <div class="col-md-9">
-                            <form:input path="email" cssClass="form-control" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="password" class="col-md-6 control-label">Mot de passe</label> <form:errors path="password" cssClass="error"/>
-                        <div class="col-md-9">
-                            <form:input type="password" path="password" cssClass="form-control" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="passwordConfirm" class="col-md-6 control-label">Confirmation mot de passe</label> <form:errors path="passwordConfirm" cssClass="error"/>
-                        <div class="col-md-9">
-                            <form:input type="password" path="passwordConfirm" cssClass="form-control" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-6">Etes vous Membre de l'association?</div>
-                        <div class="col-md-9">
-                        <form:errors path="memberOrNot" cssClass="error"/>
-                        </div>
-                        <div class="col-md-6">
-                            <form:radiobutton path="memberOrNot" value="yes" />Oui
-                            <form:radiobutton path="memberOrNot" value="no" />Non
-                        </div>
+                            <form:errors path="username" cssClass="error"/>
+                            <div class="form-group input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                                </div>
+                                <form:input path="username" cssClass="form-control" placeholder="Pseudo" type="text" />
+                            </div> <!-- form-group// -->
 
-                    </div>
-                    <div class="form-group">
-                        <!-- Button -->
-                        <div class="col-md-offset-3 col-md-9">
-                            <form:button cssClass="btn btn-primary">Envoyer</form:button>
-                        </div>
-                    </div>
 
-                </form:form>
+                            <form:errors path="email" cssClass="error"/>
+                            <div class="form-group input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                                </div>
+                                <form:input path="email" cssClass="form-control" placeholder="Email" type="email" />
+                            </div><!-- form-group end.// -->
+
+                            <form:errors path="password" cssClass="error"/>
+                            <div class="form-group input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                                </div>
+                                <form:input path="password" cssClass="form-control" placeholder="Mot de passe" type="password" />
+                            </div> <!-- form-group// -->
+
+                            <form:errors path="passwordConfirm" cssClass="error"/>
+                            <div class="form-group input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                                </div>
+                                <form:input path="passwordConfirm" cssClass="form-control"  placeholder="Confirmation mot de passe" type="password" />
+                            </div> <!-- form-group// -->
+
+                            <form:errors path="memberOrNot" cssClass="error"/>
+                            <div class="form-group input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"> <i class="far fa-address-card"></i> </span>
+                                </div>
+                                <form:select  path="memberOrNot" class="form-control">
+                                    <form:option value="" selected=""> Etes vous Membre de l'association?</form:option>
+                                    <form:option value="yes">Oui</form:option>
+                                    <form:option value="no">Non</form:option>
+                                </form:select>
+                            </div> <!-- form-group end.// -->
+
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary btn-block"> Créer le compte  </button>
+                            </div> <!-- form-group// -->
+                            <p class="text-center">Vous avez déjà un compte? <a href="<c:out value="./login" /> ">Connexion</a> </p>
+                        </form:form>
+                    </article>
+                </div> </div><!-- card.// -->
             </div>
-        </div>
-    </div>
+            <!--container end.//-->
 </div>
 </body>
+
+<c:import url="inc/footer.jsp"/>
 </html>

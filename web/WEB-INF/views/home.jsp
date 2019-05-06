@@ -19,8 +19,9 @@
 <c:if test="${ !empty sessionScope }">
   <c:import url="inc/navbar_connected.jsp" />
 </c:if>
+<div class="wrapper">
 <header class="masthead">
-  <div class="container d-flex h-100 align-items-center">
+  <div class="container d-flex align-items-center">
     <div class="mx-auto text-center">
       <div>
         <img src="<c:url value="/resources/img/logo.JPG" />" >
@@ -30,9 +31,11 @@
     </div>
   </div>
 </header>
-<c:import url="inc/footer.jsp"/>
+</div>
 
 
 
 </body>
+
+<c:import url="inc/footer.jsp"/>
 </html>

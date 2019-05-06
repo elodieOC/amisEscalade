@@ -38,5 +38,6 @@ public class UserRegistrationValidator implements Validator {
             System.out.println("passwords don't match");
             errors.rejectValue("passwordConfirm", "registration.password.noMatch");
         }
+
     }
 }
