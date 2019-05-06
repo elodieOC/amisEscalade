@@ -13,9 +13,9 @@
     <title>Title</title>
     <c:import url="inc/headContent.jsp"/>
 </head>
-<body>
+<body class="d-flex flex-column h-100">
 <c:import url="inc/navbar_connected.jsp" />
-<div class="wrapper">
+<div class="wrapper flex-shrink-0">
 <div class="container d-flex h-100 align-items-center">
     <div class="col-md-offset-2 col-md-7">
         <h2 class="text-center">Profil</h2>

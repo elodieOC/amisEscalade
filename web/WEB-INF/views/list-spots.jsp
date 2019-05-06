@@ -12,14 +12,15 @@
     <title>Title</title>
     <c:import url="inc/headContent.jsp"/>
 </head>
-<body>
+
+<body class="d-flex flex-column h-100">
 <c:if test="${ empty sessionScope }">
     <c:import url="inc/navbar.jsp" />
 </c:if>
 <c:if test="${ !empty sessionScope }">
     <c:import url="inc/navbar_connected.jsp" />
 </c:if>
-<div class="wrapper">
+<div class="wrapper flex-shrink-0">
 <div class="container d-flex h-100 align-items-center">
     <div class="col-md-offset-1 col-md-10">
         <h2>Liste des Spots</h2>

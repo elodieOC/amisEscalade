@@ -12,13 +12,14 @@
     <title>Contact</title>
     <c:import url="inc/headContent.jsp"/>
 </head>
+<body class="d-flex flex-column h-100">
 <c:if test="${ empty sessionScope }">
     <c:import url="inc/navbar.jsp" />
 </c:if>
 <c:if test="${ !empty sessionScope }">
     <c:import url="inc/navbar_connected.jsp" />
 </c:if>
-<div class="wrapper">
+<div class="wrapper flex-shrink-0">
 <section id="signup" class="signup-section">
     <div class="container align-items-center">
         <div class="row">

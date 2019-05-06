@@ -15,14 +15,14 @@
     <c:import url="inc/headContent.jsp"/>
 
 </head>
-<body>
+<body class="d-flex flex-column h-100">
 <c:if test="${ empty sessionScope }">
     <c:import url="inc/navbar.jsp" />
 </c:if>
 <c:if test="${ !empty sessionScope }">
     <c:import url="inc/navbar_connected.jsp" />
 </c:if>
-<div class="wrapper">
+<div class="wrapper flex-shrink-0">
     <div class="container align-items-center">
         <div class="col-lg-6 mx-auto">
             <div class="card bg-light p-4 ">
@@ -43,7 +43,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                         </div>
-                        <form:input path="username" cssClass="form-control" placeholder="Pseudo" type="text" />
+                        <form:input path="username" cssClass="form-control p-4" placeholder="Pseudo" type="text" />
                     </div> <!-- form-group// -->
 
 
@@ -52,7 +52,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
                         </div>
-                        <form:input path="email" cssClass="form-control" placeholder="Email" type="email" />
+                        <form:input path="email" cssClass="form-control p-4" placeholder="Email" type="email" />
                     </div><!-- form-group end.// -->
 
                     <form:errors path="password" cssClass="error"/>
@@ -60,7 +60,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                         </div>
-                        <form:input path="password" cssClass="form-control" placeholder="Mot de passe" type="password" />
+                        <form:input path="password" cssClass="form-control p-4" placeholder="Mot de passe" type="password" />
                     </div> <!-- form-group// -->
 
                     <form:errors path="passwordConfirm" cssClass="error"/>
@@ -68,7 +68,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                         </div>
-                        <form:input path="passwordConfirm" cssClass="form-control"  placeholder="Confirmation mot de passe" type="password" />
+                        <form:input path="passwordConfirm" cssClass="form-control p-4"  placeholder="Confirmation mot de passe" type="password" />
                     </div> <!-- form-group// -->
 
                     <form:errors path="memberOrNot" cssClass="error"/>
@@ -76,7 +76,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="far fa-address-card"></i> </span>
                         </div>
-                        <form:select  path="memberOrNot" class="form-control">
+                        <form:select  path="memberOrNot" cssClass="form-control" >
                             <form:option value="" selected=""> Etes vous Membre de l'association?</form:option>
                             <form:option value="yes">Oui</form:option>
                             <form:option value="no">Non</form:option>

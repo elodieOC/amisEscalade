@@ -9,7 +9,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!-- Footer -->
-<footer class="py-4 bg-dark small text-center text-white-50 ">
+<footer class="footer mt-auto py-4 bg-dark small text-center text-white-50 ">
     <div class="container">
         Copyright &copy; 2018-2019 Elo Oc
     </div>
