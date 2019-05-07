@@ -9,12 +9,14 @@ import java.util.Optional;
 public  interface UserService {
 
     void saveUser(User user);
+    void adminSaveUser(User user);
     void deleteUser(int id);
 
     List < User > getUsers();
     User findByEmail (String email);
     User findByUsername(String username);
     User findById(int id);
+    User findByIdWithSpots(int id);
     List<User> findByRole(int id);
 
     Optional<User> findUserWithThisEmail(String email);

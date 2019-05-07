@@ -1,5 +1,6 @@
 package com.elo.oc.controller;
 
+import com.elo.oc.entity.Role;
 import com.elo.oc.entity.User;
 import com.elo.oc.entity.User;
 import com.elo.oc.service.RoleService;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.List;
 
 
 @Controller
@@ -32,6 +34,9 @@ public class UserController {
     @GetMapping("/register")
     public String showRegisterForm(Model theModel) {
         User theUser = new User();
+        List<Role> roles = roleService.getRolesPublic();
+
+        theModel.addAttribute("roles", roles);
         theModel.addAttribute("user", theUser);
         return "user-register";
     }
@@ -87,7 +92,7 @@ public class UserController {
                 return "redirect:/user/login";
             }
             else {
-                theUser = userService.findById(userId);
+                theUser = userService.findByIdWithSpots(userId);
                 theModel.addAttribute("user", theUser);
                 theModel.addAttribute("spots", theUser.getSpots());
                 return "profile";

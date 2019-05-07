@@ -12,7 +12,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
     <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="<c:out value="./home" />">Les amis de l'escalade</a>
+        <a class="navbar-brand js-scroll-trigger" href="<c:url value="/home" />">Les amis de l'escalade</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             Menu
             <i class="fas fa-bars"></i>
@@ -20,16 +20,16 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item ml-4">
-                    <a class="nav-link js-scroll-trigger" href="<c:out value="./about" />">A Propos</a>
+                    <a class="nav-link js-scroll-trigger" href="<c:url value="/about" />">A Propos</a>
                 </li>
                 <li class="nav-item ml-4">
-                    <a class="nav-link js-scroll-trigger" href="<c:out value="./spots/list" />">Les Spots</a>
+                    <a class="nav-link js-scroll-trigger" href="<c:url value="/spots/list" />">Les Spots</a>
                 </li>
                 <li class="nav-item ml-4">
-                    <a class="nav-link js-scroll-trigger" href="<c:out value="./contact" />">Contact</a>
+                    <a class="nav-link js-scroll-trigger" href="<c:url value="/contact" />">Contact</a>
                 </li>
-                <li class="nav-item ml-4"><a class="nav-link js-scroll-trigger" href="<c:out value="./user/register" />"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
-                <li class="nav-item ml-4"><a class="nav-link js-scroll-trigger"  href="<c:out value="./user/login" /> "><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
+                <li class="nav-item ml-4"><a class="nav-link js-scroll-trigger" href="<c:url value="/user/register" />"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
+                <li class="nav-item ml-4"><a class="nav-link js-scroll-trigger"  href="<c:url value="/user/login" /> "><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
             <li class="nav-item ml-4 mt-2">
             <form class="form-inline" action="/action_page.php">
                 <input class="form-control mr-sm-2" type="text" placeholder="Recherche">

@@ -52,7 +52,7 @@
                     </tr>
 
                 </table>
-               <%--LAZY EXCEPTION
+               <%--LAZY EXCEPTION--%>
                <table class="table table-striped table-bordered">
                     <tr>
                         <th>Spots</th>
@@ -66,7 +66,7 @@
                     </c:forEach>
                    </c:if>
                     <tr><td>${spots}</td></tr>
-                </table>--%>
+                </table>
             </div>
         </div>
     </div>

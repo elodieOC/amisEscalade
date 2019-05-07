@@ -56,8 +56,14 @@
                             <td>${spot.name}</td>
                             <td>${spot.county}</td>
                             <td>${spot.city}</td>
-                            <td>${spot.user.username}</td>
-
+                            <c:choose>
+                                <c:when test="${empty spot.user.username}">
+                                    <td>utilisateur supprimé</td>
+                                </c:when>
+                                <c:otherwise>
+                                    <td>${spot.user.username}</td>
+                                </c:otherwise>
+                            </c:choose>
                             <td>
                                 <!-- display the update link --> <a href="${updateLink}">Update</a>
                                 | <a href="${deleteLink}"

@@ -31,6 +31,16 @@ public class RoleDAOImpl implements RoleDAO {
     }
 
     @Override
+    public List < Role > getRolesPublic() {
+        Session session = sessionFactory.getCurrentSession();
+
+        Query q = session.createQuery("SELECT r FROM Role r  WHERE r.roleName != :roleName");
+        q.setParameter("roleName", "admin");
+
+        return q.getResultList();
+    }
+
+    @Override
     public void saveRole(Role theRole){
         Session currentSession = sessionFactory.getCurrentSession();
         currentSession.saveOrUpdate(theRole);

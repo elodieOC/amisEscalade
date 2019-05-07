@@ -38,9 +38,10 @@ public class UserLoginValidator implements Validator {
                 User toBeChecked = userService.findByUsername(formUsername);
                 System.out.println("TOBECHECKED "+toBeChecked);
                 String loginPassword = Encryption.encrypt(formPassword);
-                if (!loginPassword.equals(toBeChecked.getPassword()))
+                if (!loginPassword.equals(toBeChecked.getPassword())) {
                     System.out.println("password doesn't match username");
                     errors.rejectValue("password", "login.password.noMatch");
+                }
             }
         }
     }

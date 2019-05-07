@@ -9,6 +9,7 @@ public interface RoleService {
 
     void saveRole(Role theRole);
     void deleteRole(int id);
+    List < Role > getRolesPublic();
 
     List < Role > getRoles();
     Role findById(int id);

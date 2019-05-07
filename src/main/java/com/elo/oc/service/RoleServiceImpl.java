@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class RoleServiceImpl implements RoleService {
 
     @Autowired
@@ -19,6 +20,12 @@ public class RoleServiceImpl implements RoleService {
     @Transactional
     public void saveRole(Role theRole) {
         roleDAO.saveRole(theRole);
+    }
+
+    @Override
+    @Transactional
+    public List<Role> getRolesPublic() {
+        return roleDAO.getRolesPublic();
     }
 
     @Override

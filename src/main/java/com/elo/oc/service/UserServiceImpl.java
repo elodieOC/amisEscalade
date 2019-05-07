@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -26,6 +27,16 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void saveUser(User theUser) {
         userDAO.saveUser(theUser);
+    }
+    @Override
+    @Transactional
+    public void adminSaveUser(User theUser) {
+        userDAO.adminSaveUser(theUser);
+    }
+
+    @Override
+    public User findByIdWithSpots(int id) {
+       return   userDAO.findByIdWithSpots(id);
     }
 
     @Override

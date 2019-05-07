@@ -10,6 +10,7 @@ public interface RoleDAO {
     void deleteRole(int id);
 
     List < Role > getRoles();
+    List < Role > getRolesPublic();
     Role findById(int id);
 
 

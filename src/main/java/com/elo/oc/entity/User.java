@@ -3,6 +3,7 @@ package com.elo.oc.entity;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,10 +48,10 @@ public class User {
     private Role userRole;
 
     @Transient
-    @NotEmpty
-    private String memberOrNot;
+    @NotNull
+    private Integer memberOrNot;
 
-    @OneToMany (mappedBy = "user") //attribut User user de Spot
+    @OneToMany (mappedBy = "user")//attribut User user de Spot
     private List<Spot> spots = new ArrayList<>();
 
     public List<Spot> getSpots() {
@@ -64,11 +65,11 @@ public class User {
     public User() {
     }
 
-    public String getMemberOrNot() {
+    public Integer getMemberOrNot() {
         return memberOrNot;
     }
 
-    public void setMemberOrNot(String memberOrNot) {
+    public void setMemberOrNot(Integer memberOrNot) {
         this.memberOrNot = memberOrNot;
     }
 
@@ -125,12 +126,8 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", password='" + password + '\'' +
-                ", passwordConfirm='" + passwordConfirm + '\'' +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
-                ", userRole=" + userRole +
-                ", spots=" + spots +
                 '}';
     }
 }

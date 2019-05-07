@@ -4,13 +4,14 @@ import com.elo.oc.entity.Role;
 import com.elo.oc.entity.User;
 import com.elo.oc.service.RoleService;
 import com.elo.oc.service.UserService;
+import com.elo.oc.utils.UserRegistrationValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -21,11 +22,13 @@ public class AdminInfos {
     private RoleService roleService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserRegistrationValidator userRegistrationValidator;
 
     @GetMapping("/infos")
     public String createInit(Model theModel) {
 
-        if(!roleService.findRole("admin").isPresent() ) {
+       /* if(!roleService.findRole("admin").isPresent() ) {
             Role admin = new Role();
             admin.setRoleName("admin");
             roleService.saveRole(admin);
@@ -39,7 +42,7 @@ public class AdminInfos {
             Role nonMember = new Role();
             nonMember.setRoleName("non membre");
             roleService.saveRole(nonMember);
-        }
+        }*/
 
         List<User> theUsers = userService.getUsers();
         List<Role> theRoles = roleService.getRoles();
@@ -53,8 +56,21 @@ public class AdminInfos {
     @GetMapping("/updateForm")
     public String showFormForUpdate(@RequestParam("id") int theId, Model theModel) {
         User theUser = userService.findById(theId);
+        List<Role> roles = roleService.getRoles();
+        theModel.addAttribute("roles", roles);
         theModel.addAttribute("user", theUser);
-        return "user-register";
+        return "admin-user-update";
+    }
+
+    @PostMapping("/saveUser")
+    public String updateUser(@Valid @ModelAttribute("user") User theUser, BindingResult theBindingResult) {
+        if (theBindingResult.hasErrors()) {
+            return "admin-user-update";
+        }
+        else {
+            userService.adminSaveUser(theUser);
+            return "redirect:infos";
+        }
     }
 
     @GetMapping("/delete")

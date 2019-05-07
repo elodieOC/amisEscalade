@@ -77,9 +77,10 @@
                             <span class="input-group-text"> <i class="far fa-address-card"></i> </span>
                         </div>
                         <form:select  path="memberOrNot" cssClass="form-control" >
-                            <form:option value="" selected=""> Etes vous Membre de l'association?</form:option>
-                            <form:option value="yes">Oui</form:option>
-                            <form:option value="no">Non</form:option>
+                            <form:option value="" selected="">Etes vous membre de l'association?</form:option>
+                            <c:forEach var="role" items="${roles}">
+                                <form:option value="${role.id}">${role.roleName}</form:option>
+                            </c:forEach>
                         </form:select>
                     </div> <!-- form-group end.// -->
 

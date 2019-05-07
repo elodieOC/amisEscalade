@@ -3,6 +3,7 @@ package com.elo.oc.dao;
 import com.elo.oc.entity.*;
 import com.elo.oc.service.RoleService;
 import com.elo.oc.utils.Encryption;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
@@ -40,13 +42,16 @@ public class UserDAOImpl implements UserDAO {
         Session currentSession = sessionFactory.getCurrentSession();
         user.setPassword(Encryption.encrypt(user.getPassword()));
 
-        if(user.getMemberOrNot().equals("no")) {
-            user.setUserRole(roleService.findById(3));
-        }
-        else if(user.getMemberOrNot().equals("yes")){
-            user.setUserRole(roleService.findById(2));
-        }
 
+        user.setUserRole(roleService.findById(user.getMemberOrNot()));
+        currentSession.saveOrUpdate(user);
+    }
+
+    @Override
+    public void adminSaveUser(User user){
+        Session currentSession = sessionFactory.getCurrentSession();
+
+        user.setUserRole(roleService.findById(user.getMemberOrNot()));
         currentSession.saveOrUpdate(user);
     }
 
@@ -54,6 +59,10 @@ public class UserDAOImpl implements UserDAO {
     public void deleteUser(int id){
         Session session = sessionFactory.getCurrentSession();
         User u = session.byId(User.class).load(id);
+        for (Spot s: u.getSpots() ) {
+            s.setUser(findByUsername("deleted"));
+            session.saveOrUpdate(s);
+        }
         session.delete(u);
     }
 
@@ -80,6 +89,25 @@ public class UserDAOImpl implements UserDAO {
     public User findById(int id){
         Session currentSession = sessionFactory.getCurrentSession();
         User theUser = currentSession.get(User.class, id);
+        return theUser;
+    }
+
+   @Override
+    public User findByIdWithSpots(int id){
+        Session currentSession = sessionFactory.getCurrentSession();
+
+       User theUser = currentSession.get(User.class, id);
+        Hibernate.initialize(theUser.getSpots());
+        /*
+        CriteriaBuilder cb = currentSession.getCriteriaBuilder();
+        CriteriaQuery q = cb.createQuery(User.class);
+        Root o = q.from(User.class);
+        o.fetch("spots", JoinType.INNER);
+        q.select(o);
+        q.where(cb.equal(o.get("id"), id));
+
+        User theUser = (User)currentSession.createQuery(q).getSingleResult();
+        */
         return theUser;
     }
 
