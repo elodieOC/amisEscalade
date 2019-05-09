@@ -16,12 +16,14 @@
 
 </head>
 <body class="d-flex flex-column h-100">
-<c:if test="${ empty sessionScope }">
-    <c:import url="inc/navbar.jsp" />
-</c:if>
-<c:if test="${ !empty sessionScope }">
-    <c:import url="inc/navbar_connected.jsp" />
-</c:if>
+<c:choose>
+    <c:when test="${ empty sessionScope }">
+        <c:import url="inc/navbar.jsp" />
+    </c:when>
+    <c:otherwise>
+        <c:import url="inc/navbar_connected.jsp" />
+    </c:otherwise>
+</c:choose>
 <div class="wrapper flex-shrink-0">
     <div class="container align-items-center">
         <div class="col-lg-6 mx-auto">

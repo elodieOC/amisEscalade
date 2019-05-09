@@ -65,7 +65,6 @@
                         <tr> <td>${spot.name}</td></tr>
                     </c:forEach>
                    </c:if>
-                    <tr><td>${spots}</td></tr>
                 </table>
             </div>
         </div>

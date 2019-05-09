@@ -18,18 +18,15 @@ public class UserServiceImpl implements UserService {
     private UserDAO userDAO;
 
     @Override
-    @Transactional
     public List <User> getUsers() {
         return userDAO.getUsers();
     }
 
     @Override
-    @Transactional
     public void saveUser(User theUser) {
         userDAO.saveUser(theUser);
     }
     @Override
-    @Transactional
     public void adminSaveUser(User theUser) {
         userDAO.adminSaveUser(theUser);
     }
@@ -40,19 +37,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
     public User findById(int theId) {
         return userDAO.findById(theId);
     }
 
     @Override
-    @Transactional
     public User findByEmail(String email) {
         return userDAO.findByEmail(email);
     }
 
     @Override
-    @Transactional
     public User findByUsername(String username) {
         User u = userDAO.findByUsername(username);
         return u;
@@ -64,13 +58,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
     public void deleteUser(int theId) {
         userDAO.deleteUser(theId);
     }
 
     @Override
-    @Transactional
+    
     public Optional<User> findUserWithThisEmail(String email) {
         return userDAO.getUsers().stream()
                 .filter(user -> user.getEmail().equals(email))
@@ -78,7 +71,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
     public Optional<User> findUserWithThisUsername(String username) {
         return userDAO.getUsers().stream()
                 .filter(user -> user.getUsername().equals(username))

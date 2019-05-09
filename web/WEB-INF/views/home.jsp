@@ -9,30 +9,32 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-  <title>Home</title>
+    <title>Home</title>
 
-  <c:import url="inc/headContent.jsp"/>
+    <c:import url="inc/headContent.jsp"/>
 </head>
 
 <body class="d-flex flex-column h-100">
-<c:if test="${ empty sessionScope }">
-  <c:import url="inc/navbar.jsp" />
-</c:if>
-<c:if test="${ !empty sessionScope }">
-  <c:import url="inc/navbar_connected.jsp" />
-</c:if>
+<c:choose>
+    <c:when test="${ empty sessionScope }">
+        <c:import url="inc/navbar.jsp" />
+    </c:when>
+    <c:otherwise>
+        <c:import url="inc/navbar_connected.jsp" />
+    </c:otherwise>
+</c:choose>
 <div class="wrapper flex-shrink-0">
-<header class="masthead">
-  <div class="container d-flex align-items-center">
-    <div class="mx-auto text-center">
-      <div>
-        <img src="<c:url value="/resources/img/logo.JPG" />" >
-      </div>
-      <h2 class="text-white-50 mx-auto mt-2 mb-5">Venez partager et échanger sur l'escalade avec la communauté.</h2>
-      <a href="<c:out value="about.jsp" />" class="btn btn-secondary js-scroll-trigger">A propos de nous</a>
-    </div>
-  </div>
-</header>
+    <header class="masthead">
+        <div class="container d-flex align-items-center">
+            <div class="mx-auto text-center">
+                <div>
+                    <img src="<c:url value="/resources/img/logo.JPG" />" >
+                </div>
+                <h2 class="text-white-50 mx-auto mt-2 mb-5">Venez partager et échanger sur l'escalade avec la communauté.</h2>
+                <a href="<c:out value="about.jsp" />" class="btn btn-secondary js-scroll-trigger">A propos de nous</a>
+            </div>
+        </div>
+    </header>
 </div>
 
 

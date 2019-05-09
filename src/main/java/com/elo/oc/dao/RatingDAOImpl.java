@@ -17,6 +17,7 @@ import java.util.List;
 public class RatingDAOImpl implements RatingDAO {
     @Autowired
     private SessionFactory sessionFactory;
+
     @Override
     public void saveRating(Rating theRating) {
         Session currentSession = sessionFactory.getCurrentSession();

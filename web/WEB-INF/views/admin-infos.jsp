@@ -13,7 +13,7 @@
     <c:import url="inc/headContent.jsp"/>
 </head>
 <body>
-
+<c:import url="inc/navbar_admin.jsp" />
 <div class="container">
     <div class="col-md-offset-2 col-md-7">
         <h2 class="text-center">Utilisateurs</h2>

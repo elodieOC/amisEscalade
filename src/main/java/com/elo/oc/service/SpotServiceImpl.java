@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class SpotServiceImpl implements SpotService {
 
     @Autowired
@@ -17,13 +18,11 @@ public class SpotServiceImpl implements SpotService {
 
 
     @Override
-    @Transactional
     public List<Spot> getSpots() {
         return spotDAO.getSpots();
     }
 
     @Override
-    @Transactional
     public void saveSpot(Spot spot) {
         spotDAO.saveSpot(spot);
     }
@@ -59,7 +58,6 @@ public class SpotServiceImpl implements SpotService {
     }
 
     @Override
-    @Transactional
     public Optional<Spot> findSpotWithThisName(String name) {
         return spotDAO.getSpots().stream()
                 .filter(spot -> spot.getName().equals(name))

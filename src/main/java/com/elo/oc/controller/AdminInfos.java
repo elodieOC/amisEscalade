@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -26,40 +28,46 @@ public class AdminInfos {
     private UserRegistrationValidator userRegistrationValidator;
 
     @GetMapping("/infos")
-    public String createInit(Model theModel) {
+    public String createInit(Model theModel, HttpServletRequest request, HttpSession session) {
+        session = request.getSession();
 
-       /* if(!roleService.findRole("admin").isPresent() ) {
-            Role admin = new Role();
-            admin.setRoleName("admin");
-            roleService.saveRole(admin);
+        if (session.getAttribute("loggedInUserEmail") == null) {
+            return "redirect:/user/login";
+        } else {
+            String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
+            User adminUser = userService.findByEmail(sessionEmail);
+            if(adminUser.getUserRole().getId()!=1){
+                return "redirect:/user/profile";
+            }
+            else {
+                List<User> theUsers = userService.getUsers();
+                List<Role> theRoles = roleService.getRoles();
+                theModel.addAttribute("roles", theRoles);
+                theModel.addAttribute("users", theUsers);
+                return "admin-infos";
+            }
         }
-        if(!roleService.findRole("membre asso").isPresent() ) {
-            Role assoMember = new Role();
-            assoMember.setRoleName("membre asso");
-            roleService.saveRole(assoMember);
-        }
-        if(!roleService.findRole("non membre").isPresent()) {
-            Role nonMember = new Role();
-            nonMember.setRoleName("non membre");
-            roleService.saveRole(nonMember);
-        }*/
-
-        List<User> theUsers = userService.getUsers();
-        List<Role> theRoles = roleService.getRoles();
-
-        theModel.addAttribute("roles", theRoles);
-        theModel.addAttribute("users", theUsers);
-
-        return "admin-infos";
     }
 
     @GetMapping("/updateForm")
-    public String showFormForUpdate(@RequestParam("id") int theId, Model theModel) {
-        User theUser = userService.findById(theId);
-        List<Role> roles = roleService.getRoles();
-        theModel.addAttribute("roles", roles);
-        theModel.addAttribute("user", theUser);
-        return "admin-user-update";
+    public String showFormForUpdate(@RequestParam("id") int theId, Model theModel, HttpServletRequest request, HttpSession session) {
+        session = request.getSession();
+
+        if (session.getAttribute("loggedInUserEmail") == null) {
+            return "redirect:/user/login";
+        } else {
+            String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
+            User adminUser = userService.findByEmail(sessionEmail);
+            if (adminUser.getUserRole().getId() != 1) {
+                return "redirect:/user/profile";
+            } else {
+                User theUser = userService.findById(theId);
+                List<Role> roles = roleService.getRoles();
+                theModel.addAttribute("roles", roles);
+                theModel.addAttribute("user", theUser);
+                return "admin-user-update";
+            }
+        }
     }
 
     @PostMapping("/saveUser")
@@ -74,8 +82,20 @@ public class AdminInfos {
     }
 
     @GetMapping("/delete")
-    public String deleteCustomer(@RequestParam("id") int theId) {
-        userService.deleteUser(theId);
-        return "redirect:infos";
+    public String deleteCustomer(@RequestParam("id") int theId, HttpServletRequest request, HttpSession session) {
+        session = request.getSession();
+
+        if (session.getAttribute("loggedInUserEmail") == null) {
+            return "redirect:/user/login";
+        } else {
+            String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
+            User adminUser = userService.findByEmail(sessionEmail);
+            if (adminUser.getUserRole().getId() != 1) {
+                return "redirect:/user/profile";
+            } else {
+                userService.deleteUser(theId);
+                return "redirect:infos";
+            }
+        }
     }
 }
