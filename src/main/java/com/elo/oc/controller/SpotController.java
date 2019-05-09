@@ -1,6 +1,7 @@
 package com.elo.oc.controller;
 
 import com.elo.oc.entity.Spot;
+import com.elo.oc.entity.User;
 import com.elo.oc.service.SpotService;
 import com.elo.oc.service.UserService;
 import com.elo.oc.utils.SpotRegistrationValidator;
@@ -49,9 +50,25 @@ public class SpotController {
             return "spot-register";}
     }
 
+    @GetMapping("/spot/{spotId}")
+    public String viewSpot(@PathVariable("spotId") int spotId, Spot theSpot, Model theModel, HttpServletRequest request){
+        /* Récupération de la session depuis la requête */
+        HttpSession session = request.getSession();
+        if(session.getAttribute("loggedInUserEmail") != null) {
+            String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
+            User theUser = userService.findByEmail(sessionEmail);
+            theModel.addAttribute("user", theUser);
+        }
+        theSpot = spotService.findByIdSpot(spotId);
+        theModel.addAttribute("spot", theSpot);
+        return "view-spot";
+    }
+
+
+
     @PostMapping("/saveSpot")
     public String saveSpot(@Valid @ModelAttribute("spot") Spot theSpot, BindingResult theBindingResult,
-                               HttpServletRequest request, HttpSession session) {
+                           HttpServletRequest request, HttpSession session) {
         session = request.getSession();
 
         if(session.getAttribute("loggedInUserEmail") == null){
@@ -78,14 +95,42 @@ public class SpotController {
     }
 
     @GetMapping("/updateForm")
-    public String showFormForUpdate(@RequestParam("spotId") int theId, Model theModel) {
-        Spot theSpot = spotService.findByIdSpot(theId);
-        theModel.addAttribute("spot", theSpot);
-        return "spot-register";
+    public String showFormForUpdate(@RequestParam("spotId") int theId, Model theModel,
+                                    HttpServletRequest request, HttpSession session) {
+        session = request.getSession();
+        if(session.getAttribute("loggedInUserEmail") == null){
+            System.out.println("user not logged in, redirect to login");
+            return "redirect:/user/login";
+        }
+        else {
+            Spot theSpot = spotService.findByIdSpot(theId);
+            String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
+            User theUpdater = userService.findByEmail(sessionEmail);
+            if(theUpdater.getUserRole().getId()!= 1 || theUpdater.getId() != theSpot.getUser().getId()){
+                System.out.println("User trying to update is neither the owner of the spot, or an admin");
+                System.out.println("User is: ["+theUpdater.getId()+ ", "+theUpdater.getUsername()+"]");
+                return "redirect:/home";
+            }
+            theModel.addAttribute("spot", theSpot);
+            return "spot-register";
+        }
     }
 
     @GetMapping("/delete")
-    public String deleteCustomer(@RequestParam("spotId") int theId) {
+    public String deleteCustomer(@RequestParam("spotId") int theId, HttpServletRequest request, HttpSession session) {
+        session = request.getSession();
+        if(session.getAttribute("loggedInUserEmail") == null){
+            System.out.println("user not logged in, redirect to login");
+            return "redirect:/user/login";
+        }
+        Spot theSpot = spotService.findByIdSpot(theId);
+        String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
+        User theDeleter = userService.findByEmail(sessionEmail);
+        if(theDeleter.getUserRole().getId()!= 1 || theDeleter.getId() != theSpot.getUser().getId()){
+            System.out.println("User trying to delete is neither the owner of the spot, or an admin");
+            System.out.println("User is: ["+theDeleter.getId()+ ", "+theDeleter.getUsername()+"]");
+            return "redirect:/home";
+        }
         spotService.deleteSpot(theId);
         return "redirect:list";
     }
