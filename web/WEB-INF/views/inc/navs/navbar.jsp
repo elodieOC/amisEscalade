@@ -30,12 +30,6 @@
                 </li>
                 <li class="nav-item ml-4"><a class="nav-link js-scroll-trigger" href="<c:url value="/user/register" />"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
                 <li class="nav-item ml-4"><a class="nav-link js-scroll-trigger"  href="<c:url value="/user/login" /> "><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
-            <li class="nav-item ml-4 mt-2">
-            <form class="form-inline" action="/action_page.php">
-                <input class="form-control mr-sm-2" type="text" placeholder="Recherche">
-                <button class="btn btn-primary" type="submit">Recherche</button>
-            </form>
-            </li>
             </ul>
         </div>
     </div>

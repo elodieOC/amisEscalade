@@ -28,12 +28,6 @@
                     <a class="nav-link js-scroll-trigger" href="<c:url value="/contact" />">Contact</a>
                 </li>
                 <li class="nav-item ml-4"><a class="nav-link js-scroll-trigger" href="<c:url value="/user/profile" />"><span class="glyphicon glyphicon-user"></span> Mon profil</a></li>
-                <li class="nav-item ml-4 mt-2">
-                    <form class="form-inline" action="/action_page.php">
-                        <input class="form-control mr-sm-2" type="text" placeholder="Recherche">
-                        <button class="btn btn-primary" type="submit">Recherche</button>
-                    </form>
-                </li>
                 <li class="nav-item ml-4">
                     <a class="nav-link js-scroll-trigger " href="<c:url value="/user/logout" />">
                         <span class="glyphicon glyphicon-off"></span>

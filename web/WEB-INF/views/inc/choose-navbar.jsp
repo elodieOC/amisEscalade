@@ -7,7 +7,7 @@
     </c:when>
     <c:otherwise>
         <c:choose>
-            <c:when test="${sessionScope.values().contains('admin')}">
+            <c:when test="${sessionScope['loggedInUserRole'] eq '1'}">
                 <%@ include file="navs/navbar_admin.jsp"%>
             </c:when>
             <c:otherwise>
