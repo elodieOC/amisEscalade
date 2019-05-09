@@ -75,7 +75,8 @@ public class UserController {
         else{
             User userToLogIn = userService.findByUsername(theUser.getUsername());
             session.setAttribute("loggedInUserEmail", userToLogIn.getEmail());
-            session.setAttribute("loggedinUserRole", userToLogIn.getUserRole().getId());
+            session.setAttribute("loggedInUserId", userToLogIn.getId());
+            session.setAttribute("loggedInUserRole", userToLogIn.getUserRole().getId());
             return "redirect:profile";
         }
     }

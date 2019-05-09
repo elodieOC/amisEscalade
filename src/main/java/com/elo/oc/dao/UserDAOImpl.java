@@ -52,7 +52,7 @@ public class UserDAOImpl implements UserDAO {
         Session currentSession = sessionFactory.getCurrentSession();
 
         user.setUserRole(roleService.findById(user.getMemberOrNot()));
-        currentSession.saveOrUpdate(user);
+        currentSession.update(user);
     }
 
     @Override
