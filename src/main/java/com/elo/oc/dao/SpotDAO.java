@@ -9,12 +9,12 @@ public interface SpotDAO {
     List <Spot> getSpots();
 
     void saveSpot(Spot spot);
-    void deleteSpot(int id);
+    void deleteSpot(Integer id);
 
-    Spot findByNameSpot(String name);
-    Spot findByCountySpot(String region);
-    Spot findByCitySpot(String city);
-    Spot findByIdSpot(int id);
-    List<Spot> findByUserId(int id);
+    Spot findSpotByName(String name);
+    Spot findSpotByCounty(String county);
+    Spot findSpotByCity(String city);
+    Spot findSpotById(Integer id);
+    List<Spot> findSpotByUserId(Integer id);
 
 }

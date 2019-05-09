@@ -7,10 +7,10 @@ import java.util.List;
 public interface GradeDAO {
 
     void saveGrade(Grade theGrade);
-    void deleteGrade(int id);
+    void deleteGrade(Integer id);
 
     List < Grade > getGrades();
-    Grade findById(int id);
+    Grade findById(Integer id);
 
 
 

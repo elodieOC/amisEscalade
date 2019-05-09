@@ -10,14 +10,14 @@ public  interface UserService {
 
     void saveUser(User user);
     void adminSaveUser(User user);
-    void deleteUser(int id);
+    void deleteUser(Integer id);
 
     List < User > getUsers();
-    User findByEmail (String email);
-    User findByUsername(String username);
-    User findById(int id);
-    User findByIdWithSpots(int id);
-    List<User> findByRole(int id);
+    User findUserByEmail(String email);
+    User findUserByUsername(String username);
+    User findUserById(Integer id);
+    User findUserByIdWithSpots(Integer id);
+    List<User> findUserByRole(Integer id);
 
     Optional<User> findUserWithThisEmail(String email);
     Optional<User> findUserWithThisUsername(String username);

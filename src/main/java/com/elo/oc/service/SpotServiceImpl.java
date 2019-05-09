@@ -28,33 +28,33 @@ public class SpotServiceImpl implements SpotService {
     }
 
     @Override
-    public void deleteSpot(int id) {
+    public void deleteSpot(Integer id) {
         spotDAO.deleteSpot(id);
     }
 
     @Override
-    public Spot findByNameSpot(String name) {
-        return spotDAO.findByNameSpot(name);
+    public Spot findSpotByName(String name) {
+        return spotDAO.findSpotByName(name);
     }
 
     @Override
-    public Spot findByRegionSpot(String region) {
-        return spotDAO.findByCountySpot(region);
+    public Spot findSpotByCounty(String county) {
+        return spotDAO.findSpotByCounty(county);
     }
 
     @Override
-    public Spot findByCitySpot(String city) {
-        return spotDAO.findByCitySpot(city);
+    public Spot findSpotByCity(String city) {
+        return spotDAO.findSpotByCity(city);
     }
 
     @Override
-    public Spot findByIdSpot(int id) {
-        return spotDAO.findByIdSpot(id);
+    public Spot findSpotById(Integer id) {
+        return spotDAO.findSpotById(id);
     }
 
     @Override
-    public List<Spot> findByUserId(int id){
-        return spotDAO.findByUserId(id);
+    public List<Spot> findSpotByUserId(Integer id){
+        return spotDAO.findSpotByUserId(id);
     }
 
     @Override

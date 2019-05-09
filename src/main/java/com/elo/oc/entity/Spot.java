@@ -3,17 +3,19 @@ package com.elo.oc.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "spot")
 @org.hibernate.annotations.NamedQueries({
-        @org.hibernate.annotations.NamedQuery(name = "findByCounty",
+        @org.hibernate.annotations.NamedQuery(name = "findSpotByCounty",
                 query = "from Spot where county = :county"),
-        @org.hibernate.annotations.NamedQuery(name = "findByCity",
+        @org.hibernate.annotations.NamedQuery(name = "findSpotByCity",
                 query = "from Spot where city = :city"),
-        @org.hibernate.annotations.NamedQuery(name = "findByName",
+        @org.hibernate.annotations.NamedQuery(name = "findSpotByName",
                 query = "from Spot where name = :name"),
-        @org.hibernate.annotations.NamedQuery(name = "findByUserId",
+        @org.hibernate.annotations.NamedQuery(name = "findSpotByUserId",
                 query = "from Spot where climb_user_fk = :userId")
 
 })
@@ -21,7 +23,7 @@ public class Spot {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @NotEmpty
     @Column(name = "name", unique=true)
@@ -39,6 +41,9 @@ public class Spot {
     @JoinColumn(name = "climb_user_fk")
     private User user;
 
+    @OneToMany (mappedBy = "spot")//attribut Spot spot de Comment
+    private List<Comment> comments = new ArrayList<>();
+
     public Spot() {
 
     }
@@ -51,11 +56,11 @@ public class Spot {
         this.user = user;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -81,6 +86,14 @@ public class Spot {
 
     public void setCounty(String county) {
         this.county = county;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     @Override

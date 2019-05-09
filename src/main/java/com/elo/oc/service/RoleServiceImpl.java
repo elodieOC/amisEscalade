@@ -26,7 +26,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public void deleteRole(int id) {
+    public void deleteRole(Integer id) {
         roleDAO.deleteRole(id);
     }
 
@@ -37,7 +37,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role findById(int id) {
+    public Role findById(Integer id) {
         return roleDAO.findById(id);
     }
 

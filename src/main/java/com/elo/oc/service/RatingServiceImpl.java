@@ -21,7 +21,7 @@ public class RatingServiceImpl implements RatingService{
     }
 
     @Override
-    public void deleteRating(int id) {
+    public void deleteRating(Integer id) {
         ratingDAO.deleteRating(id);
     }
 
@@ -31,7 +31,7 @@ public class RatingServiceImpl implements RatingService{
     }
 
     @Override
-    public Rating findById(int id) {
+    public Rating findById(Integer id) {
         return ratingDAO.findById(id);
     }
 }

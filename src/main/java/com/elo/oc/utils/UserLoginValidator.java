@@ -1,7 +1,6 @@
 package com.elo.oc.utils;
 
 import com.elo.oc.entity.User;
-import com.elo.oc.entity.User;
 import com.elo.oc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -35,7 +34,7 @@ public class UserLoginValidator implements Validator {
 
             if (!formPassword.equals("")&& userService.findUserWithThisUsername(formUsername).isPresent()) {
                 System.out.println("Username exists in database");
-                User toBeChecked = userService.findByUsername(formUsername);
+                User toBeChecked = userService.findUserByUsername(formUsername);
                 System.out.println("TOBECHECKED "+toBeChecked);
                 String loginPassword = Encryption.encrypt(formPassword);
                 if (!loginPassword.equals(toBeChecked.getPassword())) {

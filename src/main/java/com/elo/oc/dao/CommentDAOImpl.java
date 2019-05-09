@@ -1,6 +1,6 @@
 package com.elo.oc.dao;
 
-import com.elo.oc.entity.Role;
+import com.elo.oc.entity.Comment;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -10,56 +10,49 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Repository
-public class RoleDAOImpl implements RoleDAO {
-
-
+public class CommentDAOImpl implements CommentDAO{
+    
     @Autowired
     private SessionFactory sessionFactory;
-
+    
     @Override
-    public List < Role > getRoles() {
+    public List<Comment> getComments() {
         Session session = sessionFactory.getCurrentSession();
         CriteriaBuilder cb = session.getCriteriaBuilder();
-        CriteriaQuery < Role > cq = cb.createQuery(Role.class);
-        Root < Role > root = cq.from(Role.class);
+        CriteriaQuery<Comment> cq = cb.createQuery(Comment.class);
+        Root<Comment> root = cq.from(Comment.class);
         cq.select(root);
         Query query = session.createQuery(cq);
         return query.getResultList();
     }
 
     @Override
-    public List < Role > getRolesPublic() {
-        Session session = sessionFactory.getCurrentSession();
-
-        Query q = session.createQuery("SELECT r FROM Role r  WHERE r.roleName != :roleName");
-        q.setParameter("roleName", "admin");
-
-        return q.getResultList();
-    }
-
-    @Override
-    public void saveRole(Role theRole){
+    public void saveComment(Comment comment) {
         Session currentSession = sessionFactory.getCurrentSession();
-        currentSession.saveOrUpdate(theRole);
+        Timestamp now = new Timestamp(System.currentTimeMillis());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        comment.setDate(dateFormat.format(now));
+        currentSession.saveOrUpdate(comment);
     }
 
     @Override
-    public void deleteRole(Integer id){
+    public void deleteComment(Integer id) {
         Session session = sessionFactory.getCurrentSession();
-        Role u = session.byId(Role.class).load(id);
-        session.delete(u);
+        Comment theComment = session.byId(Comment.class).load(id);
+        session.delete(theComment);
     }
-
 
     @Override
-    public Role findById(Integer id){
+    public Comment findById(Integer id) {
         Session currentSession = sessionFactory.getCurrentSession();
-        Role theRole = currentSession.get(Role.class, id);
-        return theRole;
+        Comment theComment = currentSession.get(Comment.class, id);
+        return theComment;
     }
-
 
 }

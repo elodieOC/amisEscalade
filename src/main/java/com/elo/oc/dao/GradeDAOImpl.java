@@ -25,7 +25,7 @@ public class GradeDAOImpl implements GradeDAO {
     }
 
     @Override
-    public void deleteGrade(int id) {
+    public void deleteGrade(Integer id) {
         Session currentSession = sessionFactory.getCurrentSession();
         currentSession.delete(id);
 
@@ -43,7 +43,7 @@ public class GradeDAOImpl implements GradeDAO {
     }
 
     @Override
-    public Grade findById(int id) {
+    public Grade findById(Integer id) {
         Session currentSession = sessionFactory.getCurrentSession();
         Grade theGrade = currentSession.get(Grade.class, id);
         return theGrade;

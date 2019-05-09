@@ -10,13 +10,13 @@ public interface SpotService {
     public List <Spot> getSpots();
 
     void saveSpot(Spot spot);
-    void deleteSpot(int id);
+    void deleteSpot(Integer id);
 
-    Spot findByNameSpot(String name);
-    Spot findByRegionSpot(String region);
-    Spot findByCitySpot(String city);
-    Spot findByIdSpot(int id);
+    Spot findSpotByName(String name);
+    Spot findSpotByCounty(String county);
+    Spot findSpotByCity(String city);
+    Spot findSpotById(Integer id);
     Optional<Spot> findSpotWithThisName(String name);
 
-    List<Spot> findByUserId(int id);
+    List<Spot> findSpotByUserId(Integer id);
 }

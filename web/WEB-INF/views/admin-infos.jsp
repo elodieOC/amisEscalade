@@ -47,7 +47,7 @@
                 </table>
             </div>
         </div>
-        <h2 class="text-center">Roles</h2>
+        <h2 class="text-center mt-5 mb-5">Roles</h2>
         <div class="panel panel-info">
             <div class="panel-body">
                 <table class="table table-striped table-bordered">

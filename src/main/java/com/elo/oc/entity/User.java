@@ -11,11 +11,11 @@ import java.util.List;
 @Entity
 @Table(name = "climb_user")
 @org.hibernate.annotations.NamedQueries({
-        @org.hibernate.annotations.NamedQuery(name = "findByUserName",
+        @org.hibernate.annotations.NamedQuery(name = "findUserByUserName",
                 query = "from User where username = :username"),
-        @org.hibernate.annotations.NamedQuery(name = "findByEmail",
+        @org.hibernate.annotations.NamedQuery(name = "findUserByEmail",
                 query = "from User where email = :email"),
-        @org.hibernate.annotations.NamedQuery(name = "findByRole",
+        @org.hibernate.annotations.NamedQuery(name = "findUserByRole",
                 query = "from User where userRole = :userRole")
 })
 
@@ -23,7 +23,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @Column(name = "password")
     @NotEmpty
@@ -54,6 +54,9 @@ public class User {
     @OneToMany (mappedBy = "user")//attribut User user de Spot
     private List<Spot> spots = new ArrayList<>();
 
+    @OneToMany (mappedBy = "user")//attribut User user de Comment
+    private List<Comment> comments = new ArrayList<>();
+
     public List<Spot> getSpots() {
         return spots;
     }
@@ -81,11 +84,11 @@ public class User {
         this.userRole = userRole;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -121,6 +124,13 @@ public class User {
         this.email = email;
     }
 
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 
     @Override
     public String toString() {

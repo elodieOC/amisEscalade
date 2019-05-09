@@ -7,11 +7,11 @@ import java.util.List;
 public interface RoleDAO {
 
     void saveRole(Role theRole);
-    void deleteRole(int id);
+    void deleteRole(Integer id);
 
     List < Role > getRoles();
     List < Role > getRolesPublic();
-    Role findById(int id);
+    Role findById(Integer id);
 
 
 

@@ -32,33 +32,33 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByIdWithSpots(int id) {
-       return   userDAO.findByIdWithSpots(id);
+    public User findUserByIdWithSpots(Integer id) {
+       return   userDAO.findUserByIdWithAllInfos(id);
     }
 
     @Override
-    public User findById(int theId) {
-        return userDAO.findById(theId);
+    public User findUserById(Integer theId) {
+        return userDAO.findUserById(theId);
     }
 
     @Override
-    public User findByEmail(String email) {
-        return userDAO.findByEmail(email);
+    public User findUserByEmail(String email) {
+        return userDAO.findUserByEmail(email);
     }
 
     @Override
-    public User findByUsername(String username) {
-        User u = userDAO.findByUsername(username);
+    public User findUserByUsername(String username) {
+        User u = userDAO.findUserByUsername(username);
         return u;
     }
 
     @Override
-    public List<User> findByRole(int id) {
-        return userDAO.findByRole(id);
+    public List<User> findUserByRole(Integer id) {
+        return userDAO.findUserByRole(id);
     }
 
     @Override
-    public void deleteUser(int theId) {
+    public void deleteUser(Integer theId) {
         userDAO.deleteUser(theId);
     }
 

@@ -49,7 +49,7 @@ public class AdminInfos {
         //if a user is connected:
         else {
             String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
-            User theAccessor = userService.findByEmail(sessionEmail);
+            User theAccessor = userService.findUserByEmail(sessionEmail);
             //if the user is not an admin: back to homepage
             if(theAccessor.getUserRole().getId()!=1){
                 System.out.println("User trying to access the admin infos is not an admin");
@@ -79,7 +79,7 @@ public class AdminInfos {
      * @return page to show depending on user on the page
      */
     @GetMapping("/user/{userId}/profile")
-    public String showUserProfile(@PathVariable("userId") int userId, Model theModel,
+    public String showUserProfile(@PathVariable("userId") Integer userId, Model theModel,
                                   HttpServletRequest request, HttpSession session) {
             session = request.getSession();
         //if no user is connected: back to login page
@@ -89,7 +89,7 @@ public class AdminInfos {
         //if a user is connected:
         else {
             String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
-            User theAccessor = userService.findByEmail(sessionEmail);
+            User theAccessor = userService.findUserByEmail(sessionEmail);
             //if the user is not an admin: back to homepage
             if(theAccessor.getUserRole().getId()!=1){
                 System.out.println("User trying to access the user profile is not an admin");
@@ -98,7 +98,7 @@ public class AdminInfos {
             }
             //fetches the User with its id, and adds attributes to Model to display on jsp
             else {
-                    User theUser = userService.findByIdWithSpots(userId);
+                    User theUser = userService.findUserByIdWithSpots(userId);
                     theModel.addAttribute("user", theUser);
                     theModel.addAttribute("spots", theUser.getSpots());
                     return "admin-user-profile";
@@ -117,7 +117,7 @@ public class AdminInfos {
      * @return page to show depending on user on the page
      */
     @GetMapping("/user/{userId}/updateForm")
-    public String showFormForUpdate(@PathVariable("userId") int userId, Model theModel,
+    public String showFormForUpdate(@PathVariable("userId") Integer userId, Model theModel,
                                     HttpServletRequest request, HttpSession session) {
         session = request.getSession();
 //if no user is connected: back to login page
@@ -126,7 +126,7 @@ public class AdminInfos {
         }  //if a user is connected:
          else {
             String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
-            User theUpdater = userService.findByEmail(sessionEmail);
+            User theUpdater = userService.findUserByEmail(sessionEmail);
             //if the user is not an admin: back to homepage
             if (theUpdater.getUserRole().getId() != 1) {
                 System.out.println("User trying to update is not an admin");
@@ -135,7 +135,7 @@ public class AdminInfos {
             }
             //fetches the User with its id, and adds attributes to Model to display on jsp
             else {
-                User theUser = userService.findById(userId);
+                User theUser = userService.findUserById(userId);
                 List<Role> roles = roleService.getRoles();
                 theModel.addAttribute("roles", roles);
                 theModel.addAttribute("user", theUser);
@@ -153,7 +153,7 @@ public class AdminInfos {
      * @return profile page if update valid, stays on updateForm if not
      */
     @PostMapping("/user/{userId}/saveUser")
-    public String updateUser(@PathVariable("userId") int userId, @Valid @ModelAttribute("user") User theUser, BindingResult theBindingResult) {
+    public String updateUser(@PathVariable("userId") Integer userId, @Valid @ModelAttribute("user") User theUser, BindingResult theBindingResult) {
 
         if (theBindingResult.hasErrors()) {
             //TODO la liste des roles ne se recharge pas lorsqu'il y a erreur
@@ -175,14 +175,14 @@ public class AdminInfos {
      * @return page to show depending on user on the page, admin/infos if deletion successful
      */
     @GetMapping("/user/{userId}/delete")
-    public String deleteCustomer(@PathVariable("userId") int userId, HttpServletRequest request, HttpSession session) {
+    public String deleteCustomer(@PathVariable("userId") Integer userId, HttpServletRequest request, HttpSession session) {
         session = request.getSession();
 
         if (session.getAttribute("loggedInUserEmail") == null) {
             return "redirect:/user/login";
         } else {
             String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
-            User theDeleter = userService.findByEmail(sessionEmail);
+            User theDeleter = userService.findUserByEmail(sessionEmail);
             if (theDeleter.getUserRole().getId() != 1) {
                 System.out.println("User trying to delete is not an admin");
                 System.out.println("User is: ["+theDeleter.getId()+ ", "+theDeleter.getUsername()+"]");

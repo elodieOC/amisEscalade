@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <title>Spot ${spot.name}</title>
@@ -66,14 +67,44 @@
                                 </td>
                             </c:if>
                         </tr>
-                    </table>
 
+                    </table>
+                </div></a>
+                <div class="container comment">
+                            <h3 class="mb-5">Commentaires</h3>
+                    <input type="button" value="Ajouter Commentaire"
+                           onclick="window.location.href='${spot.id}/commenter'; return false;"
+                           class="btn btn-primary" />
+                    <br/><br/>
+                    <c:choose>
+                        <c:when test="${ empty comments }" >
+                            <p>Il n'y a pas encore de commentaire sur ce spot</p>
+                        </c:when>
+                        <c:otherwise>
+                            <c:forEach var="comment" items="${comments}">
+                                <div class="row">
+                                    <div class="col-md-8 col-lg-12">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <strong><c:out value="${comment.user.username}"/></strong> <span class="text-muted" style="float: right">posté le <c:out value="${comment.date}"/></span>
+                                            </div>
+                                            <div class="panel-body">
+                                                <c:out value="${comment.content}"/>
+                                            </div><!-- /panel-body -->
+                                        </div><!-- /panel panel-default -->
+                                    </div><!-- /col-md-8 col-lg-12 -->
+                                </div><!-- /row comment-->
+                            </c:forEach>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
+
+
+
 </body>
 
 <c:import url="inc/footer.jsp"/>

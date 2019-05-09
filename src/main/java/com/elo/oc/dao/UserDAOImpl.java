@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
@@ -56,11 +55,11 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void deleteUser(int id){
+    public void deleteUser(Integer id){
         Session session = sessionFactory.getCurrentSession();
         User u = session.byId(User.class).load(id);
         for (Spot s: u.getSpots() ) {
-            s.setUser(findByUsername("deleted"));
+            s.setUser(findUserByUsername("deleted"));
             session.saveOrUpdate(s);
         }
         session.delete(u);
@@ -68,36 +67,37 @@ public class UserDAOImpl implements UserDAO {
 
 
     @Override
-    public User findByEmail(String email){
+    public User findUserByEmail(String email){
         Session currentSession = sessionFactory.getCurrentSession();
-        Query<User> query = currentSession.createNamedQuery("findByEmail", User.class);
+        Query<User> query = currentSession.createNamedQuery("findUserByEmail", User.class);
         query.setParameter("email", email);
         User result = query.getSingleResult();
         return result;
     }
 
     @Override
-    public User findByUsername(String username){
+    public User findUserByUsername(String username){
         Session currentSession = sessionFactory.getCurrentSession();
-        Query<User> query = currentSession.createNamedQuery("findByUserName", User.class);
+        Query<User> query = currentSession.createNamedQuery("findUserByUserName", User.class);
         query.setParameter("username", username);
         User result = query.getSingleResult();
         return result;
     }
 
     @Override
-    public User findById(int id){
+    public User findUserById(Integer id){
         Session currentSession = sessionFactory.getCurrentSession();
         User theUser = currentSession.get(User.class, id);
         return theUser;
     }
 
    @Override
-    public User findByIdWithSpots(int id){
+    public User findUserByIdWithAllInfos(Integer id){
         Session currentSession = sessionFactory.getCurrentSession();
 
        User theUser = currentSession.get(User.class, id);
         Hibernate.initialize(theUser.getSpots());
+        Hibernate.initialize(theUser.getComments());
         /*
         CriteriaBuilder cb = currentSession.getCriteriaBuilder();
         CriteriaQuery q = cb.createQuery(User.class);
@@ -112,9 +112,9 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public List<User> findByRole(int id) {
+    public List<User> findUserByRole(Integer id) {
         Session currentSession = sessionFactory.getCurrentSession();
-        Query<User> query = currentSession.createNamedQuery("findByRole", User.class);
+        Query<User> query = currentSession.createNamedQuery("findUserByRole", User.class);
         query.setParameter("role", id);
         List<User> result = query.getResultList();
         return result;

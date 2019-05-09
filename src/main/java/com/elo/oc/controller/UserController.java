@@ -73,7 +73,7 @@ public class UserController {
             return "user-login";
         }
         else{
-            User userToLogIn = userService.findByUsername(theUser.getUsername());
+            User userToLogIn = userService.findUserByUsername(theUser.getUsername());
             session.setAttribute("loggedInUserEmail", userToLogIn.getEmail());
             session.setAttribute("loggedInUserId", userToLogIn.getId());
             session.setAttribute("loggedInUserRole", userToLogIn.getUserRole().getId());
@@ -89,8 +89,8 @@ public class UserController {
             return "redirect:/user/login";
         } else {
             String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
-            int userId = userService.findByEmail(sessionEmail).getId();
-                theUser = userService.findByIdWithSpots(userId);
+            Integer userId = userService.findUserByEmail(sessionEmail).getId();
+                theUser = userService.findUserByIdWithSpots(userId);
                 theModel.addAttribute("user", theUser);
                 theModel.addAttribute("spots", theUser.getSpots());
                 return "user-profile";
@@ -104,14 +104,16 @@ public class UserController {
         return "redirect:/home";
     }
     @GetMapping("/updateForm")
-    public String showFormForUpdate(@RequestParam("id") int theId, Model theModel) {
-        User theUser = userService.findById(theId);
+    //TODO faire une page et form pour updater user
+    public String showFormForUpdate(@RequestParam("id") Integer theId, Model theModel) {
+        User theUser = userService.findUserById(theId);
         theModel.addAttribute("user", theUser);
         return "user-register";
     }
 
+
     @GetMapping("/delete")
-    public String deleteCustomer(@RequestParam("id") int theId) {
+    public String deleteCustomer(@RequestParam("id") Integer theId) {
         userService.deleteUser(theId);
         return "redirect:/home";
     }

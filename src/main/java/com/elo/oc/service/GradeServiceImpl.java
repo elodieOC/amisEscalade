@@ -21,7 +21,7 @@ public class GradeServiceImpl implements GradeService {
     }
 
     @Override
-    public void deleteGrade(int id) {
+    public void deleteGrade(Integer id) {
         gradeDAO.deleteGrade(id);
     }
 
@@ -31,7 +31,7 @@ public class GradeServiceImpl implements GradeService {
     }
 
     @Override
-    public Grade findById(int id) {
+    public Grade findById(Integer id) {
         return gradeDAO.findById(id);
     }
 }

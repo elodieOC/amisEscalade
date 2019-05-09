@@ -25,7 +25,7 @@ public class RatingDAOImpl implements RatingDAO {
     }
 
     @Override
-    public void deleteRating(int id) {
+    public void deleteRating(Integer id) {
         Session currentSession = sessionFactory.getCurrentSession();
         currentSession.delete(id);
 
@@ -43,7 +43,7 @@ public class RatingDAOImpl implements RatingDAO {
     }
 
     @Override
-    public Rating findById(int id) {
+    public Rating findById(Integer id) {
         Session currentSession = sessionFactory.getCurrentSession();
         Rating theRating = currentSession.get(Rating.class, id);
         Hibernate.initialize(theRating.getGrades());

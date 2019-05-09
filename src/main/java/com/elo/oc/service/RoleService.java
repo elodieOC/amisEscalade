@@ -8,11 +8,11 @@ import java.util.Optional;
 public interface RoleService {
 
     void saveRole(Role theRole);
-    void deleteRole(int id);
+    void deleteRole(Integer id);
     List < Role > getRolesPublic();
 
     List < Role > getRoles();
-    Role findById(int id);
+    Role findById(Integer id);
     Optional<Role> findRole(String name);
 
 

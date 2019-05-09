@@ -7,10 +7,10 @@ import java.util.List;
 public interface RatingDAO {
 
     void saveRating(Rating theRating);
-    void deleteRating(int id);
+    void deleteRating(Integer id);
 
     List < Rating > getRatings();
-    Rating findById(int id);
+    Rating findById(Integer id);
 
 
 

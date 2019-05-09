@@ -51,7 +51,7 @@
                             <c:param name="spotId" value="${spot.id}" />
                         </c:url>
                         <!-- construct an "view" link with spot id -->
-                        <c:url var="viewLink" value="/spots/spot/${spot.id}" />
+                        <c:url var="viewLink" value="/spots/${spot.id}" />
 
                         <tr>
                             <!-- display the view link -->

@@ -10,7 +10,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Mon Profil</title>
     <c:import url="inc/headContent.jsp"/>
 </head>
 <body class="d-flex flex-column h-100">
