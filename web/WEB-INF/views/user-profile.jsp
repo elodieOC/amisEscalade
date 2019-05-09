@@ -18,7 +18,7 @@
 <div class="wrapper flex-shrink-0">
 <div class="container d-flex h-100 align-items-center">
     <div class="col-md-offset-2 col-md-7">
-        <h2 class="text-center">Profil</h2>
+        <h2 class="text-center mb-5">Profil</h2>
         <div class="panel panel-info">
             <div class="panel-body">
                 <table class="table table-striped table-bordered">

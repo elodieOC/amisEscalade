@@ -16,7 +16,7 @@
 <c:import url="inc/choose-navbar.jsp" />
 <div class="container">
     <div class="col-md-offset-2 col-md-7">
-        <h2 class="text-center">Utilisateurs</h2>
+        <h2 class="text-center mb-5">Utilisateurs</h2>
         <div class="panel panel-info">
             <div class="panel-body">
                 <table class="table table-striped table-bordered">
@@ -31,27 +31,16 @@
 
                     <c:forEach var="tempUser" items="${users}">
 
-                    <!-- construct an "update" link with user id -->
-                    <c:url var="updateLink" value="/admin/updateForm">
-                        <c:param name="id" value="${tempUser.id}" />
-                    </c:url>
-
-                    <!-- construct an "delete" link with user id -->
-                    <c:url var="deleteLink" value="/admin/delete">
-                        <c:param name="id" value="${tempUser.id}" />
-                    </c:url>
+                    <!-- construct an "view" link with user id -->
+                    <c:url var="viewLink" value="/admin/user/${tempUser.id}/profile" />
 
                         <tr>
                             <td>${tempUser.username}</td>
                             <td>${tempUser.email}</td>
                             <td>${tempUser.userRole.roleName}</td>
                             <td>
-                                <!-- display the update link -->
-                                  <a href="${updateLink}">Update</a>
-
-                                <!-- display the delete link -->
-                                | <a href="${deleteLink}"
-                                     onclick="if (!(confirm('Etes vous sûr de vouloir supprimer cet utilisateur?'))) return false">Delete</a>
+                                <!-- display the view link -->
+                                  <a href="${viewLink}">View</a>
                             </td>
                         </tr>
                     </c:forEach>

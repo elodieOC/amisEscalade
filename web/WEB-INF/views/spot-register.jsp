@@ -19,7 +19,7 @@
 <div class="wrapper flex-shrink-0">
 <div class="container d-flex h-100 align-items-center">
     <div class="col-md-offset-2 col-md-7">
-        <h2 class="text-center">Ajouter Spot</h2>
+        <h2 class="text-center mb-5">Ajouter Spot</h2>
         <div class="panel panel-info">
             <div class="panel-body">
                 <form:form action="saveSpot" cssClass="form-horizontal"  method="post" modelAttribute="spot">

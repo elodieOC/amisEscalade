@@ -10,7 +10,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Profil de ${user.username}</title>
     <c:import url="inc/headContent.jsp"/>
 </head>
 <body class="d-flex flex-column h-100">
@@ -18,29 +18,27 @@
 <div class="wrapper flex-shrink-0">
 <div class="container d-flex h-100 align-items-center">
     <div class="col-md-offset-2 col-md-7">
-        <h2 class="text-center">Profil de l'utilisateur</h2>
+        <h2 class="text-center mb-5">Profil de l'utilisateur</h2>
         <div class="panel panel-info">
             <div class="panel-body">
                 <table class="table table-striped table-bordered">
                     <tr>
                         <th>Pseudo</th>
                         <th>Email</th>
+                        <th>Role</th>
                         <th>Action</th>
                     </tr>
 
                     <!-- construct an "update" link with user id -->
-                    <c:url var="updateLink" value="/user/updateForm">
-                        <c:param name="id" value="${user.id}" />
-                    </c:url>
+                    <c:url var="updateLink" value="/admin/user/${user.id}/updateForm" />
 
                     <!-- construct an "delete" link with user id -->
-                    <c:url var="deleteLink" value="/user/delete">
-                        <c:param name="id" value="${user.id}" />
-                    </c:url>
+                    <c:url var="deleteLink" value="/admin/user/${user.id}/delete" />
 
                     <tr>
                         <td>${user.username}</td>
                         <td>${user.email}</td>
+                        <td>${user.userRole.roleName}</td>
 
 
                         <td>
