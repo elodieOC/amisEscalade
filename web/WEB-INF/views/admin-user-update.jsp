@@ -16,6 +16,7 @@
 
 </head>
 <body class="d-flex flex-column h-100">
+<c:import url="inc/choose-navbar.jsp" />
 <div class="wrapper flex-shrink-0">
     <div class="container align-items-center">
         <div class="col-lg-6 mx-auto">

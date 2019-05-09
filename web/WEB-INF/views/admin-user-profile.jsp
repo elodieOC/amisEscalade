@@ -14,11 +14,11 @@
     <c:import url="inc/headContent.jsp"/>
 </head>
 <body class="d-flex flex-column h-100">
-<c:import url="inc/navbar_connected.jsp" />
+<c:import url="inc/choose-navbar.jsp" />
 <div class="wrapper flex-shrink-0">
 <div class="container d-flex h-100 align-items-center">
     <div class="col-md-offset-2 col-md-7">
-        <h2 class="text-center">Profil</h2>
+        <h2 class="text-center">Profil de l'utilisateur</h2>
         <div class="panel panel-info">
             <div class="panel-body">
                 <table class="table table-striped table-bordered">
@@ -58,7 +58,7 @@
                         <th>Spots</th>
                     </tr>
                    <c:if test="${ empty spots }">
-                       <tr><td>Vous n'avez pas encore ajouté de spot</td></tr>
+                       <tr><td>Cet utilisateur n'a pas encore ajouté de spot</td></tr>
                    </c:if>
                    <c:if test="${ !empty spots }">
                     <c:forEach var="spot" items="${spots}" >

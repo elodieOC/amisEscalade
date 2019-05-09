@@ -2,7 +2,6 @@ package com.elo.oc.controller;
 
 import com.elo.oc.entity.Role;
 import com.elo.oc.entity.User;
-import com.elo.oc.entity.User;
 import com.elo.oc.service.RoleService;
 import com.elo.oc.service.UserService;
 import com.elo.oc.utils.UserLoginValidator;
@@ -52,7 +51,7 @@ public class UserController {
         else{
             userService.saveUser(theUser);
             session.setAttribute("loggedInUserEmail", theUser.getEmail());
-            return "redirect:profile/"+theUser.getId();
+            return "redirect:profile";
         }
     }
 
@@ -76,29 +75,27 @@ public class UserController {
         else{
             User userToLogIn = userService.findByUsername(theUser.getUsername());
             session.setAttribute("loggedInUserEmail", userToLogIn.getEmail());
-            return "redirect:profile/"+userToLogIn.getId();
+            session.setAttribute("loggedinUserRole", userToLogIn.getUserRole().getId());
+            return "redirect:profile";
         }
     }
 
-    @GetMapping("profile/{userId}")
-    public String showUserProfile(@PathVariable("userId") int userId, User theUser, Model theModel, HttpServletRequest request) {
+    @GetMapping("/profile")
+    public String showUserProfile(User theUser, Model theModel, HttpServletRequest request) {
         /* Récupération de la session depuis la requête */
         HttpSession session = request.getSession();
         if (session.getAttribute("loggedInUserEmail") == null) {
             return "redirect:/user/login";
         } else {
             String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
-            if(!sessionEmail.equals(userService.findById(userId).getEmail())){
-                return "redirect:/user/login";
-            }
-            else {
+            int userId = userService.findByEmail(sessionEmail).getId();
                 theUser = userService.findByIdWithSpots(userId);
                 theModel.addAttribute("user", theUser);
                 theModel.addAttribute("spots", theUser.getSpots());
-                return "profile";
+                return "user-profile";
             }
         }
-    }
+
 
     @RequestMapping(value = "/logout")
     public String logout(HttpSession session) {

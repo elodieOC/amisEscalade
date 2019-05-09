@@ -20,9 +20,6 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item ml-4">
-                    <a class="nav-link js-scroll-trigger" href="<c:url value="/admin/infos" />" >Infos Admin</a>
-                </li>
-                <li class="nav-item ml-4">
                     <a class="nav-link js-scroll-trigger" href="<c:url value="/about" />" >A Propos</a>
                 </li>
                 <li class="nav-item ml-4"><a class="nav-link" href="<c:url value="#" />">Les Topos</a></li>
@@ -30,7 +27,7 @@
                 <li class="nav-item ml-4">
                     <a class="nav-link js-scroll-trigger" href="<c:url value="/contact" />">Contact</a>
                 </li>
-                <li class="nav-item ml-4"><a class="nav-link js-scroll-trigger" href="<c:url value="/user/profile/" />"><span class="glyphicon glyphicon-user"></span> Mon profil</a></li>
+                <li class="nav-item ml-4"><a class="nav-link js-scroll-trigger" href="<c:url value="/user/profile" />"><span class="glyphicon glyphicon-user"></span> Mon profil</a></li>
                 <li class="nav-item ml-4 mt-2">
                     <form class="form-inline" action="/action_page.php">
                         <input class="form-control mr-sm-2" type="text" placeholder="Recherche">

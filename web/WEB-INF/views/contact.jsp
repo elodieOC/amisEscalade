@@ -13,14 +13,8 @@
     <c:import url="inc/headContent.jsp"/>
 </head>
 <body class="d-flex flex-column h-100">
-<c:choose>
-    <c:when test="${ empty sessionScope }">
-        <c:import url="inc/navbar.jsp" />
-    </c:when>
-    <c:otherwise>
-        <c:import url="inc/navbar_connected.jsp" />
-    </c:otherwise>
-</c:choose>s="wrapper flex-shrink-0">
+<c:import url="inc/choose-navbar.jsp" />
+<div class="wrapper flex-shrink-0">
 <section id="signup" class="signup-section">
     <div class="container align-items-center">
         <div class="row">

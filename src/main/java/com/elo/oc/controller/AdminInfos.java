@@ -37,7 +37,7 @@ public class AdminInfos {
             String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
             User adminUser = userService.findByEmail(sessionEmail);
             if(adminUser.getUserRole().getId()!=1){
-                return "redirect:/user/profile";
+                return "redirect:/user/profile/"+adminUser.getId();
             }
             else {
                 List<User> theUsers = userService.getUsers();
@@ -69,6 +69,26 @@ public class AdminInfos {
             }
         }
     }
+
+    @GetMapping("/user/{userId}/profile")
+    public String showUserProfile(@RequestParam("userId") int userId, User theUser, Model theModel, HttpServletRequest request) {
+            /* Récupération de la session depuis la requête */
+            HttpSession session = request.getSession();
+        if (session.getAttribute("loggedInUserEmail") == null) {
+            return "redirect:/user/login";
+        } else {
+            String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
+            User adminUser = userService.findByEmail(sessionEmail);
+            if (adminUser.getUserRole().getId() != 1) {
+                return "redirect:/user/profile";
+            } else {
+                    theUser = userService.findByIdWithSpots(userId);
+                    theModel.addAttribute("user", theUser);
+                    theModel.addAttribute("spots", theUser.getSpots());
+                    return "admin-user-profile";
+                }
+            }
+        }
 
     @PostMapping("/saveUser")
     public String updateUser(@Valid @ModelAttribute("user") User theUser, BindingResult theBindingResult) {
