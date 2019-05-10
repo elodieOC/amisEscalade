@@ -10,7 +10,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
-    <title>Ajouter Spot</title>
+    <title>Editer Spot</title>
     <c:import url="inc/headContent.jsp"/>
 
 </head>
@@ -20,8 +20,8 @@
     <div class="container align-items-center">
         <div class="col-lg-6 mx-auto">
             <div class="card bg-light p-4 ">
-                <h2 class="mt-3 mb-3 text-center">Ajouter Spot</h2>
-                <form:form action="saveSpot" cssClass="form-horizontal"  method="post" modelAttribute="spot">
+                <h2 class="mt-3 mb-3 text-center">Editer Spot</h2>
+                <form:form action="updateSpot" cssClass="form-horizontal"  method="post" modelAttribute="spot">
 
                     <!-- need to associate this data with spot id -->
                     <form:hidden path="id" />
@@ -29,7 +29,7 @@
                     <form:errors path="name" cssClass="error"/>
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"> Nom</span>
+                            <span class="input-group-text">Nom </span>
                         </div>
                         <form:input path="name" cssClass="form-control p-4" placeholder="Nom du Spot" type="text" />
                     </div> <!-- form-group// -->
@@ -37,7 +37,7 @@
                     <form:errors path="city" cssClass="error"/>
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"> Ville </span>
+                            <span class="input-group-text">Ville</span>
                         </div>
                         <form:input path="city" cssClass="form-control p-4" placeholder="Ville du Spot" type="text" />
                     </div> <!-- form-group// -->
@@ -45,7 +45,7 @@
                     <form:errors path="county" cssClass="error"/>
                     <div class="form-group input-group mb-5">
                         <div class="input-group-prepend">
-                            <span class="input-group-text">Région </span>
+                            <span class="input-group-text"> Région</span>
                         </div>
                         <form:input path="county" cssClass="form-control p-4" placeholder="Région du Spot" type="text" />
                     </div> <!-- form-group// -->

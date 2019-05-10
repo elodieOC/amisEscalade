@@ -10,6 +10,7 @@ public interface SpotService {
     public List <Spot> getSpots();
 
     void saveSpot(Spot spot);
+    void updateSpot(Spot spot);
     void deleteSpot(Integer id);
 
     Spot findSpotByName(String name);

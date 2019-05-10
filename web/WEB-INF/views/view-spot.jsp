@@ -21,7 +21,6 @@
         <div class="col-md-offset-1 col-md-10">
             <h2 class="mb-5">Spot: ${spot.name}</h2>
             <hr />
-
             <br/><br/>
             <div class="panel panel-info">
                 <div class="panel-body">
@@ -39,13 +38,9 @@
                         </tr>
 
                         <!-- construct an "update" link with spot id -->
-                        <c:url var="updateLink" value="/spots/updateForm">
-                            <c:param name="spotId" value="${spot.id}" />
-                        </c:url>
+                        <c:url var="updateLink" value="/spots/${spot.id}/updateFormSpot" />
                         <!-- construct an "delete" link with spot id -->
-                        <c:url var="deleteLink" value="/spots/delete">
-                            <c:param name="spotId" value="${spot.id}" />
-                        </c:url>
+                        <c:url var="deleteLink" value="/spots/${spot.id}/delete" />
 
                         <tr>
                             <td>${spot.name}</td>
@@ -61,51 +56,70 @@
                             </c:choose>
                             <c:if test="${userRole eq '1' || userId eq spot.user.id}">
                                 <td>
-                                    <!-- display the update link --> <a href="${updateLink}">Update</a>
-                                    | <a href="${deleteLink}"
-                                         onclick="if (!(confirm('Are you sure you want to delete this spot?'))) return false">Delete</a>
+                                    <!-- display the update link -->
+                                    <a href="${updateLink}">Editer</a>
+                                    |
+                                    <!-- display the delete link -->
+                                    <a href="${deleteLink}"
+                                       onclick="if (!(confirm('Are you sure you want to delete this spot?'))) return false">Supprimer</a>
                                 </td>
                             </c:if>
                         </tr>
 
                     </table>
-                </div></a>
-                <div class="container comment">
-                            <h3 class="mb-5">Commentaires</h3>
-                    <input type="button" value="Ajouter Commentaire"
-                           onclick="window.location.href='${spot.id}/commenter'; return false;"
-                           class="btn btn-primary" />
-                    <br/><br/>
-                    <c:choose>
-                        <c:when test="${ empty comments }" >
-                            <p>Il n'y a pas encore de commentaire sur ce spot</p>
-                        </c:when>
-                        <c:otherwise>
-                            <c:forEach var="comment" items="${comments}">
-                                <div class="row">
-                                    <div class="col-md-8 col-lg-12">
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <strong><c:out value="${comment.user.username}"/></strong> <span class="text-muted" style="float: right">posté le <c:out value="${comment.date}"/></span>
-                                            </div>
-                                            <div class="panel-body">
-                                                <c:out value="${comment.content}"/>
-                                            </div><!-- /panel-body -->
-                                        </div><!-- /panel panel-default -->
-                                    </div><!-- /col-md-8 col-lg-12 -->
-                                </div><!-- /row comment-->
-                            </c:forEach>
-                        </c:otherwise>
-                    </c:choose>
                 </div>
+            </div>
+            <div class="container comment">
+                <h2 class="mt-5 d-inline-block">Commentaires</h2>
+                <input id="add-comment" type="button" value="Ajouter Commentaire"
+                       onclick="window.location.href='${spot.id}/commenter'; return false;"
+                       class="btn btn-primary" />
+                <hr />
+                <br/>
+                <c:choose>
+                    <c:when test="${ empty comments }" >
+                        <p>Il n'y a pas encore de commentaire sur ce spot</p>
+                    </c:when>
+                    <c:otherwise>
+                        <c:forEach var="comment" items="${comments}">
+                            <div class="row">
+                                <div class="col-md-8 col-lg-12">
+                                    <div class="panel panel-default comment">
+                                        <div class="panel-heading py-2 pb-3">
+                                            <strong>
+                                                <c:choose>
+                                                    <c:when test="${empty spot.user.username}">
+                                                        utilisateur supprimé
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <c:out value="${comment.user.username}"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </strong>
+                                            <span class="text-muted ml-2">posté le <c:out value="${comment.date}"/></span>
+                                            <c:if test="${userRole eq '1' ||userRole eq '2' || userId eq spot.user.id}">
+                                                <span class="comment-btn"><input type="button" value="Editer"
+                                                                                 onclick="window.location.href='${spot.id}/${comment.id}/updateFormComment'; return false;"
+                                                                                 class="btn btn-primary" />
+                                                <input type="button" value="Supprimer"
+                                                       onclick="window.location.href='deleteComment?spotId=${spot.id}&commentId=${comment.id}'; return false;"
+                                                       class="btn btn-primary" />
+                                                </span>
+                                            </c:if>
+                                        </div>
+                                        <div class="panel-body py-2">
+                                            <p style="white-space: pre-line"> <c:out value="${comment.content}"/></p>
+                                        </div><!-- /panel-body -->
+                                    </div><!-- /panel panel-default -->
+                                </div><!-- /col-md-8 col-lg-12 -->
+                            </div><!-- /row comment-->
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
             </div>
         </div>
     </div>
 </div>
-
-
-
 </body>
-
 <c:import url="inc/footer.jsp"/>
 </html>

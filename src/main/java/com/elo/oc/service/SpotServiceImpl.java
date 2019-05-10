@@ -28,6 +28,11 @@ public class SpotServiceImpl implements SpotService {
     }
 
     @Override
+    public void updateSpot(Spot spot) {
+        spotDAO.updateSpot(spot);
+    }
+
+    @Override
     public void deleteSpot(Integer id) {
         spotDAO.deleteSpot(id);
     }

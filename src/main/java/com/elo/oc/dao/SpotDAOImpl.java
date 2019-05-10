@@ -1,6 +1,8 @@
 package com.elo.oc.dao;
 
+import com.elo.oc.entity.Comment;
 import com.elo.oc.entity.Spot;
+import com.elo.oc.entity.User;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -37,9 +39,18 @@ public class SpotDAOImpl implements SpotDAO {
     }
 
     @Override
+    public void updateSpot(Spot spot) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        currentSession.update(spot);
+    }
+
+    @Override
     public void deleteSpot(Integer id) {
         Session session = sessionFactory.getCurrentSession();
         Spot theSpot = session.byId(Spot.class).load(id);
+        for (Comment c: theSpot.getComments() ) {
+            session.remove(c);
+        }
         session.delete(theSpot);
     }
 

@@ -42,16 +42,12 @@
 
                     <!-- loop over and print our spots -->
                     <c:forEach var="spot" items="${spots}">
-                        <!-- construct an "update" link with spot id -->
-                        <c:url var="updateLink" value="/spots/updateForm">
-                            <c:param name="spotId" value="${spot.id}" />
-                        </c:url>
-                        <!-- construct an "delete" link with spot id -->
-                        <c:url var="deleteLink" value="/spots/delete">
-                            <c:param name="spotId" value="${spot.id}" />
-                        </c:url>
                         <!-- construct an "view" link with spot id -->
                         <c:url var="viewLink" value="/spots/${spot.id}" />
+                        <!-- construct an "update" link with spot id -->
+                        <c:url var="updateLink" value="/spots/${spot.id}/updateFormSpot" />
+                        <!-- construct an "delete" link with spot id -->
+                        <c:url var="deleteLink" value="/spots/${spot.id}/delete" />
 
                         <tr>
                             <!-- display the view link -->

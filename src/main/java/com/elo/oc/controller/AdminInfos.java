@@ -1,8 +1,10 @@
 package com.elo.oc.controller;
 
 import com.elo.oc.entity.Role;
+import com.elo.oc.entity.Spot;
 import com.elo.oc.entity.User;
 import com.elo.oc.service.RoleService;
+import com.elo.oc.service.SpotService;
 import com.elo.oc.service.UserService;
 import com.elo.oc.utils.UserRegistrationValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,8 @@ public class AdminInfos {
     private RoleService roleService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private SpotService spotService;
     @Autowired
     private UserRegistrationValidator userRegistrationValidator;
 
@@ -60,9 +64,11 @@ public class AdminInfos {
                 //fetches the lists in Services
                 List<User> theUsers = userService.getUsers();
                 List<Role> theRoles = roleService.getRoles();
+                List<Spot> theSpots = spotService.getSpots();
                 //adding attributes to Model to display on jsp
                 theModel.addAttribute("roles", theRoles);
                 theModel.addAttribute("users", theUsers);
+                theModel.addAttribute("spots", theSpots);
                 return "admin-infos";
             }
         }

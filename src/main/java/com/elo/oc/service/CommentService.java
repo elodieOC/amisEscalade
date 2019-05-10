@@ -9,7 +9,8 @@ public interface  CommentService {
     List <Comment> getComments();
 
     void saveComment(Comment comment);
+    void updateComment(Comment comment);
     void deleteComment(Integer id);
 
-    Comment findById(Integer id);
+    Comment findCommentById(Integer id);
 }

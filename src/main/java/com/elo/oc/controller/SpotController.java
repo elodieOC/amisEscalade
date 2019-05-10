@@ -122,7 +122,7 @@ public class SpotController {
 
     @PostMapping("{spotId}/saveComment")
     public String saveComment(@PathVariable("spotId") Integer spotId, @Valid @ModelAttribute("comment") Comment theComment, BindingResult theBindingResult,
-                           HttpServletRequest request, HttpSession session) {
+                              HttpServletRequest request, HttpSession session) {
         session = request.getSession();
 
         if(session.getAttribute("loggedInUserEmail") == null){
@@ -146,8 +146,29 @@ public class SpotController {
         }
     }
 
-    @GetMapping("/updateForm")
-    public String showFormForUpdate(@RequestParam("spotId") Integer theId, Model theModel,
+    @GetMapping("/deleteComment")
+    public String deleteCommentFromSpot(@RequestParam("spotId") Integer theSpotId,@RequestParam("commentId") Integer theCommentId,
+                                        HttpServletRequest request, HttpSession session) {
+        session = request.getSession();
+        if(session.getAttribute("loggedInUserEmail") == null){
+            System.out.println("user not logged in, redirect to login");
+            return "redirect:/user/login";
+        }
+        Spot theSpot = spotService.findSpotById(theSpotId);
+        Comment theComment = commentService.findCommentById(theCommentId);
+        String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
+        User theDeleter = userService.findUserByEmail(sessionEmail);
+        if(theDeleter.getUserRole().getId()!= 1 && theDeleter.getUserRole().getId()!= 2 && theDeleter.getId() != theComment.getUser().getId()){
+            System.out.println("User trying to delete comment is neither the owner of the comment, an admin, or a member of the association");
+            System.out.println("User is: ["+theDeleter.getId()+ ", "+theDeleter.getUsername()+"]");
+            return "redirect:/home";
+        }
+        commentService.deleteComment(theCommentId);
+        return "redirect:/spots/"+theSpotId;
+    }
+
+    @GetMapping("{spotId}/updateFormSpot")
+    public String formForSpotUpdate(@PathVariable("spotId") Integer theId, Model theModel,
                                     HttpServletRequest request, HttpSession session) {
         session = request.getSession();
         if(session.getAttribute("loggedInUserEmail") == null){
@@ -158,18 +179,73 @@ public class SpotController {
             Spot theSpot = spotService.findSpotById(theId);
             String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
             User theUpdater = userService.findUserByEmail(sessionEmail);
-            if(theUpdater.getUserRole().getId()!= 1 || theUpdater.getId() != theSpot.getUser().getId()){
+            if(theUpdater.getUserRole().getId()!= 1 && theUpdater.getId() != theSpot.getUser().getId()){
                 System.out.println("User trying to update is neither the owner of the spot, or an admin");
                 System.out.println("User is: ["+theUpdater.getId()+ ", "+theUpdater.getUsername()+"]");
                 return "redirect:/home";
             }
             theModel.addAttribute("spot", theSpot);
-            return "spot-register";
+            return "spot-update";
         }
     }
 
-    @GetMapping("/delete")
-    public String deleteCustomer(@RequestParam("spotId") Integer theId, HttpServletRequest request, HttpSession session) {
+    @PostMapping("{spotId}/updateSpot")
+    public String updateSpot(@PathVariable("spotId") Integer spotId, @Valid @ModelAttribute("spot") Spot theSpot, BindingResult theBindingResult) {
+        if (theBindingResult.hasErrors()) {
+            System.out.println("form has errors");
+            return "spot-update";
+        } else {
+            System.out.println("form is validated");
+            Spot spotToUpdate = spotService.findSpotById(spotId);
+            User spotUser =  userService.findUserById(spotToUpdate.getUser().getId());
+            theSpot.setUser(spotUser);
+            spotService.updateSpot(theSpot);
+            return "redirect:/spots/"+spotId;
+        }
+    }
+
+
+    @GetMapping("{spotId}/{commentId}/updateFormComment")
+    public String formForCommentUpdate(@PathVariable("spotId") Integer theSpotId,@PathVariable("commentId") Integer theCommentId, Model theModel,
+                                       HttpServletRequest request, HttpSession session) {
+        session = request.getSession();
+        if(session.getAttribute("loggedInUserEmail") == null){
+            System.out.println("user not logged in, redirect to login");
+            return "redirect:/user/login";
+        }
+        else {
+            Spot theSpot = spotService.findSpotById(theSpotId);
+            Comment theComment = commentService.findCommentById(theCommentId);
+            String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
+            User theUpdater = userService.findUserByEmail(sessionEmail);
+            if(theUpdater.getUserRole().getId()!= 1 && theUpdater.getUserRole().getId()!= 2 && theUpdater.getId() != theSpot.getUser().getId()){
+                System.out.println("User trying to update the comment is neither the owner of the spot, an admin or a member of the association");
+                System.out.println("User is: ["+theUpdater.getId()+ ", "+theUpdater.getUsername()+"]");
+                return "redirect:/home";
+            }
+            theModel.addAttribute("comment", theComment);
+            return "comment-edit";
+        }
+    }
+
+    @PostMapping("{spotId}/{commentId}/updateComment")
+    public String updateComment(@PathVariable("spotId") Integer spotId,  @PathVariable("commentId") Integer theCommentId,@Valid @ModelAttribute("comment") Comment theComment, BindingResult theBindingResult) {
+        if (theBindingResult.hasErrors()) {
+            System.out.println("form has errors");
+            return "comment-edit";
+        } else {
+            System.out.println("form is validated");
+            Comment theCommentToUpdate = commentService.findCommentById(theCommentId);
+            theComment.setSpot(theCommentToUpdate.getSpot());
+            theComment.setDate(theCommentToUpdate.getDate());
+            theComment.setUser(theCommentToUpdate.getUser());
+            commentService.updateComment(theComment);
+            return "redirect:/spots/"+spotId;
+        }
+    }
+
+    @GetMapping("{spotId}/delete")
+    public String deleteCustomer(@PathVariable("spotId") Integer theId, HttpServletRequest request, HttpSession session) {
         session = request.getSession();
         if(session.getAttribute("loggedInUserEmail") == null){
             System.out.println("user not logged in, redirect to login");
@@ -178,12 +254,12 @@ public class SpotController {
         Spot theSpot = spotService.findSpotById(theId);
         String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
         User theDeleter = userService.findUserByEmail(sessionEmail);
-        if(theDeleter.getUserRole().getId()!= 1 || theDeleter.getId() != theSpot.getUser().getId()){
+        if(theDeleter.getUserRole().getId()!= 1 && theDeleter.getId() != theSpot.getUser().getId()){
             System.out.println("User trying to delete is neither the owner of the spot, or an admin");
             System.out.println("User is: ["+theDeleter.getId()+ ", "+theDeleter.getUsername()+"]");
             return "redirect:/home";
         }
         spotService.deleteSpot(theId);
-        return "redirect:list";
+        return "redirect:/spots/list";
     }
 }

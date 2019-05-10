@@ -1,18 +1,18 @@
 
-.panel {
+.comment .panel {
 	position:relative;
 }
-.panel-heading{
+.comment .panel-heading{
 	background-color: #9e9e9e !important;
 	color: black;
 	padding: 0.5rem;
 }
-.panel-body{
-	background-color: #dee2e6 !important;
+.comment .panel-body{
+	background-color: #c3c6ca !important;
 	color: black;
 	padding: 0.5rem;
 }
-.panel>.panel-heading:after,.panel>.panel-heading:before{
+.comment .panel>.panel-heading:after,.panel>.panel-heading:before{
 	position:absolute;
 	top:11px;left:-16px;
 	right:100%;
@@ -27,4 +27,10 @@
 
 .comment{
 	margin: 2rem auto;
+}
+#add-comment{
+	margin-left: 10rem;
+}
+.comment-btn{
+	float: right;
 }

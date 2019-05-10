@@ -42,6 +42,12 @@ public class CommentDAOImpl implements CommentDAO{
     }
 
     @Override
+    public void updateComment(Comment comment) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        currentSession.update(comment);
+    }
+
+    @Override
     public void deleteComment(Integer id) {
         Session session = sessionFactory.getCurrentSession();
         Comment theComment = session.byId(Comment.class).load(id);
@@ -49,7 +55,7 @@ public class CommentDAOImpl implements CommentDAO{
     }
 
     @Override
-    public Comment findById(Integer id) {
+    public Comment findCommentById(Integer id) {
         Session currentSession = sessionFactory.getCurrentSession();
         Comment theComment = currentSession.get(Comment.class, id);
         return theComment;

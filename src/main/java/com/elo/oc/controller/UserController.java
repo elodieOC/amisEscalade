@@ -103,6 +103,7 @@ public class UserController {
         session.invalidate();
         return "redirect:/home";
     }
+
     @GetMapping("/updateForm")
     //TODO faire une page et form pour updater user
     public String showFormForUpdate(@RequestParam("id") Integer theId, Model theModel) {

@@ -23,6 +23,10 @@ public class CommentServiceImpl implements CommentService {
     public void saveComment(Comment comment) {
         commentDAO.saveComment(comment);
     }
+    @Override
+    public void updateComment(Comment comment) {
+        commentDAO.updateComment(comment);
+    }
 
     @Override
     public void deleteComment(Integer id) {
@@ -30,7 +34,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Comment findById(Integer id) {
-        return commentDAO.findById(id);
+    public Comment findCommentById(Integer id) {
+        return commentDAO.findCommentById(id);
     }
 }

@@ -62,6 +62,10 @@ public class UserDAOImpl implements UserDAO {
             s.setUser(findUserByUsername("deleted"));
             session.saveOrUpdate(s);
         }
+        for (Comment c: u.getComments() ) {
+            c.setUser(findUserByUsername("deleted"));
+            session.saveOrUpdate(c);
+        }
         session.delete(u);
     }
 
