@@ -6,6 +6,7 @@ import com.elo.oc.entity.Comment;
 import com.elo.oc.service.CommentService;
 import com.elo.oc.service.SpotService;
 import com.elo.oc.service.UserService;
+import com.elo.oc.utils.SessionCheck;
 import com.elo.oc.utils.SpotRegistrationValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,10 +44,10 @@ public class SpotController {
         /* Récupération de la session depuis la requête */
         HttpSession session = request.getSession();
 
-        if (session.getAttribute("loggedInUserEmail") == null) {
-            System.out.println("user not logged in, redirect to login");
+        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
             return "redirect:/user/login";
-        } else {
+        }
+        else {
             String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
             System.out.println("user "+ userService.findUserByEmail(sessionEmail).getUsername()+" logged in");
             Spot theSpot = new Spot();
@@ -73,10 +74,10 @@ public class SpotController {
     @GetMapping("/{spotId}/commenter")
     public String addCommentToSpot(@PathVariable("spotId") Integer spotId, Model theModel, HttpServletRequest request) {
         HttpSession session = request.getSession();
-        if (session.getAttribute("loggedInUserEmail") == null) {
-            System.out.println("user not logged in, redirect to login");
+        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
             return "redirect:/user/login";
-        } else {
+        }
+        else {
             String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
             Spot theSpot = spotService.findSpotById(spotId);
             Comment theComment = new Comment();
@@ -96,8 +97,7 @@ public class SpotController {
                            HttpServletRequest request, HttpSession session) {
         session = request.getSession();
 
-        if(session.getAttribute("loggedInUserEmail") == null){
-            System.out.println("user not logged in, redirect to login");
+        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
             return "redirect:/user/login";
         }
         else {
@@ -125,8 +125,7 @@ public class SpotController {
                               HttpServletRequest request, HttpSession session) {
         session = request.getSession();
 
-        if(session.getAttribute("loggedInUserEmail") == null){
-            System.out.println("user not logged in, redirect to login");
+        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
             return "redirect:/user/login";
         }
         else {
@@ -150,8 +149,7 @@ public class SpotController {
     public String deleteCommentFromSpot(@RequestParam("spotId") Integer theSpotId,@RequestParam("commentId") Integer theCommentId,
                                         HttpServletRequest request, HttpSession session) {
         session = request.getSession();
-        if(session.getAttribute("loggedInUserEmail") == null){
-            System.out.println("user not logged in, redirect to login");
+        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
             return "redirect:/user/login";
         }
         Spot theSpot = spotService.findSpotById(theSpotId);
@@ -171,8 +169,7 @@ public class SpotController {
     public String formForSpotUpdate(@PathVariable("spotId") Integer theId, Model theModel,
                                     HttpServletRequest request, HttpSession session) {
         session = request.getSession();
-        if(session.getAttribute("loggedInUserEmail") == null){
-            System.out.println("user not logged in, redirect to login");
+        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
             return "redirect:/user/login";
         }
         else {
@@ -209,8 +206,7 @@ public class SpotController {
     public String formForCommentUpdate(@PathVariable("spotId") Integer theSpotId,@PathVariable("commentId") Integer theCommentId, Model theModel,
                                        HttpServletRequest request, HttpSession session) {
         session = request.getSession();
-        if(session.getAttribute("loggedInUserEmail") == null){
-            System.out.println("user not logged in, redirect to login");
+        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
             return "redirect:/user/login";
         }
         else {
@@ -247,8 +243,7 @@ public class SpotController {
     @GetMapping("{spotId}/delete")
     public String deleteCustomer(@PathVariable("spotId") Integer theId, HttpServletRequest request, HttpSession session) {
         session = request.getSession();
-        if(session.getAttribute("loggedInUserEmail") == null){
-            System.out.println("user not logged in, redirect to login");
+        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
             return "redirect:/user/login";
         }
         Spot theSpot = spotService.findSpotById(theId);

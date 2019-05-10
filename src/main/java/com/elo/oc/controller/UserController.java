@@ -4,6 +4,7 @@ import com.elo.oc.entity.Role;
 import com.elo.oc.entity.User;
 import com.elo.oc.service.RoleService;
 import com.elo.oc.service.UserService;
+import com.elo.oc.utils.SessionCheck;
 import com.elo.oc.utils.UserLoginValidator;
 import com.elo.oc.utils.UserRegistrationValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,9 +86,10 @@ public class UserController {
     public String showUserProfile(User theUser, Model theModel, HttpServletRequest request) {
         /* Récupération de la session depuis la requête */
         HttpSession session = request.getSession();
-        if (session.getAttribute("loggedInUserEmail") == null) {
+        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
             return "redirect:/user/login";
-        } else {
+        }
+        else {
             String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
             Integer userId = userService.findUserByEmail(sessionEmail).getId();
                 theUser = userService.findUserByIdWithSpots(userId);

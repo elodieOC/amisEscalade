@@ -21,7 +21,7 @@
         <div class="container d-flex align-items-center">
             <div class="mx-auto text-center">
                 <div>
-                    <img src="<c:url value="/resources/img/logo.JPG" />" >
+                    <img src="<c:url value="/resources/img/logo.JPG" />" alt="logo amis de l'escalade">
                 </div>
                 <h2 class="text-white-50 mx-auto mt-2 mb-5">Venez partager et échanger sur l'escalade avec la communauté.</h2>
                 <a href="<c:out value="about.jsp" />" class="btn btn-secondary js-scroll-trigger">A propos de nous</a>

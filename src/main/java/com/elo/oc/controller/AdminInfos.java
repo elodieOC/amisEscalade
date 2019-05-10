@@ -6,6 +6,7 @@ import com.elo.oc.entity.User;
 import com.elo.oc.service.RoleService;
 import com.elo.oc.service.SpotService;
 import com.elo.oc.service.UserService;
+import com.elo.oc.utils.SessionCheck;
 import com.elo.oc.utils.UserRegistrationValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,7 +48,7 @@ public class AdminInfos {
         session = request.getSession();
 
         //if no user is connected: back to login page
-        if (session.getAttribute("loggedInUserEmail") == null) {
+        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
             return "redirect:/user/login";
         }
         //if a user is connected:
@@ -55,9 +56,7 @@ public class AdminInfos {
             String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
             User theAccessor = userService.findUserByEmail(sessionEmail);
             //if the user is not an admin: back to homepage
-            if(theAccessor.getUserRole().getId()!=1){
-                System.out.println("User trying to access the admin infos is not an admin");
-                System.out.println("User is: ["+theAccessor.getId()+ ", "+theAccessor.getUsername()+"]");
+            if(!SessionCheck.checkIfUserIsAdmin(theAccessor)){
                 return "redirect:/home";
             }
             else {
@@ -89,7 +88,7 @@ public class AdminInfos {
                                   HttpServletRequest request, HttpSession session) {
             session = request.getSession();
         //if no user is connected: back to login page
-        if (session.getAttribute("loggedInUserEmail") == null) {
+        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
             return "redirect:/user/login";
         }
         //if a user is connected:
@@ -97,9 +96,7 @@ public class AdminInfos {
             String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
             User theAccessor = userService.findUserByEmail(sessionEmail);
             //if the user is not an admin: back to homepage
-            if(theAccessor.getUserRole().getId()!=1){
-                System.out.println("User trying to access the user profile is not an admin");
-                System.out.println("User is: ["+theAccessor.getId()+ ", "+theAccessor.getUsername()+"]");
+            if(!SessionCheck.checkIfUserIsAdmin(theAccessor)){
                 return "redirect:/home";
             }
             //fetches the User with its id, and adds attributes to Model to display on jsp
@@ -126,17 +123,16 @@ public class AdminInfos {
     public String showFormForUpdate(@PathVariable("userId") Integer userId, Model theModel,
                                     HttpServletRequest request, HttpSession session) {
         session = request.getSession();
-//if no user is connected: back to login page
-        if (session.getAttribute("loggedInUserEmail") == null) {
+        //if no user is connected: back to login page
+        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
             return "redirect:/user/login";
-        }  //if a user is connected:
+        }
+        //if a user is connected:
          else {
             String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
             User theUpdater = userService.findUserByEmail(sessionEmail);
             //if the user is not an admin: back to homepage
-            if (theUpdater.getUserRole().getId() != 1) {
-                System.out.println("User trying to update is not an admin");
-                System.out.println("User is: ["+theUpdater.getId()+ ", "+theUpdater.getUsername()+"]");
+            if(!SessionCheck.checkIfUserIsAdmin(theUpdater)){
                 return "redirect:/home";
             }
             //fetches the User with its id, and adds attributes to Model to display on jsp
@@ -184,16 +180,16 @@ public class AdminInfos {
     public String deleteCustomer(@PathVariable("userId") Integer userId, HttpServletRequest request, HttpSession session) {
         session = request.getSession();
 
-        if (session.getAttribute("loggedInUserEmail") == null) {
+        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
             return "redirect:/user/login";
-        } else {
+        }
+        else {
             String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
             User theDeleter = userService.findUserByEmail(sessionEmail);
-            if (theDeleter.getUserRole().getId() != 1) {
-                System.out.println("User trying to delete is not an admin");
-                System.out.println("User is: ["+theDeleter.getId()+ ", "+theDeleter.getUsername()+"]");
+            if(!SessionCheck.checkIfUserIsAdmin(theDeleter)){
                 return "redirect:/home";
-            } else {
+            }
+            else {
                 userService.deleteUser(userId);
                 return "redirect:infos";
             }
