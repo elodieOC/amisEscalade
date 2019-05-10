@@ -43,7 +43,7 @@
                 <!-- construct an "update" link with spot id -->
                 <c:url var="updateLink" value="/spots/${spot.id}/${sector.id}/updateFormSector" />
                 <!-- construct an "delete" link with spot id -->
-                <c:url var="deleteLink" value="/spots/${spot.id}/${sector.id}/delete" />
+                <c:url var="deleteLink" value="/spots/${spot.id}/${sector.id}/deleteSector" />
                 <!-- display the update link -->
                 <input type="button" value="Editer"
                        onclick="window.location.href='${updateLink}'; return false;"
@@ -57,34 +57,57 @@
             <hr />
             <br/><br/>
 
-<%--            <div class="panel panel-info">
-                <div class="panel-body mt-2 mb-5">
-                    <h3 class="mb-5">Les Voies</h3>
-
-                    <c:choose>
-                        <c:when test="${empty routes}">
-                            <p>Il n'y a pas encore de voies ajouté pour ce spot</p>
-                        </c:when>
-                        <c:otherwise>
-                            <ul class="list-unstyled">
-                                <c:forEach var="route" items="${routes}">
-                                    <li>${route.name}
-                                        <span class="ml-5 text-muted small">(Ajouté par: ${route.user.username})</span>
-                                    </li>
-                                </c:forEach>
-
-                            </ul>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
-            </div>--%>
-
             <div class="panel panel-info">
                 <div class="panel-body mt-2 mb-5">
                     <h3 class="mb-5">Informations</h3>
-                    <p style="white-space: pre-line">${sector.info}</p>
+                    <div class="row">
+                    <h4 class="col-lg-1 mx-auto">Situation:</h4>
+                        <p class="col-lg-10" style="white-space: pre-line;">${sector.location}</p>
+                    </div>
+                    <div class="row">
+                    <h4 class="col-lg-1 mx-auto">Accès:</h4>
+                        <p class="col-lg-10" style="white-space: pre-line">${sector.access}</p>
+                    </div>
+
+                    <div class="row">
+                    <h4 class="col-lg-1 mx-auto">Voies</h4>
+                            <p class="col-lg-10" style="white-space: pre-line">
+<%--                                ${sector.routes}--%>
+                            </p>
+                       </div>
+                       <div class="row">
+                    <h4 class="col-lg-1 mx-auto">Spits</h4>
+                            <p class="col-lg-10" style="white-space: pre-line">
+<%--                                ${sector.routes.bolts}--%>
+                            </p>
+                        </div>
                 </div>
             </div>
+
+
+
+            <%--            <div class="panel panel-info">
+                            <div class="panel-body mt-2 mb-5">
+                                <h3 class="mb-5">Les Voies</h3>
+
+                                <c:choose>
+                                    <c:when test="${empty routes}">
+                                        <p>Il n'y a pas encore de voies ajouté pour ce spot</p>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <ul class="list-unstyled">
+                                            <c:forEach var="route" items="${routes}">
+                                                <li>${route.name}
+                                                    <span class="ml-5 text-muted small">(Ajouté par: ${route.user.username})</span>
+                                                </li>
+                                            </c:forEach>
+
+                                        </ul>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                        </div>--%>
+
         </div>
     </div>
 </div>

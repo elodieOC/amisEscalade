@@ -24,8 +24,12 @@ public class Sector {
     private String name;
 
     @NotEmpty
-    @Column(name = "info")
-    private String info;
+    @Column(name = "location")
+    private String location;
+
+    @NotEmpty
+    @Column(name = "access")
+    private String access;
 
     @ManyToOne //plusieurs secteurs pour un seul user
     @JoinColumn(name = "climb_user_fk")
@@ -54,12 +58,20 @@ public class Sector {
         this.name = name;
     }
 
-    public String getInfo() {
-        return info;
+    public String getLocation() {
+        return location;
     }
 
-    public void setInfo(String info) {
-        this.info = info;
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getAccess() {
+        return access;
+    }
+
+    public void setAccess(String access) {
+        this.access = access;
     }
 
     public User getUser() {

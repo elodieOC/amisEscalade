@@ -199,7 +199,9 @@ public class SpotController {
                 theSector.setUser(userService.findUserByEmail(sessionEmail));
                 theSector.setSpot(spotService.findSpotById(spotId));
                 sectorService.saveSector(theSector);
-                return "redirect:/spots/"+spotId;
+
+                String redirectingString = "/spots/"+spotId+theSector.getId();
+                return "redirect:"+redirectingString;
             }
         }
     }
@@ -221,6 +223,26 @@ public class SpotController {
             return "redirect:/home";
         }
         commentService.deleteComment(theCommentId);
+        return "redirect:/spots/"+theSpotId;
+    }
+
+    @GetMapping("{spotId}/{sectorId}/deleteSector")
+    public String deleteSectorFromSpot(@PathVariable("spotId") Integer theSpotId,@PathVariable("sectorId") Integer theSectorId,
+                                        HttpServletRequest request, HttpSession session) {
+        session = request.getSession();
+        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
+            return "redirect:/user/login";
+        }
+        Spot theSpot = spotService.findSpotById(theSpotId);
+        Sector theSector = sectorService.findSectorById(theSectorId);
+        String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
+        User theDeleter = userService.findUserByEmail(sessionEmail);
+        if(theDeleter.getUserRole().getId()!= 1 && theDeleter.getId() != theSector.getUser().getId()){
+            System.out.println("User trying to delete sector is neither the owner of the comment or an admin");
+            System.out.println("User is: ["+theDeleter.getId()+ ", "+theDeleter.getUsername()+"]");
+            return "redirect:/home";
+        }
+        sectorService.deleteSector(theSectorId);
         return "redirect:/spots/"+theSpotId;
     }
 
@@ -283,6 +305,28 @@ public class SpotController {
         }
     }
 
+    @GetMapping("{spotId}/{sectorId}/updateFormSector")
+    public String formForSectorUpdate(@PathVariable("spotId") Integer theSpotId,@PathVariable("sectorId") Integer theSectorId, Model theModel,
+                                       HttpServletRequest request, HttpSession session) {
+        session = request.getSession();
+        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
+            return "redirect:/user/login";
+        }
+        else {
+            Spot theSpot = spotService.findSpotById(theSpotId);
+            Sector theSector = sectorService.findSectorById(theSectorId);
+            String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
+            User theUpdater = userService.findUserByEmail(sessionEmail);
+            if(theUpdater.getUserRole().getId()!= 1 && theUpdater.getId() != theSector.getUser().getId()){
+                System.out.println("User trying to update the sector is neither the owner of the sector or an admin");
+                System.out.println("User is: ["+theUpdater.getId()+ ", "+theUpdater.getUsername()+"]");
+                return "redirect:/home";
+            }
+            theModel.addAttribute("sector", theSector);
+            return "sector-edit";
+        }
+    }
+
     @PostMapping("{spotId}/{commentId}/updateComment")
     public String updateComment(@PathVariable("spotId") Integer spotId,  @PathVariable("commentId") Integer theCommentId,@Valid @ModelAttribute("comment") Comment theComment, BindingResult theBindingResult) {
         if (theBindingResult.hasErrors()) {
@@ -296,6 +340,23 @@ public class SpotController {
             theComment.setUser(theCommentToUpdate.getUser());
             commentService.updateComment(theComment);
             return "redirect:/spots/"+spotId;
+        }
+    }
+
+    @PostMapping("{spotId}/{sectorId}/updateSector")
+    public String updateSector(@PathVariable("spotId") Integer spotId,  @PathVariable("sectorId") Integer theSectorId,@Valid @ModelAttribute("sector") Sector theSector, BindingResult theBindingResult) {
+        if (theBindingResult.hasErrors()) {
+            System.out.println("form has errors");
+            return "sector-edit";
+        } else {
+            System.out.println("form is validated");
+            Sector theSectorToUpdate = sectorService.findSectorById(theSectorId);
+            theSector.setSpot(theSectorToUpdate.getSpot());
+            theSector.setUser(theSectorToUpdate.getUser());
+            sectorService.updateSector(theSector);
+
+            String redirectingString = "/spots/"+spotId+theSector.getId();
+            return "redirect:"+redirectingString;
         }
     }
 

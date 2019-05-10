@@ -10,7 +10,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
-    <title>Spot ${spot.name} - Ajouter un secteur</title>
+    <title>Editer un secteur</title>
     <c:import url="inc/headContent.jsp"/>
 </head>
 
@@ -18,10 +18,10 @@
 <c:import url="inc/choose-navbar.jsp" />
 <div class="wrapper flex-shrink-0">
     <div class="container d-flex h-100 align-items-center">
-        <div class="col-md-offset-1 col-lg-6 mx-auto">
-            <h2 class="mb-5">Spot ${spot.name} - Ajouter un secteur</h2>
+        <div class="col-md-offset-1 col-md-10">
+            <h2 class="mb-5">Editer un secteur</h2>
             <hr />
-            <form:form action="saveSector" cssClass="form-horizontal"  method="post" modelAttribute="sector">
+            <form:form action="updateSector" cssClass="form-horizontal"  method="post" modelAttribute="sector">
                 <form:hidden path="id" />
 
                 <form:errors path="name" cssClass="error"/>
@@ -48,20 +48,19 @@
                     <form:textarea path="access" cssClass="form-control p-4" placeholder="Accès" rows="2" />
                 </div><!-- form-group// -->
 
-               <%-- <form:errors path="routes" cssClass="error"/>
-                <div class="form-group">
-                    <label for="routes">Voies:</label>
-                    <form:textarea path="routes" cssClass="form-control p-4" placeholder="Voies" rows="3" />
-                </div><!-- form-group// -->
+                <%-- <form:errors path="routes" cssClass="error"/>
+                 <div class="form-group">
+                     <label for="routes">Voies:</label>
+                     <form:textarea path="routes" cssClass="form-control p-4" placeholder="Voies" rows="3" />
+                 </div><!-- form-group// -->
 
-                <form:errors path="bolts" cssClass="error"/>
-                <div class="form-group">
-                    <label for="bolts">Spits:</label>
-                    <form:textarea path="bolts" cssClass="form-control p-4" placeholder="Spits" rows="3" />
-                </div><!-- form-group// -->--%>
-
+                 <form:errors path="bolts" cssClass="error"/>
+                 <div class="form-group">
+                     <label for="bolts">Spits:</label>
+                     <form:textarea path="bolts" cssClass="form-control p-4" placeholder="Spits" rows="3" />
+                 </div><!-- form-group// -->--%>
                 <div class="row mb-2">
-                    <button class="btn btn-lg btn-primary mb-2 ml-4" type="submit">Ajouter</button>
+                    <button class="btn btn-lg btn-primary mb-2 ml-4" type="submit">Editer</button>
                 </div>
             </form:form>
             </div>
