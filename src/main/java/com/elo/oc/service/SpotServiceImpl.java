@@ -53,6 +53,10 @@ public class SpotServiceImpl implements SpotService {
     }
 
     @Override
+    public Spot findSpotWithAllInfosById(Integer id) {
+        return spotDAO.findSpotWithAllInfosById(id);
+    }
+    @Override
     public Spot findSpotById(Integer id) {
         return spotDAO.findSpotById(id);
     }

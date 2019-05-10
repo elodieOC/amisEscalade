@@ -44,6 +44,9 @@ public class Spot {
     @OneToMany (mappedBy = "spot")//attribut Spot spot de Comment
     private List<Comment> comments = new ArrayList<>();
 
+    @OneToMany (mappedBy = "spot")//attribut Spot spot de Sector
+    private List<Sector> sectors = new ArrayList<>();
+
     public Spot() {
 
     }
@@ -94,6 +97,14 @@ public class Spot {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public List<Sector> getSectors() {
+        return sectors;
+    }
+
+    public void setSectors(List<Sector> sectors) {
+        this.sectors = sectors;
     }
 
     @Override

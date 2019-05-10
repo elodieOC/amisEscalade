@@ -82,10 +82,18 @@ public class SpotDAOImpl implements SpotDAO {
     }
 
     @Override
-    public Spot findSpotById(Integer id) {
+    public Spot findSpotWithAllInfosById(Integer id) {
         Session currentSession = sessionFactory.getCurrentSession();
         Spot theSpot = currentSession.get(Spot.class, id);
         Hibernate.initialize(theSpot.getComments());
+        Hibernate.initialize((theSpot.getSectors()));
+        return theSpot;
+    }
+
+    @Override
+    public Spot findSpotById(Integer id) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        Spot theSpot = currentSession.get(Spot.class, id);
         return theSpot;
     }
 

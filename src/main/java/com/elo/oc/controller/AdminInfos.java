@@ -1,11 +1,7 @@
 package com.elo.oc.controller;
 
-import com.elo.oc.entity.Role;
-import com.elo.oc.entity.Spot;
-import com.elo.oc.entity.User;
-import com.elo.oc.service.RoleService;
-import com.elo.oc.service.SpotService;
-import com.elo.oc.service.UserService;
+import com.elo.oc.entity.*;
+import com.elo.oc.service.*;
 import com.elo.oc.utils.SessionCheck;
 import com.elo.oc.utils.UserRegistrationValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +28,10 @@ public class AdminInfos {
     private UserService userService;
     @Autowired
     private SpotService spotService;
+    @Autowired
+    private GradeService gradeService;
+    @Autowired
+    private RatingService ratingService;
     @Autowired
     private UserRegistrationValidator userRegistrationValidator;
 
@@ -64,10 +64,14 @@ public class AdminInfos {
                 List<User> theUsers = userService.getUsers();
                 List<Role> theRoles = roleService.getRoles();
                 List<Spot> theSpots = spotService.getSpots();
+                List<Grade> theGrades = gradeService.getGrades();
+                List<Rating> theRatings = ratingService.getRatings();
                 //adding attributes to Model to display on jsp
                 theModel.addAttribute("roles", theRoles);
                 theModel.addAttribute("users", theUsers);
                 theModel.addAttribute("spots", theSpots);
+                theModel.addAttribute("grades", theGrades);
+                theModel.addAttribute("ratings", theRatings);
                 return "admin-infos";
             }
         }

@@ -64,3 +64,11 @@ td{
 hr{
     border-top: 1px solid #494f54;
 }
+
+.in-line-btn{
+    margin-left: 15rem;
+}
+
+textarea{
+    resize: none;
+}

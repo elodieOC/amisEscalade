@@ -1,9 +1,11 @@
 package com.elo.oc.controller;
 
+import com.elo.oc.entity.Sector;
 import com.elo.oc.entity.Spot;
 import com.elo.oc.entity.User;
 import com.elo.oc.entity.Comment;
 import com.elo.oc.service.CommentService;
+import com.elo.oc.service.SectorService;
 import com.elo.oc.service.SpotService;
 import com.elo.oc.service.UserService;
 import com.elo.oc.utils.SessionCheck;
@@ -29,6 +31,8 @@ public class SpotController {
     private UserService userService;
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private SectorService sectorService;
     @Autowired
     private SpotRegistrationValidator spotRegistrationValidator;
 
@@ -64,10 +68,27 @@ public class SpotController {
             User theUser = userService.findUserByEmail(sessionEmail);
             theModel.addAttribute("user", theUser);
         }
-        Spot theSpot = spotService.findSpotById(spotId);
+        Spot theSpot = spotService.findSpotWithAllInfosById(spotId);
         theModel.addAttribute("spot", theSpot);
         theModel.addAttribute("comments", theSpot.getComments());
+        theModel.addAttribute("sectors", theSpot.getSectors());
         return "view-spot";
+    }
+
+    @GetMapping("/{spotId}/{sectorId}")
+    public String viewSector(@PathVariable("spotId") Integer spotId,@PathVariable("sectorId") Integer sectorId, Model theModel, HttpServletRequest request){
+        /* Récupération de la session depuis la requête */
+        HttpSession session = request.getSession();
+        if(session.getAttribute("loggedInUserEmail") != null) {
+            String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
+            User theUser = userService.findUserByEmail(sessionEmail);
+            theModel.addAttribute("user", theUser);
+        }
+        Spot theSpot = spotService.findSpotWithAllInfosById(spotId);
+        Sector theSector = sectorService.findSectorById(sectorId);
+        theModel.addAttribute("spot", theSpot);
+        theModel.addAttribute("sector", theSector);
+        return "view-sector";
     }
 
 
@@ -140,6 +161,44 @@ public class SpotController {
                 theComment.setUser(userService.findUserByEmail(sessionEmail));
                 theComment.setSpot(spotService.findSpotById(spotId));
                 commentService.saveComment(theComment);
+                return "redirect:/spots/"+spotId;
+            }
+        }
+    }
+    @GetMapping("/{spotId}/ajoutSecteur")
+    public String addSectorToSpot(@PathVariable("spotId") Integer spotId, Model theModel, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
+            return "redirect:/user/login";
+        }
+        else {
+            Spot theSpot = spotService.findSpotById(spotId);
+            Sector theSector = new Sector();
+            theModel.addAttribute("spot", theSpot);
+            theModel.addAttribute("sector", theSector);
+            return "add-sector-toSpot";
+        }
+    }
+    @PostMapping("{spotId}/saveSector")
+    public String saveSector(@PathVariable("spotId") Integer spotId, @Valid @ModelAttribute("sector") Sector theSector, BindingResult theBindingResult,
+                              HttpServletRequest request, HttpSession session) {
+        session = request.getSession();
+
+        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
+            return "redirect:/user/login";
+        }
+        else {
+            String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
+            System.out.println("user "+ userService.findUserByEmail(sessionEmail).getUsername()+" logged in");
+
+            if (theBindingResult.hasErrors()) {
+                System.out.println("form has errors");
+                return "add-sector-toSpot";
+            } else {
+                System.out.println("form is validated");
+                theSector.setUser(userService.findUserByEmail(sessionEmail));
+                theSector.setSpot(spotService.findSpotById(spotId));
+                sectorService.saveSector(theSector);
                 return "redirect:/spots/"+spotId;
             }
         }

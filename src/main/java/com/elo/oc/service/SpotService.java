@@ -17,6 +17,7 @@ public interface SpotService {
     Spot findSpotByCounty(String county);
     Spot findSpotByCity(String city);
     Spot findSpotById(Integer id);
+    Spot findSpotWithAllInfosById(Integer id);
     Optional<Spot> findSpotWithThisName(String name);
 
     List<Spot> findSpotByUserId(Integer id);

@@ -13,11 +13,11 @@
     <c:import url="inc/headContent.jsp"/>
 </head>
 <body class="d-flex flex-column h-100">
-<c:import url="inc/choose-navbar.jsp" />
 <div class="wrapper flex-shrink-0">
-    <div class="container d-flex h-100 align-items-center">
+    <c:import url="inc/choose-navbar.jsp" />
+    <div class="container h-100 align-items-center">
         <div class="container col-md-offset-1 col-md-10">
-            <h2 class="mt-5">Utilisateurs</h2>
+            <h2>Utilisateurs</h2>
             <hr />
             <div class="panel panel-info">
                 <div class="panel-body">
@@ -44,48 +44,70 @@
                     </table>
                 </div>
             </div>
-            <div class="container col-md-offset-1 col-md-10">
-                <h2 class="mt-5">Roles</h2>
-                <hr />
-                <div class="panel panel-info">
-                    <div class="panel-body">
-                        <table class="table table-striped table-bordered">
+        </div>
+        <div class="container col-md-offset-1 col-md-10">
+            <h2 class="mt-5">Roles</h2>
+            <hr />
+            <div class="panel panel-info">
+                <div class="panel-body">
+                    <table class="table table-striped table-bordered">
+                        <tr>
+                            <th>Id</th>
+                            <th>Nom</th>
+                        </tr>
+                        <c:forEach var="userRole" items="${roles}" >
                             <tr>
-                                <th>Id</th>
-                                <th>Nom</th>
+                                <td>${userRole.id}</td>
+                                <td>${userRole.roleName}</td>
                             </tr>
-                            <c:forEach var="userRole" items="${roles}" >
-                                <tr>
-                                    <td>${userRole.id}</td>
-                                    <td>${userRole.roleName}</td>
-                                </tr>
-                            </c:forEach>
-                        </table>
-                    </div>
+                        </c:forEach>
+                    </table>
                 </div>
             </div>
-            <div class="container col-md-offset-1 col-md-10">
-                <h2 class="mt-5">Spots</h2>
-                <hr />
-                <div class="panel panel-info">
-                    <div class="panel-body">
-                        <table class="table table-striped table-bordered">
+        </div>
+        <div class="container col-md-offset-1 col-md-10">
+            <h2 class="mt-5">Spots</h2>
+            <hr />
+            <div class="panel panel-info">
+                <div class="panel-body">
+                    <table class="table table-striped table-bordered">
+                        <tr>
+                            <th>Id</th>
+                            <th>Nom</th>
+                            <th>Ville</th>
+                            <th>Région</th>
+                        </tr>
+                        <c:forEach var="spot" items="${spots}" >
                             <tr>
-                                <th>Id</th>
-                                <th>Nom</th>
-                                <th>Ville</th>
-                                <th>Région</th>
+                                <td>${spot.id}</td>
+                                <td>${spot.name}</td>
+                                <td>${spot.city}</td>
+                                <td>${spot.county}</td>
                             </tr>
-                            <c:forEach var="spot" items="${spots}" >
-                                <tr>
-                                    <td>${spot.id}</td>
-                                    <td>${spot.name}</td>
-                                    <td>${spot.city}</td>
-                                    <td>${spot.county}</td>
-                                </tr>
-                            </c:forEach>
-                        </table>
-                    </div>
+                        </c:forEach>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="container col-md-offset-1 col-md-10">
+            <h2 class="mt-5">Cotations</h2>
+            <hr />
+            <div class="panel panel-info">
+                <div class="panel-body">
+                    <table class="table table-striped table-bordered">
+                        <tr>
+                            <th>Id</th>
+                            <th>Cotation</th>
+                            <th>Niveau</th>
+                        </tr>
+                        <c:forEach var="cot" items="${grades}" >
+                            <tr>
+                                <td>${cot.id}</td>
+                                <td>${cot.name}</td>
+                                <td>${cot.rating.name}</td>
+                            </tr>
+                        </c:forEach>
+                    </table>
                 </div>
             </div>
         </div>

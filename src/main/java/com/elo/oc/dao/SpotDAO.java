@@ -15,6 +15,7 @@ public interface SpotDAO {
     Spot findSpotByName(String name);
     Spot findSpotByCounty(String county);
     Spot findSpotByCity(String city);
+    Spot findSpotWithAllInfosById(Integer id);
     Spot findSpotById(Integer id);
     List<Spot> findSpotByUserId(Integer id);
 

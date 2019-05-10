@@ -64,9 +64,9 @@
                             </c:choose>
                             <c:if test="${userRole eq '1' || userId eq spot.user.id}">
                                 <td>
-                                    <!-- display the update link --> <a href="${updateLink}">Update</a>
+                                    <!-- display the update link --> <a href="${updateLink}">Editer</a>
                                     | <a href="${deleteLink}"
-                                         onclick="if (!(confirm('Are you sure you want to delete this spot?'))) return false">Delete</a>
+                                         onclick="if (!(confirm('Are you sure you want to delete this spot?'))) return false">Supprimer</a>
                                 </td>
                             </c:if>
 

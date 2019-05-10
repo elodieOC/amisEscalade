@@ -19,7 +19,7 @@ public class Rating {
     @NotEmpty
     private String name;
 
-    @OneToMany (mappedBy = "rating")
+    @OneToMany (mappedBy = "rating", fetch = FetchType.EAGER)
     private List<Grade> grades = new ArrayList<>();
 
       public Rating() {
