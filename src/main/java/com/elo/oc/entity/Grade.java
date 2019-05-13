@@ -2,6 +2,8 @@ package com.elo.oc.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "grade")
@@ -19,6 +21,9 @@ public class Grade {
     @ManyToOne //plusieurs cotation pour un seul niveau
     @JoinColumn(name = "rating_fk")
     private Rating rating;
+
+    @OneToMany(mappedBy = "grade")
+    private List<Route> routes = new ArrayList<>();
 
       public Grade() {
     }
@@ -46,6 +51,14 @@ public class Grade {
 
     public void setRating(Rating rating) {
         this.rating = rating;
+    }
+
+    public List<Route> getRoutes() {
+        return routes;
+    }
+
+    public void setRoutes(List<Route> routes) {
+        this.routes = routes;
     }
 
     @Override

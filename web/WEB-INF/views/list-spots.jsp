@@ -35,19 +35,12 @@
                         <th>Région</th>
                         <th>Ville</th>
                         <th>Ajouté par</th>
-                        <c:if test="${userRole eq '1' }">
-                            <th>Action</th>
-                        </c:if>
                     </tr>
 
                     <!-- loop over and print our spots -->
                     <c:forEach var="spot" items="${spots}">
                         <!-- construct an "view" link with spot id -->
                         <c:url var="viewLink" value="/spots/${spot.id}" />
-                        <!-- construct an "update" link with spot id -->
-                        <c:url var="updateLink" value="/spots/${spot.id}/updateFormSpot" />
-                        <!-- construct an "delete" link with spot id -->
-                        <c:url var="deleteLink" value="/spots/${spot.id}/delete" />
 
                         <tr>
                             <!-- display the view link -->
@@ -62,14 +55,6 @@
                                     <td>${spot.user.username}</td>
                                 </c:otherwise>
                             </c:choose>
-                            <c:if test="${userRole eq '1' || userId eq spot.user.id}">
-                                <td>
-                                    <!-- display the update link --> <a href="${updateLink}">Editer</a>
-                                    | <a href="${deleteLink}"
-                                         onclick="if (!(confirm('Are you sure you want to delete this spot?'))) return false">Supprimer</a>
-                                </td>
-                            </c:if>
-
                         </tr>
 
                     </c:forEach>

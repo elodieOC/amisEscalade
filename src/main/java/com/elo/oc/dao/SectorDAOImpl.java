@@ -1,5 +1,6 @@
 package com.elo.oc.dao;
 
+import com.elo.oc.entity.Route;
 import com.elo.oc.entity.Sector;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
@@ -45,10 +46,9 @@ public class SectorDAOImpl implements SectorDAO {
     public void deleteSector(Integer id) {
         Session session = sessionFactory.getCurrentSession();
         Sector theSector = session.byId(Sector.class).load(id);
-        //TODO implements routes to sectors
-        /*for (Route r: theSector.getRoutes() ) {
+        for (Route r: theSector.getRoutes() ) {
             session.remove(r);
-        }*/
+        }
         session.delete(theSector);
     }
 
@@ -65,6 +65,7 @@ public class SectorDAOImpl implements SectorDAO {
     public Sector findSectorById(Integer id) {
         Session currentSession = sessionFactory.getCurrentSession();
         Sector theSector = currentSession.get(Sector.class, id);
+        Hibernate.initialize(theSector.getRoutes());
         return theSector;
     }
 

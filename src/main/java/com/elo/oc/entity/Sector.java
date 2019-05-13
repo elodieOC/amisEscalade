@@ -2,6 +2,8 @@ package com.elo.oc.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "sector")
@@ -20,7 +22,7 @@ public class Sector {
     private Integer id;
 
     @NotEmpty
-    @Column(name = "name", unique=true)
+    @Column(name = "name")
     private String name;
 
     @NotEmpty
@@ -38,6 +40,9 @@ public class Sector {
     @ManyToOne //plusieurs secteurs pour un seul spot
     @JoinColumn(name = "spot_fk")
     private Spot spot;
+
+    @OneToMany(mappedBy = "sector")
+    private List<Route> routes = new ArrayList<>();
 
     public Sector() {
     }
@@ -88,6 +93,12 @@ public class Sector {
 
     public void setSpot(Spot spot) {
         this.spot = spot;
+    }
+
+    public List<Route> getRoutes() {return routes; }
+
+    public void setRoutes(List<Route> routes) {
+        this.routes = routes;
     }
 
     @Override

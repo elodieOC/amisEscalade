@@ -31,9 +31,6 @@
             <input type="button" value="Ajouter un Secteur"
                    onclick="window.location.href='${spot.id}/ajoutSecteur'; return false;"
                    class="btn btn-primary" />
-            <input type="button" value="Ajouter une Voie"
-                   onclick="window.location.href='${spot.id}/${sector.id}/ajoutVoie'; return false;"
-                   class="btn btn-primary" />
 
             <c:set var="userRole" value="${sessionScope['loggedInUserRole']}" />
             <c:set var="userId" value="${sessionScope['loggedInUserId']}" />

@@ -54,4 +54,5 @@ sectorDAO.deleteSector(id);
     public List<Sector> findSectorBySpotId(Integer id) {
         return sectorDAO.findSectorBySpotId(id);
     }
+
 }

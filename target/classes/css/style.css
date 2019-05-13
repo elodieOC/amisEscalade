@@ -65,6 +65,13 @@ hr{
     border-top: 1px solid #494f54;
 }
 
+.small-hr{
+    width: 50%;
+    margin-top: 0;
+    margin-bottom: 0;
+    float: left;
+    border-top: 1px solid gray;
+}
 .in-line-btn{
     margin-left: 15rem;
 }

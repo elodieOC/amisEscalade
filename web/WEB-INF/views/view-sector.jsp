@@ -30,7 +30,7 @@
                     </c:otherwise>
                 </c:choose>)</span></h2>
             <input type="button" value="Ajouter une Voie"
-                   onclick="window.location.href='${spot.id}/${sector.id}/ajoutVoie'; return false;"
+                   onclick="window.location.href='${sector.id}/ajoutVoie'; return false;"
                    class="btn btn-primary" />
 
             <c:set var="userRole" value="${sessionScope['loggedInUserRole']}" />
@@ -60,54 +60,50 @@
             <div class="panel panel-info">
                 <div class="panel-body mt-2 mb-5">
                     <h3 class="mb-5">Informations</h3>
+
                     <div class="row">
-                    <h4 class="col-lg-1 mx-auto">Situation:</h4>
+                        <h4 class="col-lg-1 mx-auto">Situation:</h4>
                         <p class="col-lg-10" style="white-space: pre-line;">${sector.location}</p>
                     </div>
                     <div class="row">
-                    <h4 class="col-lg-1 mx-auto">Accès:</h4>
+                        <h4 class="col-lg-1 mx-auto">Accès:</h4>
                         <p class="col-lg-10" style="white-space: pre-line">${sector.access}</p>
                     </div>
 
                     <div class="row">
-                    <h4 class="col-lg-1 mx-auto">Voies</h4>
-                            <p class="col-lg-10" style="white-space: pre-line">
-<%--                                ${sector.routes}--%>
-                            </p>
-                       </div>
-                       <div class="row">
-                    <h4 class="col-lg-1 mx-auto">Spits</h4>
-                            <p class="col-lg-10" style="white-space: pre-line">
-<%--                                ${sector.routes.bolts}--%>
-                            </p>
-                        </div>
+                        <h4 class="col-lg-1 mx-auto">Voies</h4>
+                        <c:choose>
+                        <c:when test="${empty sector.routes}">
+                            <p class="col-lg-10">Il n'y a pas encore de voie ajoutée</p>
+                        </c:when>
+                        <c:otherwise>
+                        <p class="col-lg-10"> ${sector.routes.size()}
+                            </c:otherwise>
+                            </c:choose>
+                    </div>
+
+                    <c:choose>
+                        <c:when test="${empty sector.routes}">
+                            <div class="row ml-5">
+                                <p class="col-lg-10"></p>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="row">
+                                <h4 class="mt-5 ml-5">Infos voies:</h4>
+                            </div>
+                            <hr class="small-hr ml-3"/>
+                            <br/>
+                            <c:forEach var="route" items="${sector.routes}">
+                                <div class="row ml-5">
+                                    <p><strong>${sector.routes.indexOf(route)+1}:  </strong> ${route.grade.rating.name}, ${route.name}, cotation ${route.grade.name}, hauteur ${route.height}, ${route.bolts} spits</>
+                                    <br/>
+                                </div>
+                            </c:forEach>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
-
-
-
-            <%--            <div class="panel panel-info">
-                            <div class="panel-body mt-2 mb-5">
-                                <h3 class="mb-5">Les Voies</h3>
-
-                                <c:choose>
-                                    <c:when test="${empty routes}">
-                                        <p>Il n'y a pas encore de voies ajouté pour ce spot</p>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <ul class="list-unstyled">
-                                            <c:forEach var="route" items="${routes}">
-                                                <li>${route.name}
-                                                    <span class="ml-5 text-muted small">(Ajouté par: ${route.user.username})</span>
-                                                </li>
-                                            </c:forEach>
-
-                                        </ul>
-                                    </c:otherwise>
-                                </c:choose>
-                            </div>
-                        </div>--%>
-
         </div>
     </div>
 </div>
