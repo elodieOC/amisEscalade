@@ -23,7 +23,15 @@
             <hr />
             <form:form action="saveRoute" cssClass="form-horizontal"  method="post" modelAttribute="route">
 
-                <form:errors path="height" cssClass="error"/>
+                <form:errors path="name" cssClass="error"/>
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> Nom </span>
+                    </div>
+                    <form:input path="name" cssClass="form-control p-4" placeholder="Nom" type="text" />
+                </div><!-- form-group// -->
+
+ <form:errors path="height" cssClass="error"/>
                 <div class="form-group input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"> Hauteur </span>
@@ -38,6 +46,19 @@
                     </div>
                     <form:input path="bolts" cssClass="form-control p-4" placeholder="Spits"  type="text"  />
                 </div><!-- form-group// -->
+
+                <form:errors path="grade" cssClass="error"/>
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Cotation</span>
+                    </div>
+                    <form:select  path="grade" cssClass="form-control" >
+                        <form:option value="" selected="">Cotation</form:option>
+                        <c:forEach var="cot" items="${grades}">
+                            <form:option value="${cot.id}">${cot.name}</form:option>
+                        </c:forEach>
+                    </form:select>
+                </div> <!-- form-group end.// -->
 
                 <div class="row mb-2">
                     <button class="btn btn-lg btn-primary mb-2 ml-4" type="submit">Ajouter</button>

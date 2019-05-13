@@ -30,6 +30,8 @@ public class SpotController {
     @Autowired
     private SectorService sectorService;
     @Autowired
+    private GradeService gradeService;
+    @Autowired
     private RouteService routeService;
     @Autowired
     private SpotRegistrationValidator spotRegistrationValidator;
@@ -403,8 +405,10 @@ public class SpotController {
         }
         else {
             Spot theSpot = spotService.findSpotById(spotId);
+            List<Grade>grades = gradeService.getGrades();
             Sector theSector = sectorService.findSectorById(sectorId);
             Route theRoute = new Route();
+            theModel.addAttribute("grades", grades );
             theModel.addAttribute("spot", theSpot);
             theModel.addAttribute("sector", theSector);
             theModel.addAttribute("route", theRoute);
@@ -432,15 +436,19 @@ public class SpotController {
                 System.out.println("form is validated");
                 String formHeight = theRouteForm.getHeight();
                 String formBolts = theRouteForm.getBolts();
+                Integer formGrade = theRouteForm.getGrade();
 
                 double height = Double.parseDouble(formHeight);
                 Integer bolts = Integer.parseInt(formBolts);
 
+                //TODO la liste des cotations ne se recharge pas lorsqu'il y a erreur
                 Route theRoute = new Route();
                 theRoute.setUser(userService.findUserByEmail(sessionEmail));
                 theRoute.setSector(sectorService.findSectorById(sectorId));
                 theRoute.setBolts(bolts);
                 theRoute.setHeight(height);
+                theRoute.setName(theRouteForm.getName());
+                theRoute.setGrade(gradeService.findById(formGrade));
 
                 routeService.saveRoute(theRoute);
 

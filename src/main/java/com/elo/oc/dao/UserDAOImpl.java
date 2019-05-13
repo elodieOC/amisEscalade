@@ -40,8 +40,6 @@ public class UserDAOImpl implements UserDAO {
     public void saveUser(User user){
         Session currentSession = sessionFactory.getCurrentSession();
         user.setPassword(Encryption.encrypt(user.getPassword()));
-
-
         user.setUserRole(roleService.findById(user.getMemberOrNot()));
         currentSession.saveOrUpdate(user);
     }

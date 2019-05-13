@@ -26,6 +26,7 @@ public class RouteFormValidator implements Validator {
         String formHeight = ((RouteForm) o).getHeight();
         String formBolts = ((RouteForm) o).getBolts();
 
+
             if (!formHeight.matches("^\\d*\\.?\\d*$") && !formHeight.equals("")) {
                 System.out.println("entered data for height: "+formHeight);
                 errors.rejectValue("height", "route.height.error");
