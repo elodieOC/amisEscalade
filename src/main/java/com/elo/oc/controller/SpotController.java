@@ -1,7 +1,6 @@
 package com.elo.oc.controller;
 
 import com.elo.oc.dto.LengthForm;
-import com.elo.oc.dto.RouteForm;
 import com.elo.oc.entity.*;
 import com.elo.oc.entity.Sector;
 import com.elo.oc.service.*;
@@ -288,7 +287,7 @@ public class SpotController {
             return "redirect:/home";
         }
         sectorService.deleteSector(theSectorId);
-        return "redirect:/spots/"+theSpotId;
+        return "redirect:/spots/spot/"+theSpotId;
     }
 
     /*
@@ -414,7 +413,7 @@ public class SpotController {
             Spot theSpot = spotService.findSpotById(spotId);
             List<Grade>grades = gradeService.getGrades();
             Sector theSector = sectorService.findSectorById(sectorId);
-            RouteForm form = new RouteForm();
+            Route form = new Route();
 
             theModel.addAttribute("grades", grades );
             theModel.addAttribute("spot", theSpot);
@@ -427,7 +426,7 @@ public class SpotController {
 
     @PostMapping("/spot/{spotId}/sector/{sectorId}/saveRoute")
     public String saveRoute(@PathVariable("spotId") Integer spotId, @PathVariable("sectorId") Integer sectorId,
-                            @Valid @ModelAttribute("routeForm") RouteForm theRouteForm,  BindingResult theBindingResult,
+                            @Valid @ModelAttribute("routeForm") Route theRoute,  BindingResult theBindingResult,
                             HttpServletRequest request, HttpSession session) {
         session = request.getSession();
 
@@ -444,18 +443,104 @@ public class SpotController {
             } else {
                 System.out.println("form is validated");
 
-                Route theRoute = new Route();
-                theRoute.setUser(userService.findUserByEmail(sessionEmail));
-                theRoute.setSector(sectorService.findSectorById(sectorId));
-                theRoute.setName(theRouteForm.getName());
+                Route routeToSave = new Route();
+                routeToSave.setUser(userService.findUserByEmail(sessionEmail));
+                routeToSave.setSector(sectorService.findSectorById(sectorId));
+                routeToSave.setName(theRoute.getName());
 
-                routeService.saveRoute(theRoute);
+                routeService.saveRoute(routeToSave);
 
                 String redirectingString = "/spots/spot/"+spotId+"/sector/"+sectorId;
                 return "redirect:"+redirectingString;
             }
         }
     }
+
+
+    @GetMapping("/spot/{spotId}/sector/{sectorId}/route/{routeId}")
+    public String viewRoute(@PathVariable("spotId") Integer spotId,@PathVariable("sectorId") Integer sectorId, @PathVariable("routeId") Integer routeId,
+                            Model theModel, HttpServletRequest request){
+        /* Récupération de la session depuis la requête */
+        HttpSession session = request.getSession();
+        if(session.getAttribute("loggedInUserEmail") != null) {
+            String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
+            User theUser = userService.findUserByEmail(sessionEmail);
+            theModel.addAttribute("user", theUser);
+        }
+        Spot theSpot = spotService.findSpotById(spotId);
+        Sector theSector = sectorService.findSectorById(sectorId);
+        Route theRoute = routeService.findRouteById(routeId);
+
+        theModel.addAttribute("route", theRoute);
+        theModel.addAttribute("sector", theSector);
+        theModel.addAttribute("spot", theSpot);
+        return "view-route";
+    }
+
+
+    @GetMapping("/spot/{spotId}/sector/{sectorId}/route/{routeId}/updateFormRoute")
+    public String formForRouteUpdate(@PathVariable("spotId") Integer theSpotId,@PathVariable("sectorId") Integer theSectorId,@PathVariable("routeId") Integer theRouteId,
+                                     Model theModel,  HttpServletRequest request, HttpSession session) {
+        session = request.getSession();
+        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
+            return "redirect:/user/login";
+        }
+        else {
+            Spot theSpot = spotService.findSpotById(theSpotId);
+            Sector theSector = sectorService.findSectorById(theSectorId);
+            Route theRoute = routeService.findRouteById(theRouteId);
+            String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
+            User theUpdater = userService.findUserByEmail(sessionEmail);
+            if(theUpdater.getUserRole().getId()!= 1 && theUpdater.getId() != theRoute.getUser().getId()){
+                System.out.println("User trying to update the route is neither the owner of the sector or an admin");
+                System.out.println("User is: ["+theUpdater.getId()+ ", "+theUpdater.getUsername()+"]");
+                return "redirect:/home";
+            }
+            theModel.addAttribute("route", theRoute);
+            return "route-edit";
+        }
+    }
+
+
+    @PostMapping("/spot/{spotId}/sector/{sectorId}/route/{routeId}/updateRoute")
+    public String updateRoute(@PathVariable("spotId") Integer theSpotId,  @PathVariable("sectorId") Integer theSectorId, @PathVariable("routeId") Integer theRouteId,
+                              @Valid @ModelAttribute("route") Route theRoute, BindingResult theBindingResult) {
+        if (theBindingResult.hasErrors()) {
+            System.out.println("form has errors");
+            return "route-edit";
+        } else {
+            System.out.println("form is validated");
+            Route theRouteToUpdate = routeService.findRouteById(theRouteId);
+            theRoute.setUser(theRouteToUpdate.getUser());
+            theRoute.setSector(theRouteToUpdate.getSector());
+            routeService.updateRoute(theRoute);
+
+            String redirectingString = "/spots/spot/"+theSpotId+"/sector/"+theSectorId+"/route/"+theRouteId;
+            return "redirect:"+redirectingString;
+        }
+    }
+    @GetMapping("/spot/{spotId}/sector/{sectorId}/route/{routeId}/deleteRoute")
+    public String deleteRouteFromSector(@PathVariable("spotId") Integer theSpotId,@PathVariable("sectorId") Integer theSectorId,@PathVariable("routeId") Integer theRouteId,
+                                       HttpServletRequest request, HttpSession session) {
+        session = request.getSession();
+        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
+            return "redirect:/user/login";
+        }
+        Spot theSpot = spotService.findSpotById(theSpotId);
+        Sector theSector = sectorService.findSectorById(theSectorId);
+        Route theRoute = routeService.findRouteById(theRouteId);
+        String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
+        User theDeleter = userService.findUserByEmail(sessionEmail);
+        if(theDeleter.getUserRole().getId()!= 1 && theDeleter.getId() != theRoute.getUser().getId()){
+            System.out.println("User trying to delete route is neither the owner of the comment or an admin");
+            System.out.println("User is: ["+theDeleter.getId()+ ", "+theDeleter.getUsername()+"]");
+            return "redirect:/home";
+        }
+        routeService.deleteRoute(theRouteId);
+        String redirectingString = "/spots/spot/"+theSpotId+"/sector/"+theSectorId;
+        return "redirect:"+redirectingString;
+    }
+
     /*
     ******************************************
     * Lengths
@@ -488,7 +573,7 @@ public class SpotController {
     public String saveLength(@PathVariable("spotId") Integer spotId, @PathVariable("sectorId") Integer sectorId, @PathVariable("routeId") Integer routeId,
                             @Valid @ModelAttribute("lengthForm") LengthForm theLengthForm,
                              BindingResult theBindingResult,
-                            HttpServletRequest request, HttpSession session) {
+                            HttpServletRequest request, HttpSession session, Model theModel) {
         session = request.getSession();
 
         if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
@@ -498,9 +583,10 @@ public class SpotController {
             String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
             lengthFormValidator.validate(theLengthForm, theBindingResult);
 
-            // TODO list grades ne se recharge pas en cas d'erreur
             if (theBindingResult.hasErrors()) {
                 System.out.println("form has errors");
+                List<Grade> grades = gradeService.getGrades();
+                theModel.addAttribute("grades", grades);
                 return "add-length-toRoute";
             } else {
                 System.out.println("form is validated");
@@ -517,9 +603,94 @@ public class SpotController {
 
                 lengthService.saveLength(theLength);
 
-                String redirectingString = "/spots/spot/"+spotId+"/sector/"+sectorId;
+                String redirectingString = "/spots/spot/"+spotId+"/sector/"+sectorId+"/route/"+routeId;
                 return "redirect:"+redirectingString;
             }
         }
     }
+
+    @GetMapping("/spot/{spotId}/sector/{sectorId}/route/{routeId}/length/{lengthId}/updateFormLength")
+    public String formForLengthUpdate(@PathVariable("spotId") Integer theSpotId,@PathVariable("sectorId") Integer theSectorId,
+                                      @PathVariable("routeId") Integer theRouteId,@PathVariable("lengthId") Integer theLengthId,
+                                     Model theModel,  HttpServletRequest request, HttpSession session) {
+        session = request.getSession();
+        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
+            return "redirect:/user/login";
+        }
+        else {
+            Length theLength = lengthService.findLengthById(theLengthId);
+            LengthForm form = new LengthForm();
+            List<Grade>grades = gradeService.getGrades();
+
+            form.setBolts(String.valueOf(theLength.getBolts()));
+            form.setHeight(String.valueOf(theLength.getHeight()));
+            form.setGrade(theLength.getGrade().getId());
+
+            String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
+            User theUpdater = userService.findUserByEmail(sessionEmail);
+            if(theUpdater.getUserRole().getId()!= 1 && theUpdater.getId() != theLength.getUser().getId()){
+                System.out.println("User trying to update the length is neither the owner of the sector or an admin");
+                System.out.println("User is: ["+theUpdater.getId()+ ", "+theUpdater.getUsername()+"]");
+                return "redirect:/home";
+            }
+            theModel.addAttribute("lengthForm", form);
+            theModel.addAttribute("grades", grades);
+            return "length-edit";
+        }
+    }
+
+    @PostMapping("/spot/{spotId}/sector/{sectorId}/route/{routeId}/length/{lengthId}/updateLength")
+    public String updateLength(@PathVariable("spotId") Integer theSpotId,  @PathVariable("sectorId") Integer theSectorId,
+                               @PathVariable("routeId") Integer theRouteId,@PathVariable("lengthId") Integer theLengthId,
+                              @Valid @ModelAttribute("lengthForm") LengthForm theLengthForm, BindingResult theBindingResult, Model theModel) {
+        lengthFormValidator.validate(theLengthForm, theBindingResult);
+
+        if (theBindingResult.hasErrors()) {
+            System.out.println("form has errors");
+            List<Grade> grades = gradeService.getGrades();
+            theModel.addAttribute("grades", grades);
+            return "length-edit";
+        } else {
+            System.out.println("form is validated");
+            Length theLengthToUpdate = lengthService.findLengthById(theLengthId);
+
+            Double height = Double.parseDouble(theLengthForm.getHeight());
+            Integer bolts = Integer.parseInt(theLengthForm.getBolts());
+
+           // theLength.setUser(theLengthToUpdate.getUser());
+            //theLength.setRoute(theLengthToUpdate.getRoute());
+            theLengthToUpdate.setBolts(bolts);
+            theLengthToUpdate.setHeight(height);
+            theLengthToUpdate.setGrade(gradeService.findById(theLengthForm.getGrade()));
+
+            lengthService.updateLength(theLengthToUpdate);
+
+            String redirectingString = "/spots/spot/"+theSpotId+"/sector/"+theSectorId+"/route/"+theRouteId;
+            return "redirect:"+redirectingString;
+        }
+    }
+    @GetMapping("/spot/{spotId}/sector/{sectorId}/route/{routeId}/length/{lengthId}/deleteLength")
+    public String deleteLengthFromRoute(@PathVariable("spotId") Integer theSpotId,@PathVariable("sectorId") Integer theSectorId,
+                                        @PathVariable("routeId") Integer theRouteId,@PathVariable("lengthId") Integer theLengthId,
+                                        HttpServletRequest request, HttpSession session) {
+        session = request.getSession();
+        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
+            return "redirect:/user/login";
+        }
+        Spot theSpot = spotService.findSpotById(theSpotId);
+        Sector theSector = sectorService.findSectorById(theSectorId);
+        Route theRoute = routeService.findRouteById(theRouteId);
+        Length theLength = lengthService.findLengthById(theLengthId);
+        String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
+        User theDeleter = userService.findUserByEmail(sessionEmail);
+        if(theDeleter.getUserRole().getId()!= 1 && theDeleter.getId() != theLength.getUser().getId()){
+            System.out.println("User trying to delete length is neither the owner of the comment or an admin");
+            System.out.println("User is: ["+theDeleter.getId()+ ", "+theDeleter.getUsername()+"]");
+            return "redirect:/home";
+        }
+        lengthService.deleteLength(theLengthId);
+        String redirectingString = "/spots/spot/"+theSpotId+"/sector/"+theSectorId+"/route/"+theRouteId;
+        return "redirect:"+redirectingString;
+    }
+
 }

@@ -23,11 +23,6 @@ public class Route {
     @Column(name = "name")
     private String name;
 
-    //TODO enlever le length de route + annuler routeForm
-    @NotNull
-    @Column(name = "length")
-    private Integer length;
-
     @ManyToOne //plusieurs voies pour un seul user
     @JoinColumn(name = "climb_user_fk")
     private User user;
@@ -64,14 +59,6 @@ public class Route {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Integer getLength() {
-        return length;
-    }
-
-    public void setLength(Integer length) {
-        this.length = length;
     }
 
     public User getUser() {

@@ -2,6 +2,7 @@ package com.elo.oc.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,10 +27,12 @@ public class Sector {
     private String name;
 
     @NotEmpty
+    @Size(max = 255, message = "maximum 255 caractères")
     @Column(name = "location")
     private String location;
 
     @NotEmpty
+    @Size(max = 255, message = "maximum 255 caractères")
     @Column(name = "access")
     private String access;
 

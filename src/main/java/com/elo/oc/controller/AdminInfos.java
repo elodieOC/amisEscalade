@@ -159,10 +159,11 @@ public class AdminInfos {
      * @return profile page if update valid, stays on updateForm if not
      */
     @PostMapping("/user/{userId}/saveUser")
-    public String updateUser(@PathVariable("userId") Integer userId, @Valid @ModelAttribute("user") User theUser, BindingResult theBindingResult) {
+    public String updateUser(@PathVariable("userId") Integer userId, @Valid @ModelAttribute("user") User theUser, BindingResult theBindingResult, Model theModel) {
 
         if (theBindingResult.hasErrors()) {
-            //TODO la liste des roles ne se recharge pas lorsqu'il y a erreur
+            List<Role> roles = roleService.getRoles();
+            theModel.addAttribute("roles", roles);
             return "admin-user-update";
         }
         else {

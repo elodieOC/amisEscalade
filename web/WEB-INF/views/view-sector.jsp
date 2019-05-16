@@ -16,8 +16,7 @@
 <c:import url="inc/choose-navbar.jsp" />
 <main role="main" class="flex-shrink-0 mt-5">
     <div class="container col-md-10 mt-5">
-        <h1 class="d-inline-block col-md-8">${sector.name}:
-            <span class="small">${spot.name}, ${spot.county}, ${spot.city}</span>
+        <h1 class="d-inline-block col-md-8">Secteur ${sector.name}:
             <span class="text-muted ml-5 small">(Ajouté par: <c:choose>
                 <c:when test="${empty sector.user.username}">
                     utilisateur supprimé
@@ -29,7 +28,8 @@
         <input type="button" value="Ajouter une Voie"
                onclick="window.location.href='${sector.id}/ajoutVoie'; return false;"
                class="btn btn-primary" />
-
+        <br />
+        <h4 class="col-md-8">${spot.name}, ${spot.county}, ${spot.city}</h4>
         <c:set var="userRole" value="${sessionScope['loggedInUserRole']}" />
         <c:set var="userId" value="${sessionScope['loggedInUserId']}" />
 
@@ -51,7 +51,7 @@
                    class="btn btn-secondary" />
         </c:if>
 
-        <div class="panel panel-info mt-5">
+        <div class="panel panel-info mt-5 col-md-10">
             <div class="panel-body mb-5">
                 <table class="mb-5 table table-borderless">
                     <thead>
@@ -73,11 +73,16 @@
                             <!-- construct an "view" link with spot id -->
                             <c:url var="viewLink" value="/spots/spot/${spot.id}/sector/${sector.id}/route/${route.id}" />
                             <tr>
-                                <td class="col-lg-2 mx-auto"><a href="${viewLink}"><strong>${sector.routes.indexOf(route)+1}:  </strong>  ${route.name}</a></td><td class="col-lg-2"> <input type="button" value="Ajouter une Longueur" class="btn btn-primary" /></td>
+                                <td class="col-lg-2 mx-auto"><a href="${viewLink}"><strong>${sector.routes.indexOf(route)+1}:  </strong>  ${route.name}</a>
+                           <%--TODO LAZY init
+                                <c:if test="${!empty route.lengths}">
+                                    (${route.lengths.size()+1} longueurs)
+                                </c:if>--%>
+                                </td>
                                 <c:if test="${userRole eq '1' || userId eq spot.user.id}">
                                     <td class="col-lg-2 mx-auto">
                                         <!-- construct an "update" link with spot id -->
-                                        <c:url var="updateLink" value="/spots/spot/${spot.id}/sector/${sector.id}/route/${route.id}/updateRoute" />
+                                        <c:url var="updateLink" value="/spots/spot/${spot.id}/sector/${sector.id}/route/${route.id}/updateFormRoute" />
                                         <!-- construct an "delete" link with spot id -->
                                         <c:url var="deleteLink" value="/spots/spot/${spot.id}/sector/${sector.id}/route/${route.id}/deleteRoute" />
                                         <!-- display the update link -->
