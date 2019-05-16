@@ -17,7 +17,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
-
+/**
+ *<h2>Controller for User purposes</h2>
+ */
 
 @Controller
 @RequestMapping("/user")
@@ -31,6 +33,11 @@ public class UserController {
     @Autowired
     private UserLoginValidator userLoginValidator;
 
+    /**
+     * <p>Page that displays a form to register</p>
+     * @param theModel attribute passed to jsp page
+     * @return register page
+     */
     @GetMapping("/register")
     public String showRegisterForm(Model theModel) {
         User theUser = new User();
@@ -40,11 +47,19 @@ public class UserController {
         return "user-register";
     }
 
+    /**
+     * <p>Process called after the submit button is clicked on register page</p>
+     * @param theUser user being created
+     * @param theBindingResult the result of validation of the form
+     * @param request servlet request
+     * @param theModel attribute passed to jsp page
+     * @return page to show depending on result of process
+     */
     @PostMapping("/saveUser")
     public String saveUser(@Valid @ModelAttribute("user") User theUser, BindingResult theBindingResult,
-                           HttpServletRequest request, HttpSession session, Model theModel) {
+                           HttpServletRequest request, Model theModel) {
         userRegistrationValidator.validate(theUser, theBindingResult);
-        session = request.getSession();
+        HttpSession session = request.getSession();
         if (theBindingResult.hasErrors()) {
             List<Role> roles = roleService.getRolesPublic();
             theModel.addAttribute("roles", roles);
@@ -57,6 +72,11 @@ public class UserController {
         }
     }
 
+    /**
+     * <p>Page that displays a form to login a user</p>
+     * @param theModel attribute passed to jsp page
+     * @return login page
+     */
     @GetMapping("/login")
     public String showLoginForm(Model theModel){
         User theUser = new User();
@@ -64,12 +84,18 @@ public class UserController {
         return "user-login";
     }
 
+    /**
+     * <p>Process called after the submit button is clicked on login page</p>
+     * @param theUser user being logged in
+     * @param theBindingResult the result of validation of the form
+     * @param request servlet request
+     * @return page to show depending on process result
+     */
     @PostMapping("/logUser")
-    public String connectUser(@ModelAttribute("user") User theUser, BindingResult theBindingResult,
-                              HttpServletRequest request, HttpSession session) {
+    public String connectUser(@ModelAttribute("user") User theUser, BindingResult theBindingResult,  HttpServletRequest request) {
 
         userLoginValidator.validate(theUser, theBindingResult);
-        session = request.getSession();
+        HttpSession session = request.getSession();
 
         if (theBindingResult.hasErrors()) {
             return "user-login";
@@ -83,10 +109,16 @@ public class UserController {
         }
     }
 
+    /**
+     * <p>Page that displays the profile of a user</p>
+     * @param theUser logged in user
+     * @param theModel attribute passed to jsp page
+     * @param request servlet request
+     * @return page to show depending on user on the page
+     */
     @GetMapping("/profile")
     //TODO changer mapping pour /userID/profile
     public String showUserProfile(User theUser, Model theModel, HttpServletRequest request) {
-        /* Récupération de la session depuis la requête */
         HttpSession session = request.getSession();
         if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
             return "redirect:/user/login";
@@ -101,7 +133,11 @@ public class UserController {
             }
         }
 
-
+    /**
+     * Process called after the logout button is clicked in navbar
+     * @param session session
+     * @return homepage
+     */
     @RequestMapping(value = "/logout")
     public String logout(HttpSession session) {
         session.invalidate();
