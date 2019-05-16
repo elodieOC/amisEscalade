@@ -37,9 +37,9 @@
                 <p class="text-muted small">Vous êtes administrateur ou vous avez ajouté ce spot. Vous pouvez l'éditer ou le supprimer.</p>
             </div>
             <!-- construct an "update" link with spot id -->
-            <c:url var="updateLink" value="/spots/${spot.id}/updateFormSpot" />
+            <c:url var="updateLink" value="/spots/spot/${spot.id}/updateFormSpot" />
             <!-- construct an "delete" link with spot id -->
-            <c:url var="deleteLink" value="/spots/${spot.id}/delete" />
+            <c:url var="deleteLink" value="/spots/spot/${spot.id}/delete" />
             <!-- display the update link -->
             <input type="button" value="Editer"
                    onclick="window.location.href='${updateLink}'; return false;"
@@ -61,7 +61,7 @@
                 <table class="mb-5">
                     <c:forEach var="sector" items="${sectors}">
                         <!-- construct an "view" link with spot id -->
-                        <c:url var="viewLink" value="/spots/${spot.id}/${sector.id}" />
+                        <c:url var="viewLink" value="/spots/spot/${spot.id}/sector/${sector.id}" />
                         <tr>
                             <td class="col-lg-2 mx-auto"><a href="${viewLink}">${sector.name}</a></td><td class="col-lg-7" style="white-space: pre-line;"><span class="ml-5 text-muted small">(Ajouté par: ${sector.user.username})</span></td>
                         </tr>

@@ -84,6 +84,7 @@ public class UserController {
     }
 
     @GetMapping("/profile")
+    //TODO changer mapping pour /userID/profile
     public String showUserProfile(User theUser, Model theModel, HttpServletRequest request) {
         /* Récupération de la session depuis la requête */
         HttpSession session = request.getSession();

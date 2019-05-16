@@ -37,7 +37,7 @@
                         <!-- loop over and print our spots -->
                         <c:forEach var="spot" items="${spots}">
                             <!-- construct an "view" link with spot id -->
-                            <c:url var="viewLink" value="/spots/${spot.id}" />
+                            <c:url var="viewLink" value="/spots/spot/${spot.id}" />
 
                             <tr>
                                 <!-- display the view link -->

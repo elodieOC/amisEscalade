@@ -45,17 +45,13 @@ textarea{
     resize: none;
 }
 /*TABLES*/
-th{
-    /*background-color: #c3c6ca !important;*/
-    color: black;
-    padding: 0.5rem;
-}
-td{
-    color: black;
+th, td{
     padding: 0.5rem;
 }
 
 .in-line-btn{
     margin-left: 15rem;
 }
+
+
 
