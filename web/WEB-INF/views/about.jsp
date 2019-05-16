@@ -13,10 +13,9 @@
     <c:import url="inc/headContent.jsp"/>
 </head>
 
-<body class="d-flex flex-column h-100">
 <c:import url="inc/choose-navbar.jsp" />
-<div class="wrapper flex-shrink-0">
-    <div class="container d-flex align-items-center">
+<main role="main" class="flex-shrink-0 mt-5">
+    <div class="container col-md-10 mt-5">
         <div class="row">
             <div class="col-lg-8 mx-auto">
                 <h1 class="mb-6">A propos de nous</h1>
@@ -35,7 +34,7 @@
             </div>
         </div>
     </div>
-</div>
+</main>
 </body>
 
 <c:import url="inc/footer.jsp"/>

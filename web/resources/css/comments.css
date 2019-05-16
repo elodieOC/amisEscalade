@@ -2,33 +2,19 @@
 .comment .panel {
 	position:relative;
 }
-.comment .panel-heading{
-	background-color: #9e9e9e !important;
-	color: black;
-	padding: 0.5rem;
-}
-.comment .panel-body{
-	background-color: #c3c6ca !important;
-	color: black;
-	padding: 0.5rem;
-}
-.comment .panel>.panel-heading:after,.panel>.panel-heading:before{
-	position:absolute;
-	top:11px;left:-16px;
-	right:100%;
-	width:0;
-	height:0;
-	display:block;
-	content:" ";
-	border-color:transparent;
-	border-style:solid solid outset;
-	pointer-events:none;
+
+.comment-content{
+	white-space: pre-line;
+	background-color: #E9E9E9;
 }
 
 .comment{
-	margin: 2rem auto;
+	border: 1px solid gray;
 }
 
+.comment th, .comment td{
+	border: 1px solid gray;
+}
 .comment-btn{
 	float: right;
 }

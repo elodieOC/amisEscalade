@@ -13,26 +13,22 @@
 
     <c:import url="inc/headContent.jsp"/>
 </head>
-
-<body class="d-flex flex-column h-100">
 <c:import url="inc/choose-navbar.jsp" />
-<div class="wrapper flex-shrink-0">
-    <header class="masthead">
-        <div class="container d-flex align-items-center">
-            <div class="mx-auto text-center">
-                <div>
-                    <img src="<c:url value="/resources/img/logo.JPG" />" alt="logo amis de l'escalade">
+<main role="main" class="flex-shrink-0 mt-5">
+    <div class="container col-md-10 mt-5" >
+        <header class="masthead">
+            <div class="container d-flex align-items-center mt-5">
+                <div class="mx-auto text-center mt-5">
+                    <div class="mt-5">
+                        <img class="mt-5" src="<c:url value="/resources/img/logo.JPG" />" alt="logo amis de l'escalade">
+                    </div>
+                    <h2 class="text-white-50 mx-auto mt-2 mb-5">Venez partager et échanger sur l'escalade avec la communauté.</h2>
+                    <a href="<c:out value="about.jsp" />" class="btn btn-secondary js-scroll-trigger">A propos de nous</a>
                 </div>
-                <h2 class="text-white-50 mx-auto mt-2 mb-5">Venez partager et échanger sur l'escalade avec la communauté.</h2>
-                <a href="<c:out value="about.jsp" />" class="btn btn-secondary js-scroll-trigger">A propos de nous</a>
             </div>
-        </div>
-    </header>
-</div>
-
-
-
+        </header>
+    </div>
+</main>
 </body>
-
 <c:import url="inc/footer.jsp"/>
 </html>

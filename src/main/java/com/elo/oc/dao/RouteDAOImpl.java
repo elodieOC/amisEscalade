@@ -1,5 +1,6 @@
 package com.elo.oc.dao;
 
+import com.elo.oc.entity.Length;
 import com.elo.oc.entity.Route;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
@@ -45,6 +46,9 @@ public class RouteDAOImpl implements RouteDAO {
     public void deleteRoute(Integer id) {
         Session session = sessionFactory.getCurrentSession();
         Route theRoute = session.byId(Route.class).load(id);
+        for(Length l: theRoute.getLengths()){
+            session.remove(l);
+        }
         session.delete(theRoute);
     }
 
@@ -52,6 +56,7 @@ public class RouteDAOImpl implements RouteDAO {
     public Route findRouteById(Integer id) {
         Session currentSession = sessionFactory.getCurrentSession();
         Route theRoute = currentSession.get(Route.class, id);
+        Hibernate.initialize(theRoute.getLengths());
         return theRoute;
     }
 

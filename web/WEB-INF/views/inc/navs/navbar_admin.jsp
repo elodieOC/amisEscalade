@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<body id="page-top">
+<body class="d-flex flex-column h-100">
 <!-- Navigation -->
 
 <nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top" id="mainNav">
@@ -41,5 +41,4 @@
     </div>
 </nav>
 
-<div class="container nav-below"></div>
 <!-- Header -->

@@ -13,13 +13,10 @@
     <title>Spot ${spot.name} - Secteur ${sector.name}</title>
     <c:import url="inc/headContent.jsp"/>
 </head>
-
-<body class="d-flex flex-column h-100">
-<div class="container h-100 align-items-center">
     <c:import url="inc/choose-navbar.jsp" />
-    <div class="wrapper flex-shrink-0">
-        <div class="offset-1 col-md-10">
-            <h2 class="d-inline-block col-md-8">${sector.name}:
+    <main role="main" class="flex-shrink-0 mt-5">
+        <div class="container col-md-10 mt-5">
+            <h1 class="d-inline-block col-md-8">${sector.name}:
                 <span class="small">${spot.name}, ${spot.county}, ${spot.city}</span>
                 <span class="text-muted ml-5 small">(Ajouté par: <c:choose>
                     <c:when test="${empty sector.user.username}">
@@ -28,7 +25,7 @@
                     <c:otherwise>
                         ${sector.user.username}
                     </c:otherwise>
-                </c:choose>)</span></h2>
+                </c:choose>)</span></h1>
             <input type="button" value="Ajouter une Voie"
                    onclick="window.location.href='${sector.id}/ajoutVoie'; return false;"
                    class="btn btn-primary" />
@@ -54,59 +51,32 @@
                        class="btn btn-secondary" />
             </c:if>
 
-            <hr />
-            <br/><br/>
-
-            <div class="panel panel-info">
-                <div class="panel-body mt-2 mb-5">
-                    <h3 class="mb-5">Informations</h3>
-
-                    <div class="row">
-                        <h4 class="col-lg-1 mx-auto">Situation:</h4>
-                        <p class="col-lg-10" style="white-space: pre-line;">${sector.location}</p>
-                    </div>
-                    <div class="row">
-                        <h4 class="col-lg-1 mx-auto">Accès:</h4>
-                        <p class="col-lg-10" style="white-space: pre-line">${sector.access}</p>
-                    </div>
-
-                    <div class="row">
-                        <h4 class="col-lg-1 mx-auto">Voies</h4>
-                        <c:choose>
-                        <c:when test="${empty sector.routes}">
-                            <p class="col-lg-10">Il n'y a pas encore de voie ajoutée</p>
-                        </c:when>
-                        <c:otherwise>
-                        <p class="col-lg-10"> ${sector.routes.size()}
-                            </c:otherwise>
-                            </c:choose>
-                    </div>
-
-                    <c:choose>
-                        <c:when test="${empty sector.routes}">
-                            <div class="row ml-5">
-                                <p class="col-lg-10"></p>
-                            </div>
-                        </c:when>
-                        <c:otherwise>
-                            <div class="row">
-                                <h4 class="mt-5 ml-5">Infos voies:</h4>
-                            </div>
-                            <hr class="small-hr ml-3"/>
-                            <br/>
+            <div class="panel panel-info mt-5">
+                <h2 class="d-inline-block col-md-8 mb-5">Informations</h2>
+                <div class="panel-body mb-5">
+                    <table class="mb-5 table">
+                        <tr>
+                            <td class="col-lg-2 mx-auto">Situation:</td><td class="col-lg-7" style="white-space: pre-line;">${sector.location}</td>
+                        </tr>
+                        <tr>
+                            <td class="col-lg-2 mx-auto">Accès:</td><td class="col-lg-7" style="white-space: pre-line;">${sector.access}</td>
+                        </tr>
+                    </table>
+                    <c:if test="${!empty sector.routes}">
+                        <table class="mb-5">
+                            <th colspan="2">Infos voies:</th>
                             <c:forEach var="route" items="${sector.routes}">
-                                <div class="row ml-5">
-                                    <p><strong>${sector.routes.indexOf(route)+1}:  </strong> ${route.grade.rating.name}, ${route.name}, cotation ${route.grade.name}, hauteur ${route.height}, ${route.bolts} spits</>
-                                    <br/>
-                                </div>
+                                <tr>
+                                    <td class="col-lg-2 mx-auto"><strong>${sector.routes.indexOf(route)+1}:  </strong>  ${route.name}</td><td class="col-lg-7"> <input type="button" value="Ajouter une Longueur" class="btn btn-primary" /></td>
+                                </tr>
                             </c:forEach>
-                        </c:otherwise>
-                    </c:choose>
+                        </table>
+                    </c:if>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 </div>
-</body>
 <c:import url="inc/footer.jsp"/>
+</body>
 </html>

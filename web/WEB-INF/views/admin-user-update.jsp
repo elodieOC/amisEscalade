@@ -15,13 +15,12 @@
     <c:import url="inc/headContent.jsp"/>
 
 </head>
-<body class="d-flex flex-column h-100">
 <c:import url="inc/choose-navbar.jsp" />
-<div class="wrapper flex-shrink-0">
-    <div class="container align-items-center">
+<main role="main" class="flex-shrink-0 mt-5">
+    <div class="container col-md-10 mt-5">
         <div class="col-lg-6 mx-auto">
             <div class="card bg-light p-4 ">
-                <h2 class="mt-3 mb-3 text-center">Edition de compte</h2>
+                <h2 class="mt-3 mb-3">Edition de compte</h2>
 
                 <form:form action="saveUser" cssClass="form-horizontal"  method="post" modelAttribute="user">
                     <!-- need to associate this data with user id -->
@@ -69,7 +68,6 @@
                         </form:select>
                     </div> <!-- form-group end.// -->
 
-
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block"> Editer le compte  </button>
                     </div> <!-- form-group// -->
@@ -77,9 +75,7 @@
             </div>
         </div><!-- card.// -->
     </div>
-    <!--container end.//-->
-</div>
+</main>
 </body>
-
 <c:import url="inc/footer.jsp"/>
 </html>

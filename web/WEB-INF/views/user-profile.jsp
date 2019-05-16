@@ -13,21 +13,21 @@
     <title>Mon Profil</title>
     <c:import url="inc/headContent.jsp"/>
 </head>
-<body class="d-flex flex-column h-100">
 <c:import url="inc/choose-navbar.jsp" />
-<div class="wrapper flex-shrink-0">
-<div class="container d-flex h-100 align-items-center">
+<main role="main" class="flex-shrink-0 mt-5">
+    <div class="container col-md-10 mt-5">
     <div class="col-md-offset-2 col-md-7">
-        <h2 class="text-center mb-5">Profil</h2>
+        <h2 class="mb-5 mt-5">Bienvenu-e ${user.username}</h2>
         <div class="panel panel-info">
             <div class="panel-body">
                 <table class="table table-striped table-bordered">
+                    <thead class="thead-dark">
                     <tr>
                         <th>Pseudo</th>
                         <th>Email</th>
                         <th>Action</th>
                     </tr>
-
+                    </thead>
                     <!-- construct an "update" link with user id -->
                     <c:url var="updateLink" value="/user/updateForm">
                         <c:param name="id" value="${user.id}" />
@@ -54,9 +54,11 @@
                 </table>
                <%--LAZY EXCEPTION--%>
                <table class="table table-striped table-bordered">
+                   <thead class="thead-dark">
                     <tr>
                         <th>Spots</th>
                     </tr>
+                   </thead>
                    <c:if test="${ empty spots }">
                        <tr><td>Vous n'avez pas encore ajouté de spot</td></tr>
                    </c:if>
@@ -70,7 +72,7 @@
         </div>
     </div>
 </div>
-</div>
+</main>
 </body>
 
 <c:import url="inc/footer.jsp"/>

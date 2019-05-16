@@ -12,22 +12,23 @@
     <title>Infos</title>
     <c:import url="inc/headContent.jsp"/>
 </head>
-<body class="d-flex flex-column h-100">
-<div class="wrapper flex-shrink-0">
-    <c:import url="inc/choose-navbar.jsp" />
-    <div class="container h-100 align-items-center">
+<c:import url="inc/choose-navbar.jsp" />
+<main role="main" class="flex-shrink-0 mt-5">
+    <div class="container col-md-10 mt-5">
         <div class="container col-md-offset-1 col-md-10">
             <h2>Utilisateurs</h2>
-            <hr />
+            
             <div class="panel panel-info">
                 <div class="panel-body">
                     <table class="table table-striped table-bordered">
+                        <thead class="thead-dark">
                         <tr>
                             <th>Pseudo</th>
                             <th>Email</th>
                             <th>Role</th>
                             <th>Action</th>
                         </tr>
+                        </thead>
                         <c:forEach var="tempUser" items="${users}">
                             <!-- construct an "view" link with user id -->
                             <c:url var="viewLink" value="/admin/user/${tempUser.id}/profile" />
@@ -47,14 +48,16 @@
         </div>
         <div class="container col-md-offset-1 col-md-10">
             <h2 class="mt-5">Roles</h2>
-            <hr />
+            
             <div class="panel panel-info">
                 <div class="panel-body">
                     <table class="table table-striped table-bordered">
+                        <thead class="thead-dark">
                         <tr>
                             <th>Id</th>
                             <th>Nom</th>
                         </tr>
+                        </thead>
                         <c:forEach var="userRole" items="${roles}" >
                             <tr>
                                 <td>${userRole.id}</td>
@@ -67,16 +70,18 @@
         </div>
         <div class="container col-md-offset-1 col-md-10">
             <h2 class="mt-5">Spots</h2>
-            <hr />
+            
             <div class="panel panel-info">
                 <div class="panel-body">
                     <table class="table table-striped table-bordered">
+                        <thead class="thead-dark">
                         <tr>
                             <th>Id</th>
                             <th>Nom</th>
                             <th>Ville</th>
                             <th>Région</th>
                         </tr>
+                        </thead>
                         <c:forEach var="spot" items="${spots}" >
                             <tr>
                                 <td>${spot.id}</td>
@@ -90,16 +95,17 @@
             </div>
         </div>
         <div class="container col-md-offset-1 col-md-10">
-            <h2 class="mt-5">Cotations</h2>
-            <hr />
+            <h2 class="mt-5">Cotations</h2><
             <div class="panel panel-info">
                 <div class="panel-body">
                     <table class="table table-striped table-bordered">
+                        <thead class="thead-dark">
                         <tr>
                             <th>Id</th>
                             <th>Cotation</th>
                             <th>Niveau</th>
                         </tr>
+                        </thead>
                         <c:forEach var="cot" items="${grades}" >
                             <tr>
                                 <td>${cot.id}</td>
@@ -110,8 +116,8 @@
                     </table>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
+        </div></div>
+</main>
 </body>
+<c:import url="inc/footer.jsp"/>
 </html>

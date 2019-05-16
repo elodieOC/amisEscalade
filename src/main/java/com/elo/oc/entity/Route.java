@@ -4,6 +4,8 @@ import com.elo.oc.entity.Sector;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "route")
@@ -21,14 +23,10 @@ public class Route {
     @Column(name = "name")
     private String name;
 
+    //TODO enlever le length de route + annuler routeForm
     @NotNull
-    @Column(name = "height")
-    private Double height;
-
-
-    @NotNull
-    @Column(name = "bolts")
-    private Integer bolts;
+    @Column(name = "length")
+    private Integer length;
 
     @ManyToOne //plusieurs voies pour un seul user
     @JoinColumn(name = "climb_user_fk")
@@ -38,11 +36,18 @@ public class Route {
     @JoinColumn(name = "sector_fk")
     private Sector sector;
 
-    @ManyToOne //plusieurs voies pour un niveau
-    @JoinColumn(name = "grade_fk")
-    private Grade grade;
+    @OneToMany(mappedBy = "route")
+    private List<Length> lengths = new ArrayList<>();
 
     public Route() {
+    }
+
+    public List<Length> getLengths() {
+        return lengths;
+    }
+
+    public void setLengths(List<Length> lengths) {
+        this.lengths = lengths;
     }
 
     public Integer getId() {
@@ -61,20 +66,12 @@ public class Route {
         this.name = name;
     }
 
-    public Double getHeight() {
-        return height;
+    public Integer getLength() {
+        return length;
     }
 
-    public void setHeight(Double height) {
-        this.height = height;
-    }
-
-    public Integer getBolts() {
-        return bolts;
-    }
-
-    public void setBolts(Integer bolts) {
-        this.bolts = bolts;
+    public void setLength(Integer length) {
+        this.length = length;
     }
 
     public User getUser() {
@@ -93,11 +90,4 @@ public class Route {
         this.sector = sector;
     }
 
-    public Grade getGrade() {
-        return grade;
-    }
-
-    public void setGrade(Grade grade) {
-        this.grade = grade;
-    }
 }

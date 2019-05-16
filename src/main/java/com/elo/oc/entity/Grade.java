@@ -23,7 +23,7 @@ public class Grade {
     private Rating rating;
 
     @OneToMany(mappedBy = "grade")
-    private List<Route> routes = new ArrayList<>();
+    private List<Length> lengths = new ArrayList<>();
 
       public Grade() {
     }
@@ -53,12 +53,12 @@ public class Grade {
         this.rating = rating;
     }
 
-    public List<Route> getRoutes() {
-        return routes;
+    public List<Length> getLengths() {
+        return lengths;
     }
 
-    public void setRoutes(List<Route> routes) {
-        this.routes = routes;
+    public void setLengths(List<Length> lengths) {
+        this.lengths = lengths;
     }
 
     @Override

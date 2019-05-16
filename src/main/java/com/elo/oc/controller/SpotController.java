@@ -1,9 +1,11 @@
 package com.elo.oc.controller;
 
+import com.elo.oc.dto.LengthForm;
+import com.elo.oc.dto.RouteForm;
 import com.elo.oc.entity.*;
 import com.elo.oc.entity.Sector;
 import com.elo.oc.service.*;
-import com.elo.oc.utils.RouteFormValidator;
+import com.elo.oc.utils.LengthFormValidator;
 import com.elo.oc.utils.SessionCheck;
 import com.elo.oc.utils.SpotRegistrationValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +36,11 @@ public class SpotController {
     @Autowired
     private RouteService routeService;
     @Autowired
+    private LengthService lengthService;
+    @Autowired
     private SpotRegistrationValidator spotRegistrationValidator;
     @Autowired
-    private RouteFormValidator routeFormValidator;
+    private LengthFormValidator lengthFormValidator;
 
     @GetMapping("/list")
     public String listSpots(Model theModel) {
@@ -407,18 +411,20 @@ public class SpotController {
             Spot theSpot = spotService.findSpotById(spotId);
             List<Grade>grades = gradeService.getGrades();
             Sector theSector = sectorService.findSectorById(sectorId);
-            Route theRoute = new Route();
+            RouteForm form = new RouteForm();
+
             theModel.addAttribute("grades", grades );
             theModel.addAttribute("spot", theSpot);
             theModel.addAttribute("sector", theSector);
-            theModel.addAttribute("route", theRoute);
+            theModel.addAttribute("routeForm", form);
+
             return "add-route-toSector";
         }
     }
 
     @PostMapping("/{spotId}/{sectorId}/saveRoute")
     public String saveRoute(@PathVariable("spotId") Integer spotId, @PathVariable("sectorId") Integer sectorId,
-                            @Valid @ModelAttribute("route") RouteForm theRouteForm, BindingResult theBindingResult,
+                            @Valid @ModelAttribute("routeForm") RouteForm theRouteForm,  BindingResult theBindingResult,
                             HttpServletRequest request, HttpSession session) {
         session = request.getSession();
 
@@ -428,29 +434,85 @@ public class SpotController {
         else {
             String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
             System.out.println("user "+ userService.findUserByEmail(sessionEmail).getUsername()+" logged in");
-            routeFormValidator.validate(theRouteForm, theBindingResult);
+
             if (theBindingResult.hasErrors()) {
                 System.out.println("form has errors");
                 return "add-route-toSector";
             } else {
                 System.out.println("form is validated");
-                String formHeight = theRouteForm.getHeight();
-                String formBolts = theRouteForm.getBolts();
-                Integer formGrade = theRouteForm.getGrade();
 
-                double height = Double.parseDouble(formHeight);
-                Integer bolts = Integer.parseInt(formBolts);
-
-                //TODO la liste des cotations ne se recharge pas lorsqu'il y a erreur
                 Route theRoute = new Route();
                 theRoute.setUser(userService.findUserByEmail(sessionEmail));
                 theRoute.setSector(sectorService.findSectorById(sectorId));
-                theRoute.setBolts(bolts);
-                theRoute.setHeight(height);
                 theRoute.setName(theRouteForm.getName());
-                theRoute.setGrade(gradeService.findById(formGrade));
 
                 routeService.saveRoute(theRoute);
+
+                String redirectingString = "/spots/"+spotId+"/"+sectorId;
+                return "redirect:"+redirectingString;
+            }
+        }
+    }
+    /*
+    ******************************************
+    * Lengths
+    ******************************************
+     */
+    @GetMapping("/{spotId}/{sectorId}/{routeId}/ajoutLongueur")
+    public String addLengthToRoute(@PathVariable("spotId") Integer spotId, @PathVariable("sectorId") Integer sectorId,
+                                  @PathVariable("routeId") Integer routeId,
+                                  Model theModel, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
+            return "redirect:/user/login";
+        }
+        else {
+            List<Grade>grades = gradeService.getGrades();
+            LengthForm form = new LengthForm();
+            Route theRoute = routeService.findRouteById(routeId);
+            Sector theSector = sectorService.findSectorById(sectorId);
+
+            theModel.addAttribute("route", theRoute);
+            theModel.addAttribute("sector", theSector);
+            theModel.addAttribute("grades", grades );
+            theModel.addAttribute("lengthForm", form);
+
+            return "add-length-toRoute";
+        }
+    }
+
+    @PostMapping("/{spotId}/{sectorId}/{routeId}/saveLength")
+    public String saveLength(@PathVariable("spotId") Integer spotId, @PathVariable("sectorId") Integer sectorId, @PathVariable("routeId") Integer routeId,
+                            @Valid @ModelAttribute("lengthForm") LengthForm theLengthForm,
+                             BindingResult theBindingResult,
+                            HttpServletRequest request, HttpSession session) {
+        session = request.getSession();
+
+        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
+            return "redirect:/user/login";
+        }
+        else {
+            String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
+            lengthFormValidator.validate(theLengthForm, theBindingResult);
+
+            // TODO list grades ne se recharge pas en cas d'erreur
+            if (theBindingResult.hasErrors()) {
+                System.out.println("form has errors");
+                return "add-length-toRoute";
+            } else {
+                System.out.println("form is validated");
+
+                Double height = Double.parseDouble(theLengthForm.getHeight());
+                Integer bolts = Integer.parseInt(theLengthForm.getBolts());
+
+                Length theLength = new Length();
+                theLength.setUser(userService.findUserByEmail(sessionEmail));
+                theLength.setRoute(routeService.findRouteById(routeId));
+                theLength.setBolts(bolts);
+                theLength.setHeight(height);
+                theLength.setGrade(gradeService.findById(theLengthForm.getGrade()));
+
+                lengthService.saveLength(theLength);
 
                 String redirectingString = "/spots/"+spotId+"/"+sectorId;
                 return "redirect:"+redirectingString;

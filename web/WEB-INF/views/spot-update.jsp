@@ -14,13 +14,12 @@
     <c:import url="inc/headContent.jsp"/>
 
 </head>
-<body class="d-flex flex-column h-100">
 <c:import url="inc/choose-navbar.jsp" />
-<div class="wrapper flex-shrink-0">
-    <div class="container align-items-center">
+<main role="main" class="flex-shrink-0 mt-5">
+    <div class="container col-md-10 mt-5">
         <div class="col-lg-6 mx-auto">
             <div class="card bg-light p-4 ">
-                <h2 class="mt-3 mb-3 text-center">Editer Spot</h2>
+                <h2 class="mt-3 mb-3 ">Editer Spot</h2>
                 <form:form action="updateSpot" cssClass="form-horizontal"  method="post" modelAttribute="spot">
 
                     <!-- need to associate this data with spot id -->
@@ -58,9 +57,8 @@
             </div>
         </div>
     </div>
-</div>
+</main>
 </body>
-
 <c:import url="inc/footer.jsp"/>
 </html>
 

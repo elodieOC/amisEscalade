@@ -15,15 +15,16 @@
     <c:import url="inc/headContent.jsp"/>
 
 </head>
-<body class="d-flex flex-column h-100">
 <c:import url="inc/choose-navbar.jsp" />
-<div class="wrapper flex-shrink-0">
-    <div class="container align-items-center">
+<main role="main" class="flex-shrink-0 mt-5">
+    <div class="container col-md-10 mt-5">
         <div class="col-lg-6 mx-auto">
-            <div class="card bg-light p-4 ">
+            <br />
+            <br />
+            <br />
+            <div class="card bg-light p-4">
                 <h2 class="mt-3 mb-3 text-center">Connexion</h2>
                 <form:form action="logUser" cssClass="form-horizontal"  method="post" modelAttribute="user">
-
                     <p>
                         <a href="" class="btn btn-block btn-facebook"> <i class="fab fa-facebook-f"></i>   via facebook</a>
                     </p>
@@ -55,8 +56,7 @@
             </div>
         </div>
     </div>
-</div>
+</main>
 </body>
-
 <c:import url="inc/footer.jsp"/>
 </html>

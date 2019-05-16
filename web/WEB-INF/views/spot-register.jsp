@@ -14,11 +14,13 @@
     <c:import url="inc/headContent.jsp"/>
 
 </head>
-<body class="d-flex flex-column h-100">
 <c:import url="inc/choose-navbar.jsp" />
-<div class="wrapper flex-shrink-0">
-    <div class="container align-items-center">
+<main role="main" class="flex-shrink-0 mt-5">
+    <div class="container col-md-10 mt-5">
         <div class="col-lg-6 mx-auto">
+            <br />
+            <br />
+            <br />
             <div class="card bg-light p-4 ">
                 <h2 class="mt-3 mb-3 text-center">Ajouter Spot</h2>
                 <form:form action="saveSpot" cssClass="form-horizontal"  method="post" modelAttribute="spot">
@@ -58,9 +60,8 @@
             </div>
         </div>
     </div>
-</div>
+</main>
 </body>
-
 <c:import url="inc/footer.jsp"/>
 </html>
 

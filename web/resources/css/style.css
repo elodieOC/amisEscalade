@@ -1,6 +1,7 @@
 .card form input, .card form select, .card form a, .card form button{
     font-size: medium;
 }
+/*LOGIN and REGISTER forms*/
 .divider-text {
     position: relative;
     text-align: center;
@@ -27,7 +28,7 @@
     background-color: #405D9D;
     color: #fff;
 }
-
+/* ALL FORMS*/
 .error{
     color: red;
 }
@@ -40,42 +41,21 @@ p .fab{
     font-size: 12px;
 }
 
-.nav-below{
-    height: 12rem;
+textarea{
+    resize: none;
 }
-
-.space-below-10{
-    height: 10rem;
-}
-.space-below-5{
-    height: 5rem;
-}
+/*TABLES*/
 th{
-    background-color: #9e9e9e !important;
+    /*background-color: #c3c6ca !important;*/
     color: black;
     padding: 0.5rem;
 }
 td{
-    background-color: #c3c6ca !important;
     color: black;
     padding: 0.5rem;
 }
 
-hr{
-    border-top: 1px solid #494f54;
-}
-
-.small-hr{
-    width: 50%;
-    margin-top: 0;
-    margin-bottom: 0;
-    float: left;
-    border-top: 1px solid gray;
-}
 .in-line-btn{
     margin-left: 15rem;
 }
 
-textarea{
-    resize: none;
-}

@@ -7,9 +7,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<body id="page-top">
 <!-- Navigation -->
-
+<body class="d-flex flex-column h-100">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
     <div class="container">
         <a class="navbar-brand js-scroll-trigger" href="<c:url value="/home" />">Les amis de l'escalade</a>
@@ -34,5 +33,5 @@
         </div>
     </div>
 </nav>
-<div class="container nav-below"></div>
+
 <!-- Header -->

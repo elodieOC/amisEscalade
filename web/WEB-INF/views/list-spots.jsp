@@ -13,61 +13,54 @@
     <c:import url="inc/headContent.jsp"/>
 </head>
 
-<body class="d-flex flex-column h-100">
 <c:import url="inc/choose-navbar.jsp" />
-<div class="wrapper flex-shrink-0">
-<div class="container d-flex h-100 align-items-center">
-    <div class="col-md-offset-1 col-md-10">
-        <h2 class="mb-5">Liste des Spots</h2>
-        <hr />
+    <main role="main" class="flex-shrink-0 mt-5">
+        <div class="container col-md-10 mt-5">
+            <h1 class="mb-5 d-inline-block col-md-8">Liste des Spots</h1>
 
-        <input type="button" value="Ajouter Spot"
-               onclick="window.location.href='ajoutSpot'; return false;"
-               class="btn btn-primary" />
-        <br/><br/>
-        <div class="panel panel-info">
-            <div class="panel-body">
-                <c:set var="userRole" value="${sessionScope['loggedInUserRole']}" />
-                <c:set var="userId" value="${sessionScope['loggedInUserId']}" />
-                <table class="table table-striped table-bordered">
-                    <tr>
-                        <th>Nom</th>
-                        <th>Région</th>
-                        <th>Ville</th>
-                        <th>Ajouté par</th>
-                    </tr>
+            <input type="button" value="Ajouter Spot"
+                   onclick="window.location.href='ajoutSpot'; return false;"
+                   class="btn btn-primary" />
 
-                    <!-- loop over and print our spots -->
-                    <c:forEach var="spot" items="${spots}">
-                        <!-- construct an "view" link with spot id -->
-                        <c:url var="viewLink" value="/spots/${spot.id}" />
-
-                        <tr>
-                            <!-- display the view link -->
-                            <td><a href="${viewLink}">${spot.name}</a></td>
-                            <td>${spot.county}</td>
-                            <td>${spot.city}</td>
-                            <c:choose>
-                                <c:when test="${empty spot.user.username}">
-                                    <td>utilisateur supprimé</td>
-                                </c:when>
-                                <c:otherwise>
-                                    <td>${spot.user.username}</td>
-                                </c:otherwise>
-                            </c:choose>
+            <div class="panel panel-info mt-5">
+                <div class="panel-body">
+                    <c:set var="userRole" value="${sessionScope['loggedInUserRole']}" />
+                    <c:set var="userId" value="${sessionScope['loggedInUserId']}" />
+                    <table class="table table-striped table-bordered">
+                        <thead class="thead-light"><tr>
+                            <th>Nom</th>
+                            <th>Région</th>
+                            <th>Ville</th>
+                            <th>Ajouté par</th>
                         </tr>
+                        </thead>
+                        <!-- loop over and print our spots -->
+                        <c:forEach var="spot" items="${spots}">
+                            <!-- construct an "view" link with spot id -->
+                            <c:url var="viewLink" value="/spots/${spot.id}" />
 
-                    </c:forEach>
+                            <tr>
+                                <!-- display the view link -->
+                                <td><a href="${viewLink}">${spot.name}</a></td>
+                                <td>${spot.county}</td>
+                                <td>${spot.city}</td>
+                                <c:choose>
+                                    <c:when test="${empty spot.user.username}">
+                                        <td>utilisateur supprimé</td>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <td>${spot.user.username}</td>
+                                    </c:otherwise>
+                                </c:choose>
+                            </tr>
 
-                </table>
-
+                        </c:forEach>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-
-</div>
-</div>
+</main>
 </body>
-
 <c:import url="inc/footer.jsp"/>
 </html>

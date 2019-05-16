@@ -35,7 +35,6 @@ public class UserController {
     public String showRegisterForm(Model theModel) {
         User theUser = new User();
         List<Role> roles = roleService.getRolesPublic();
-
         theModel.addAttribute("roles", roles);
         theModel.addAttribute("user", theUser);
         return "user-register";
@@ -43,10 +42,12 @@ public class UserController {
 
     @PostMapping("/saveUser")
     public String saveUser(@Valid @ModelAttribute("user") User theUser, BindingResult theBindingResult,
-                           HttpServletRequest request, HttpSession session) {
+                           HttpServletRequest request, HttpSession session, Model theModel) {
         userRegistrationValidator.validate(theUser, theBindingResult);
         session = request.getSession();
         if (theBindingResult.hasErrors()) {
+            List<Role> roles = roleService.getRolesPublic();
+            theModel.addAttribute("roles", roles);
             return "user-register";
         }
         else{

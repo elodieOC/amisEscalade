@@ -14,10 +14,9 @@
     <c:import url="inc/headContent.jsp"/>
 </head>
 
-<body class="d-flex flex-column h-100">
 <c:import url="inc/choose-navbar.jsp" />
-<div class="wrapper flex-shrink-0">
-    <div class="container d-flex h-100 align-items-center">
+<main role="main" class="flex-shrink-0 mt-5">
+    <div class="container col-md-10 mt-5">
         <div class="col-md-offset-1 col-md-10">
             <h2 class="mb-5">Spot ${spot.name} - Ajouter un commentaire</h2>
             <hr />
@@ -35,7 +34,7 @@
             </form:form>
             </div>
         </div>
-    </div>
+    </main>
 </div>
 
 
