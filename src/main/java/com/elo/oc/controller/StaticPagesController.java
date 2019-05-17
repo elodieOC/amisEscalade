@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/")
-public class Statics {
+public class StaticPagesController {
 
     /**
      * <p>Homepage</p>

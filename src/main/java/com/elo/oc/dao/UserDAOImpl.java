@@ -56,12 +56,15 @@ public class UserDAOImpl implements UserDAO {
         Session session = sessionFactory.getCurrentSession();
         User u = session.byId(User.class).load(id);
         for (Spot s: u.getSpots() ) {
-            s.setUser(findUserByUsername("deleted"));
+            s.setUser(null);
             session.saveOrUpdate(s);
         }
         for (Comment c: u.getComments() ) {
-            c.setUser(findUserByUsername("deleted"));
+            c.setUser(null);
             session.saveOrUpdate(c);
+        }
+        for(Topo t :u.getTopos()){
+            session.remove(t);
         }
         session.delete(u);
     }
@@ -99,6 +102,7 @@ public class UserDAOImpl implements UserDAO {
        User theUser = currentSession.get(User.class, id);
         Hibernate.initialize(theUser.getSpots());
         Hibernate.initialize(theUser.getComments());
+        Hibernate.initialize(theUser.getTopos());
         /*
         CriteriaBuilder cb = currentSession.getCriteriaBuilder();
         CriteriaQuery q = cb.createQuery(User.class);

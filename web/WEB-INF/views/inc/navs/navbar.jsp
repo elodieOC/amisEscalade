@@ -21,6 +21,7 @@
                 <li class="nav-item ml-4">
                     <a class="nav-link js-scroll-trigger" href="<c:url value="/about" />">A Propos</a>
                 </li>
+                <li class="nav-item ml-4"><a class="nav-link" href="<c:url value="/topos/list" />">Les Topos</a></li>
                 <li class="nav-item ml-4">
                     <a class="nav-link js-scroll-trigger" href="<c:url value="/spots/list" />">Les Spots</a>
                 </li>

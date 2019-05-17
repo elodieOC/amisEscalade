@@ -1,6 +1,7 @@
 package com.elo.oc.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ public class Rating {
     private Integer id;
 
     @Column(name = "name")
-    @NotEmpty
+    @NotBlank
     private String name;
 
     @OneToMany (mappedBy = "rating", fetch = FetchType.EAGER)

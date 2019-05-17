@@ -58,7 +58,7 @@ public class SpotController {
 
     /*
     **************************************
-    * Spots
+    * Spots CRUD
     * ************************************
      */
 
@@ -69,7 +69,7 @@ public class SpotController {
      * @return page to show depending on user on user on the page
      */
     @GetMapping("/ajoutSpot")
-    public String showFormForAdd(Model theModel, HttpServletRequest request) {
+    public String showFormForSpotAdd(Model theModel, HttpServletRequest request) {
         HttpSession session = request.getSession();
 
         if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){

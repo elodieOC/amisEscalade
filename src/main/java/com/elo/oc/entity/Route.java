@@ -2,6 +2,7 @@ package com.elo.oc.entity;
 
 import com.elo.oc.entity.Sector;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class Route {
     @Column(name = "id")
     private Integer id;
 
-    @NotEmpty
+    @NotBlank
     @Column(name = "name")
     private String name;
 

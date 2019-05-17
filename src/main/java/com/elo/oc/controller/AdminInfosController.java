@@ -20,7 +20,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/admin")
-public class AdminInfos {
+public class AdminInfosController {
 
     @Autowired
     private RoleService roleService;
@@ -108,6 +108,7 @@ public class AdminInfos {
                     User theUser = userService.findUserByIdWithSpots(userId);
                     theModel.addAttribute("user", theUser);
                     theModel.addAttribute("spots", theUser.getSpots());
+                    theModel.addAttribute("topos", theUser.getTopos());
                     return "admin-user-profile";
                 }
             }
@@ -196,7 +197,7 @@ public class AdminInfos {
             }
             else {
                 userService.deleteUser(userId);
-                return "redirect:infos";
+                return "redirect:/admin/infos";
             }
         }
     }

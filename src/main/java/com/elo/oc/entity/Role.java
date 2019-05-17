@@ -1,6 +1,7 @@
 package com.elo.oc.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,7 @@ public class Role {
     private Integer id;
 
     @Column(name = "role_name")
+    @NotBlank
     private String roleName;
 
 

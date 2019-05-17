@@ -52,7 +52,7 @@
                     </tr>
 
                 </table>
-               <%--LAZY EXCEPTION--%>
+
                <table class="table table-striped table-bordered">
                    <thead class="thead-dark">
                     <tr>
@@ -67,6 +67,37 @@
                         <tr> <td>${spot.name}</td></tr>
                     </c:forEach>
                    </c:if>
+                </table>
+
+               <table class="table table-striped table-bordered">
+                   <thead class="thead-dark">
+                   <tr><th colspan="7">Topos</th></tr>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Ville</th>
+                        <th>Région</th>
+                        <th>Pays</th>
+                        <th>Description</th>
+                        <th>Date de parution</th>
+                        <th>Disponible</th>
+                    </tr>
+                   </thead>
+                   <c:choose>
+                       <c:when test="${empty topos}"><tr><td colspan="7">Vous n'avez pas encore ajouté de topo</td></tr></c:when>
+                       <c:otherwise>
+                           <c:forEach var="topo" items="${topos}" >
+                               <tr>
+                                   <td>${topo.name}</td>
+                                   <td>${topo.city}</td>
+                                   <td>${topo.county}</td>
+                                   <td>${topo.country}</td>
+                                   <td>${topo.description}</td>
+                                   <td>${topo.dateRelease}</td>
+                                   <td>${topo.available}</td>
+                               </tr>
+                           </c:forEach>
+                       </c:otherwise>
+                   </c:choose>
                 </table>
             </div>
         </div>

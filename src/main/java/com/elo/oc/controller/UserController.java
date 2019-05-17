@@ -33,6 +33,11 @@ public class UserController {
     @Autowired
     private UserLoginValidator userLoginValidator;
 
+    /*
+     **************************************
+     * Registration
+     * ************************************
+     */
     /**
      * <p>Page that displays a form to register</p>
      * @param theModel attribute passed to jsp page
@@ -68,10 +73,16 @@ public class UserController {
         else{
             userService.saveUser(theUser);
             session.setAttribute("loggedInUserEmail", theUser.getEmail());
-            return "redirect:profile";
+            session.setAttribute("loggedInUserId", theUser.getId());
+            String redirectString = "/user/"+session.getAttribute("loggedInUserId")+"/profile";
+            return "redirect:"+redirectString;
         }
     }
-
+    /*
+     **************************************
+     * LOGIN
+     * ************************************
+     */
     /**
      * <p>Page that displays a form to login a user</p>
      * @param theModel attribute passed to jsp page
@@ -105,34 +116,48 @@ public class UserController {
             session.setAttribute("loggedInUserEmail", userToLogIn.getEmail());
             session.setAttribute("loggedInUserId", userToLogIn.getId());
             session.setAttribute("loggedInUserRole", userToLogIn.getUserRole().getId());
-            return "redirect:profile";
+            String redirectString = "/user/"+userToLogIn.getId()+"/profile";
+            return "redirect:"+redirectString;
         }
     }
-
+    /*
+     **************************************
+     * User Infos
+     * ************************************
+     */
     /**
      * <p>Page that displays the profile of a user</p>
-     * @param theUser logged in user
      * @param theModel attribute passed to jsp page
      * @param request servlet request
      * @return page to show depending on user on the page
      */
-    @GetMapping("/profile")
-    //TODO changer mapping pour /userID/profile
-    public String showUserProfile(User theUser, Model theModel, HttpServletRequest request) {
+    @GetMapping("/{userId}/profile")
+    public String showUserProfile(@PathVariable("userId") Integer userId,Model theModel, HttpServletRequest request) {
         HttpSession session = request.getSession();
         if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
             return "redirect:/user/login";
         }
         else {
             String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
-            Integer userId = userService.findUserByEmail(sessionEmail).getId();
-                theUser = userService.findUserByIdWithSpots(userId);
-                theModel.addAttribute("user", theUser);
-                theModel.addAttribute("spots", theUser.getSpots());
-                return "user-profile";
-            }
-        }
+            User theUser = userService.findUserByIdWithSpots(userId);
 
+            if (userService.findUserByEmail(sessionEmail).getId() != userId && theUser.getUserRole().getId()!= 1 ) {
+                System.out.println("User trying to access prolie is neither the owner of the comment or an admin");
+                System.out.println("User is: ["+theUser.getId()+ ", "+theUser.getUsername()+"]");
+                return "redirect:/home";
+            }
+            theModel.addAttribute("user", theUser);
+            theModel.addAttribute("topos", theUser.getTopos());
+            theModel.addAttribute("spots", theUser.getSpots());
+            return "user-profile";
+
+        }
+    }
+    /*
+     **************************************
+     * User logout
+     * ************************************
+     */
     /**
      * Process called after the logout button is clicked in navbar
      * @param session session
@@ -144,6 +169,11 @@ public class UserController {
         return "redirect:/home";
     }
 
+    /*
+     **************************************
+     * User update and delete
+     * ************************************
+     */
     @GetMapping("/updateForm")
     //TODO faire une page et form pour updater user
     public String showFormForUpdate(@RequestParam("id") Integer theId, Model theModel) {

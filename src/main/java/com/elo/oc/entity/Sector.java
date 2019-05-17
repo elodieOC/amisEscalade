@@ -1,6 +1,7 @@
 package com.elo.oc.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
@@ -22,16 +23,16 @@ public class Sector {
     @Column(name = "id")
     private Integer id;
 
-    @NotEmpty
+    @NotBlank
     @Column(name = "name")
     private String name;
 
-    @NotEmpty
+    @NotBlank
     @Size(max = 255, message = "maximum 255 caractères")
     @Column(name = "location")
     private String location;
 
-    @NotEmpty
+    @NotBlank
     @Size(max = 255, message = "maximum 255 caractères")
     @Column(name = "access")
     private String access;

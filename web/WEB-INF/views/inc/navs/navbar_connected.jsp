@@ -22,12 +22,13 @@
                 <li class="nav-item ml-4">
                     <a class="nav-link js-scroll-trigger" href="<c:url value="/about" />" >A Propos</a>
                 </li>
-                <li class="nav-item ml-4"><a class="nav-link" href="<c:url value="#" />">Les Topos</a></li>
+                <li class="nav-item ml-4"><a class="nav-link" href="<c:url value="/topos/list" />">Les Topos</a></li>
                 <li class="nav-item ml-4"><a class="nav-link" href="<c:url value="/spots/list" />">Les Spots</a></li>
                 <li class="nav-item ml-4">
                     <a class="nav-link js-scroll-trigger" href="<c:url value="/contact" />">Contact</a>
                 </li>
-                <li class="nav-item ml-4"><a class="nav-link js-scroll-trigger" href="<c:url value="/user/profile" />"><span class="glyphicon glyphicon-user"></span> Mon profil</a></li>
+                <c:set var="userId" value="${sessionScope['loggedInUserId']}" />
+                <li class="nav-item ml-4"><a class="nav-link js-scroll-trigger" href="<c:url value="/user/${userId}/profile" />"><span class="glyphicon glyphicon-user"></span> Mon profil</a></li>
                 <li class="nav-item ml-4">
                     <a class="nav-link js-scroll-trigger " href="<c:url value="/user/logout" />">
                         <span class="glyphicon glyphicon-off"></span>

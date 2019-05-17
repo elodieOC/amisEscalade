@@ -2,6 +2,7 @@ package com.elo.oc.entity;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,15 +26,15 @@ public class Spot {
     @Column(name = "id")
     private Integer id;
 
-    @NotEmpty
+    @NotBlank
     @Column(name = "name", unique=true)
     private String name;
 
-    @NotEmpty
+    @NotBlank
     @Column(name = "city")
     private String city;
 
-    @NotEmpty
+    @NotBlank
     @Column(name = "county")
     private String county;
 

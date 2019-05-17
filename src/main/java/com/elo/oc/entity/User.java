@@ -1,7 +1,10 @@
 package com.elo.oc.entity;
 
+import org.apache.commons.collections.ArrayStack;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -26,27 +29,27 @@ public class User {
     private Integer id;
 
     @Column(name = "password")
-    @NotEmpty
+    @NotBlank
     private String password;
 
-    @Transient
-    @NotEmpty
-    private String passwordConfirm;
 
-    @NotEmpty
+    @NotBlank
     @Column(name = "username", unique = true)
     private String username;
 
     @Email
-    @NotEmpty
+    @NotBlank
     @Column(name = "email", unique = true)
     private String email;
-
-
+    
     @ManyToOne //plusieurs user pour un seul role
     @JoinColumn(name = "role_fk")
     private Role userRole;
 
+    @Transient
+    @NotBlank
+    private String passwordConfirm;
+    
     @Transient
     @NotNull
     private Integer memberOrNot;
@@ -56,6 +59,17 @@ public class User {
 
     @OneToMany (mappedBy = "user")//attribut User user de Comment
     private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Topo> topos = new ArrayList<>();
+
+    public List<Topo> getTopos() {
+        return topos;
+    }
+
+    public void setTopos(List<Topo> topos) {
+        this.topos = topos;
+    }
 
     public List<Spot> getSpots() {
         return spots;
