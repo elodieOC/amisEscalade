@@ -18,7 +18,9 @@ import java.util.List;
         @org.hibernate.annotations.NamedQuery(name = "findSpotByName",
                 query = "from Spot where name = :name"),
         @org.hibernate.annotations.NamedQuery(name = "findSpotByUserId",
-                query = "from Spot where climb_user_fk = :userId")
+                query = "from Spot where climb_user_fk = :userId"),
+        @org.hibernate.annotations.NamedQuery(name = "findSpotWithOfficialTag",
+                query = "from Spot where tagged = :tag")
 
 })
 public class Spot {
@@ -40,7 +42,7 @@ public class Spot {
     private String county;
 
     @NotNull
-    @Column(name = "tag")
+    @Column(name = "tagged")
     private Boolean tagged = false;
 
     @ManyToOne //plusieurs spot pour un seul user

@@ -18,5 +18,6 @@ public interface SpotDAO {
     Spot findSpotWithAllInfosById(Integer id);
     Spot findSpotById(Integer id);
     List<Spot> findSpotByUserId(Integer id);
+    List<Spot> findSpotWithOfficialTag();
 
 }

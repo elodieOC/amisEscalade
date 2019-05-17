@@ -68,16 +68,10 @@
                     </div> <!-- form-group// -->
 
                     <form:errors path="available" cssClass="error"/>
-                    <div class="form-group input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text span-large-9">Disponibilité</span>
-                        </div>
-                        <form:select  path="available" cssClass="form-control" >
-                            <form:option value="" selected="">Disponible</form:option>
-                                <form:option value="oui">Oui</form:option>
-                                <form:option value="non">Non</form:option>
-                        </form:select>
-                    </div> <!-- form-group end.// -->
+                        <div class="form-group input-group mb-5">
+                            <form:label path="tagged" class="text-muted"> Topo disponible au prêt?</form:label>
+                            <form:checkbox  path="available" cssClass="ml-3 p-2" value="${topo.available}" />
+                        </div> <!-- form-group// -->
 
                     <form:errors path="description" cssClass="error"/>
                     <div class="form-group">

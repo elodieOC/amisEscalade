@@ -108,6 +108,14 @@ public class SpotDAOImpl implements SpotDAO {
         List <Spot> spots = query.getResultList();
         return spots;
     }
+    @Override
+    public List<Spot> findSpotWithOfficialTag(){
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query<Spot> query = currentSession.createNamedQuery("findSpotWithOfficialTag", Spot.class);
+        query.setParameter("tagged", true);
+        List <Spot> spots = query.getResultList();
+        return spots;
+    }
 
 
 }

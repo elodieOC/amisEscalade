@@ -15,18 +15,31 @@
 </head>
 <c:import url="inc/choose-navbar.jsp" />
 <main role="main" class="flex-shrink-0 mt-5">
+
+    <c:set var="userRole" value="${sessionScope['loggedInUserRole']}" />
+    <c:set var="userId" value="${sessionScope['loggedInUserId']}" />
+
     <div class="container col-md-10 mt-5">
         <h1 class="d-inline-block col-md-8">${topo.name}
             <span class="text-muted ml-5 small">(Ajouté par:  ${topo.user.username}, Disponible: ${topo.available})</span></h1>
-        <c:if test="${topo.available eq 'oui'}">
-            <input type="button" value="Faire une demande de Réservation"
-                   onclick="window.location.href='${topo.id}/reserver'; return false;"
-                   class="btn btn-primary" />
-        </c:if>
-
-
-        <c:set var="userRole" value="${sessionScope['loggedInUserRole']}" />
-        <c:set var="userId" value="${sessionScope['loggedInUserId']}" />
+        <c:choose>
+            <c:when test="${topo.available}">
+                <input type="button" value="Faire une demande de Réservation"
+                       onclick="window.location.href='${topo.id}/reserver'; return false;"
+                       class="btn btn-primary" />
+            </c:when>
+            <c:otherwise>
+                <c:choose>
+                    <c:when test="${userId ne null && userId eq topo.user.id}">
+                        <input type="button" value="Rendre le Topo disponible à nouveau"
+                               onclick="window.location.href='${topo.id}/updateFormTopo'; return false;"
+                               class="btn btn-success" />
+                    </c:when>
+                    <c:otherwise>
+                        <input type="button" value="Topo déjà réservé" class="btn btn-success"/></c:otherwise>
+                </c:choose>
+            </c:otherwise>
+        </c:choose>
 
         <c:if test="${userRole eq '1' || userId eq topo.user.id && userId ne null}">
             <div class="d-inline-block col-md-8 mt-3">

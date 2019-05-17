@@ -210,6 +210,10 @@ public class TopoController {
         Topo theTopo = topoService.findTopoById(theTopoId);
         String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
         User theOwner = theTopo.getUser();
+
+        theTopo.setAvailable(false);
+
+
         return "redirect:/topos/list";
     }
 

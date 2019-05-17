@@ -63,9 +63,9 @@ public class Topo {
     @Column(name = "date_release")
     private String dateRelease;
 
-    @NotBlank
+    @NotNull
     @Column(name = "available")
-    private String available;
+    private Boolean available = false;
 
     @ManyToOne //plusieurs topos pour un seul user
     @JoinColumn(name = "climb_user_fk")
@@ -82,11 +82,11 @@ public class Topo {
         this.dateRelease = dateRelease;
     }
 
-    public String getAvailable() {
+    public Boolean getAvailable() {
         return available;
     }
 
-    public void setAvailable(String available) {
+    public void setAvailable(Boolean available) {
         this.available = available;
     }
 
