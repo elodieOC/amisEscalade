@@ -196,5 +196,21 @@ public class TopoController {
         topoService.deleteTopo(theTopoId);
         return "redirect:/topos/list";
     }
+    /*
+     **************************************
+     * Topos book
+     * ************************************
+     */
+    @GetMapping("/topo/{topoId}/reserver")
+    public String askForTopo(@PathVariable("topoId") Integer theTopoId, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
+            return "redirect:/user/login";
+        }
+        Topo theTopo = topoService.findTopoById(theTopoId);
+        String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
+        User theOwner = theTopo.getUser();
+        return "redirect:/topos/list";
+    }
 
 }

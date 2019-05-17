@@ -44,6 +44,12 @@ p .fab{
 textarea{
     resize: none;
 }
+.span-large-9{
+    width: 9rem;
+}
+.span-large-5{
+    width: 5rem;
+}
 /*TABLES*/
 th, td{
     padding: 0.5rem;
@@ -51,6 +57,10 @@ th, td{
 
 .in-line-btn{
     margin-left: 15rem;
+}
+
+.official-tag{
+    color: #377ef2;
 }
 
 

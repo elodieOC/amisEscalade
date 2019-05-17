@@ -18,14 +18,17 @@
     <div class="container col-md-10 mt-5">
         <h1 class="d-inline-block col-md-8">${topo.name}
             <span class="text-muted ml-5 small">(Ajouté par:  ${topo.user.username}, Disponible: ${topo.available})</span></h1>
-        <%--        <input type="button" value="Réserver"
-                       onclick="window.location.href='${topo.id}/reserver'; return false;"
-                       class="btn btn-primary" />--%>
+        <c:if test="${topo.available eq 'oui'}">
+            <input type="button" value="Faire une demande de Réservation"
+                   onclick="window.location.href='${topo.id}/reserver'; return false;"
+                   class="btn btn-primary" />
+        </c:if>
+
 
         <c:set var="userRole" value="${sessionScope['loggedInUserRole']}" />
         <c:set var="userId" value="${sessionScope['loggedInUserId']}" />
 
-        <c:if test="${userRole eq '1' || userId eq topo.user.id}">
+        <c:if test="${userRole eq '1' || userId eq topo.user.id && userId ne null}">
             <div class="d-inline-block col-md-8 mt-3">
                 <p class="text-muted small">Vous êtes administrateur ou vous avez ajouté ce topo. Vous pouvez l'éditer ou le supprimer.</p>
             </div>

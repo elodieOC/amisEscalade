@@ -4,6 +4,7 @@ package com.elo.oc.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +39,10 @@ public class Spot {
     @Column(name = "county")
     private String county;
 
+    @NotNull
+    @Column(name = "tag")
+    private Boolean tagged = false;
+
     @ManyToOne //plusieurs spot pour un seul user
     @JoinColumn(name = "climb_user_fk")
     private User user;
@@ -50,6 +55,14 @@ public class Spot {
 
     public Spot() {
 
+    }
+
+    public Boolean getTagged() {
+        return tagged;
+    }
+
+    public void setTagged(Boolean tagged) {
+        this.tagged = tagged;
     }
 
     public User getUser() {

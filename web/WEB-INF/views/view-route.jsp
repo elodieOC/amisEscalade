@@ -33,7 +33,7 @@
         <c:set var="userRole" value="${sessionScope['loggedInUserRole']}" />
         <c:set var="userId" value="${sessionScope['loggedInUserId']}" />
 
-        <c:if test="${userRole eq '1' || userId eq route.user.id}">
+        <c:if test="${userRole eq '1' || userId eq route.user.id && userId ne null}">
             <div class="d-inline-block col-md-8 mt-3">
                 <p class="text-muted small">Vous êtes administrateur ou vous avez ajouté cette voie. Vous pouvez l'éditer ou la supprimer.</p>
             </div>
@@ -65,7 +65,7 @@
                                     <td class="col-md-10 mx-auto"><strong>Longueur ${route.lengths.indexOf(length)+1}:  </strong>
                                         cotation ${length.grade.name} (${length.grade.rating.name}), ${length.bolts} spits, hauteur ${length.height}m
                                     </td>
-                                    <c:if test="${userRole eq '1' || userId eq spot.user.id}">
+                                    <c:if test="${userRole eq '1' || userId eq spot.user.id && userId ne null}">
                                         <td class="col-lg-2 mx-auto">
                                             <!-- construct an "update" link with spot id -->
                                             <c:url var="updateLink" value="/spots/spot/${spot.id}/sector/${sector.id}/route/${route.id}/length/${length.id}/updateFormLength" />

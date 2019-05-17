@@ -28,11 +28,14 @@
         <input type="button" value="Ajouter un Secteur"
                onclick="window.location.href='${spot.id}/ajoutSecteur'; return false;"
                class="btn btn-primary" />
+        <c:if test="${spot.tagged}">
+            <div class="col-md-8"><h3 class="official-tag">"Officiel Les amis de l’escalade" </h3></div>
+        </c:if>
 
         <c:set var="userRole" value="${sessionScope['loggedInUserRole']}" />
         <c:set var="userId" value="${sessionScope['loggedInUserId']}" />
 
-        <c:if test="${userRole eq '1' || userId eq spot.user.id}">
+        <c:if test="${userRole eq '1' || userId eq spot.user.id && userId ne null}">
             <div class="d-inline-block col-md-8 mt-3">
                 <p class="text-muted small">Vous êtes administrateur ou vous avez ajouté ce spot. Vous pouvez l'éditer ou le supprimer.</p>
             </div>
@@ -97,7 +100,7 @@
                                     </c:choose>
                                 </strong>
                                     <span class="text-muted ml-2">posté le <c:out value="${comment.date}"/></span>
-                                    <c:if test="${userRole eq '1' ||userRole eq '2' || userId eq spot.user.id}">
+                                    <c:if test="${userRole eq '1' ||userRole eq '2' || userId eq spot.user.id && userId ne null}">
                                                 <span class="comment-btn"><input type="button" value="Editer"
                                                                                  onclick="window.location.href='${spot.id}/${comment.id}/updateFormComment'; return false;"
                                                                                  class="btn btn-primary" />

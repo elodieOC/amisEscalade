@@ -95,7 +95,7 @@
             </div>
         </div>
         <div class="container col-md-offset-1 col-md-10">
-            <h2 class="mt-5">Cotations</h2><
+            <h2 class="mt-5">Cotations</h2>
             <div class="panel panel-info">
                 <div class="panel-body">
                     <table class="table table-striped table-bordered">

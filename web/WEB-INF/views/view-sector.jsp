@@ -33,7 +33,7 @@
         <c:set var="userRole" value="${sessionScope['loggedInUserRole']}" />
         <c:set var="userId" value="${sessionScope['loggedInUserId']}" />
 
-        <c:if test="${userRole eq '1' || userId eq spot.user.id}">
+        <c:if test="${userRole eq '1' || userId eq spot.user.id && userId ne null}">
             <div class="d-inline-block col-md-8 mt-3">
                 <p class="text-muted small">Vous êtes administrateur ou vous avez ajouté ce secteur. Vous pouvez l'éditer ou le supprimer.</p>
             </div>
@@ -79,7 +79,7 @@
                                     (${route.lengths.size()+1} longueurs)
                                 </c:if>--%>
                                 </td>
-                                <c:if test="${userRole eq '1' || userId eq spot.user.id}">
+                                <c:if test="${userRole eq '1' || userId eq spot.user.id && userId ne null}">
                                     <td class="col-lg-2 mx-auto">
                                         <!-- construct an "update" link with spot id -->
                                         <c:url var="updateLink" value="/spots/spot/${spot.id}/sector/${sector.id}/route/${route.id}/updateFormRoute" />

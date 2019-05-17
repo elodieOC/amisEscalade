@@ -24,7 +24,7 @@
                 <form:errors path="height" cssClass="error"/>
                 <div class="form-group input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text"> Hauteur en m</span>
+                        <span class="input-group-text span-large-9"> Hauteur en m</span>
                     </div>
                     <form:input path="height" cssClass="form-control p-4" placeholder="Hauteur" type="text" />
                 </div><!-- form-group// -->
@@ -32,7 +32,7 @@
                 <form:errors path="bolts" cssClass="error"/>
                 <div class="form-group input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text"> Spits </span>
+                        <span class="input-group-text span-large-9"> Spits </span>
                     </div>
                     <form:input path="bolts" cssClass="form-control p-4" placeholder="Spits"  type="text"  />
                 </div><!-- form-group// -->
@@ -40,7 +40,7 @@
                 <form:errors path="grade" cssClass="error"/>
                 <div class="form-group input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">Cotation</span>
+                        <span class="input-group-text span-large-9">Cotation</span>
                     </div>
                     <form:select  path="grade" cssClass="form-control" >
                         <form:option value="" selected="">Cotation</form:option>

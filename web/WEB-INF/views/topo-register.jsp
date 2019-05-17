@@ -30,7 +30,7 @@
                     <form:errors path="name" cssClass="error"/>
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"> Titre</span>
+                            <span class="input-group-text  span-large-9"> Titre</span>
                         </div>
                         <form:input path="name" cssClass="form-control p-4" placeholder="Titre du Topo" type="text" />
                     </div> <!-- form-group// -->
@@ -38,7 +38,7 @@
                     <form:errors path="city" cssClass="error"/>
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"> Ville </span>
+                            <span class="input-group-text  span-large-9"> Ville </span>
                         </div>
                         <form:input path="city" cssClass="form-control p-4" placeholder="Ville du Topo" type="text" />
                     </div> <!-- form-group// -->
@@ -46,7 +46,7 @@
                     <form:errors path="county" cssClass="error"/>
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text">Région </span>
+                            <span class="input-group-text  span-large-9">Région </span>
                         </div>
                         <form:input path="county" cssClass="form-control p-4" placeholder="Région du Topo" type="text" />
                     </div> <!-- form-group// -->
@@ -54,7 +54,7 @@
                     <form:errors path="country" cssClass="error"/>
                     <div class="form-group input-group ">
                         <div class="input-group-prepend">
-                            <span class="input-group-text">Pays </span>
+                            <span class="input-group-text  span-large-9">Pays </span>
                         </div>
                         <form:input path="country" cssClass="form-control p-4" placeholder="Pays du Topo" type="text" />
                     </div> <!-- form-group// -->
@@ -62,7 +62,7 @@
                     <form:errors path="dateRelease" cssClass="error"/>
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text">Date de parution </span>
+                            <span class="input-group-text  span-large-9">Date de parution </span>
                         </div>
                         <form:input path="dateRelease" cssClass="form-control p-4" placeholder="jj/mm/aaaa" type="text" />
                     </div> <!-- form-group// -->
@@ -70,7 +70,7 @@
                     <form:errors path="available" cssClass="error"/>
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text">Disponibilité</span>
+                            <span class="input-group-text span-large-9">Disponibilité</span>
                         </div>
                         <form:select  path="available" cssClass="form-control" >
                             <form:option value="" selected="">Disponible</form:option>
