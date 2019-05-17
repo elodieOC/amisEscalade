@@ -34,6 +34,18 @@
             <artifactId>spring-orm</artifactId>
             <version>${spring.version}</version>
         </dependency>
+        <!-- Spring Context -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>5.1.7.RELEASE</version>
+        </dependency>
+        <!-- Javax mail -->
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.2</version>
+        </dependency>
         <!-- Hibernate Core -->
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -95,6 +107,8 @@
             <artifactId>commons-beanutils</artifactId>
             <version>1.9.3</version>
         </dependency>
+
+
     </dependencies>
     <build>
         <plugins>

@@ -21,7 +21,11 @@
 
     <div class="container col-md-10 mt-5">
         <h1 class="d-inline-block col-md-8">${topo.name}
-            <span class="text-muted ml-5 small">(Ajouté par:  ${topo.user.username}, Disponible: ${topo.available})</span></h1>
+            <span class="text-muted ml-5 small">(Ajouté par:  ${topo.user.username}, Disponible:
+                <c:choose>
+                    <c:when test="${topo.available}">Oui</c:when>
+                    <c:otherwise>Non</c:otherwise>
+                </c:choose>)</span></h1>
         <c:choose>
             <c:when test="${topo.available}">
                 <input type="button" value="Faire une demande de Réservation"
@@ -32,7 +36,7 @@
                 <c:choose>
                     <c:when test="${userId ne null && userId eq topo.user.id}">
                         <input type="button" value="Rendre le Topo disponible à nouveau"
-                               onclick="window.location.href='${topo.id}/updateFormTopo'; return false;"
+                               onclick="window.location.href='${topo.id}/availableAgain'; return false;"
                                class="btn btn-success" />
                     </c:when>
                     <c:otherwise>

@@ -2,11 +2,14 @@ package com.elo.oc.controller;
 
 import com.elo.oc.entity.Topo;
 import com.elo.oc.entity.User;
+import com.elo.oc.service.EmailService;
 import com.elo.oc.service.TopoService;
 import com.elo.oc.service.UserService;
 import com.elo.oc.utils.SessionCheck;
 import com.elo.oc.utils.TopoRegistrationValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,6 +33,8 @@ public class TopoController {
     private UserService userService;
     @Autowired
     private TopoRegistrationValidator topoRegistrationValidator;
+    @Autowired
+    public EmailService emailService;
 
     /**
      * <p>Page that displays a list of all the topos in database</p>
@@ -201,6 +206,14 @@ public class TopoController {
      * Topos book
      * ************************************
      */
+
+    /**
+     * <p>Allow a user to ask another to send their physical topo.</p>
+     * <p>An email is sent to the owner of the topo with the email of the asking user.</p>
+     * @param theTopoId the topo id to be lended
+     * @param request servlet request
+     * @return topo page
+     */
     @GetMapping("/topo/{topoId}/reserver")
     public String askForTopo(@PathVariable("topoId") Integer theTopoId, HttpServletRequest request){
         HttpSession session = request.getSession();
@@ -209,12 +222,46 @@ public class TopoController {
         }
         Topo theTopo = topoService.findTopoById(theTopoId);
         String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
+        User theBooker = userService.findUserByEmail(sessionEmail);
         User theOwner = theTopo.getUser();
 
         theTopo.setAvailable(false);
+        topoService.updateTopo(theTopo);
 
+        String mailTo = theOwner.getEmail();
+        String subject = "Un grimpeur a réservé votre Topo";
+        String text ="Vous pouvez envoyer un message à "+theBooker.getEmail()+" pour établir les modalités du prêt de votre Topo." +
+                "\nPensez à remettre votre Topo en 'disponible' une fois celui-ci rendu." +
+                "\n\nCordialement," +
+                "\nLes amis de l'escalade";
+        emailService.sendSimpleMessage(mailTo, subject, text);
+        return "redirect:/topos/topo/"+theTopoId;
+    }
 
-        return "redirect:/topos/list";
+    /**
+     * <p>Once a user gets their topo back after they lended it, they can notify it as being available again.</p>
+     * @param theTopoId topo id being set available
+     * @param request server request
+     * @return topo page
+     */
+    @GetMapping("/topo/{topoId}/availableAgain")
+    public String makeTopoAvailableAgain(@PathVariable("topoId") Integer theTopoId, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
+            return "redirect:/user/login";
+        }
+
+        String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
+        Topo theTopo = topoService.findTopoById(theTopoId);
+        User theUser = userService.findUserByEmail(sessionEmail);
+        if(theTopo.getUser().getId() != theUser.getId()){
+            System.out.println("User trying to change the topo availability is not the owner");
+            System.out.println("User is: ["+theUser.getId()+ ", "+theUser.getUsername()+"]");
+            return "redirect:/home";
+        }
+        theTopo.setAvailable(true);
+        topoService.updateTopo(theTopo);
+        return "redirect:/topos/topo/"+theTopoId;
     }
 
 }

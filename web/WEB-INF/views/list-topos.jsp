@@ -56,7 +56,11 @@
                                     <td>${topo.country}</td>
                                     <td>${topo.dateRelease}</td>
                                      <td>${topo.user.username}</td>
-                                     <td>${topo.available}</td>
+                                     <td> <c:choose>
+                                         <c:when test="${topo.available}">Oui</c:when>
+                                         <c:otherwise>Non</c:otherwise>
+                                         </c:choose>
+                                     </td>
                                 </tr>
                             </c:forEach>
                         </c:otherwise>

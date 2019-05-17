@@ -69,7 +69,7 @@
 
                     <form:errors path="available" cssClass="error"/>
                         <div class="form-group input-group mb-5">
-                            <form:label path="tagged" class="text-muted"> Topo disponible au prêt?</form:label>
+                            <form:label path="available" class="text-muted"> Topo disponible au prêt?</form:label>
                             <form:checkbox  path="available" cssClass="ml-3 p-2" value="${topo.available}" />
                         </div> <!-- form-group// -->
 
