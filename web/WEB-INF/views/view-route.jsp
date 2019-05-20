@@ -29,7 +29,9 @@
                onclick="window.location.href='${route.id}/ajoutLongueur'; return false;"
                class="btn btn-primary" />
         <br />
-        <h4 class="col-md-8">Secteur ${sector.name}, Spot ${spot.name}, ${spot.county}, ${spot.city}</h4>
+        <h4 class="col-md-8">Spot <a href="<c:url value="/spots/spot/${spot.id}" />">${spot.name}</a>,
+            Secteur <a href="<c:url value="/spots/spot/${spot.id}/sector/${sector.id}" />">${sector.name}</a>,
+            ${spot.county}, ${spot.city}</h4>
         <c:set var="userRole" value="${sessionScope['loggedInUserRole']}" />
         <c:set var="userId" value="${sessionScope['loggedInUserId']}" />
 

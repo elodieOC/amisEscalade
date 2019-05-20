@@ -39,4 +39,9 @@ public class LengthServiceImpl implements LengthService{
     public Length findLengthById(Integer id) {
         return lengthDAO.findLengthById(id);
     }
+
+    @Override
+    public List<Length> findLengthByRouteId(Integer id) {
+        return lengthDAO.findLengthByRouteId(id);
+    }
 }

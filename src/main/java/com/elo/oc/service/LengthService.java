@@ -12,4 +12,5 @@ public interface LengthService {
     void deleteLength(Integer id);
 
     Length findLengthById(Integer id);
+    List<Length> findLengthByRouteId(Integer id);
 }

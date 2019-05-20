@@ -29,7 +29,7 @@
                onclick="window.location.href='${sector.id}/ajoutVoie'; return false;"
                class="btn btn-primary" />
         <br />
-        <h4 class="col-md-8">${spot.name}, ${spot.county}, ${spot.city}</h4>
+        <h4 class="col-md-8"><a href="<c:url value="/spots/spot/${spot.id}" />">${spot.name}</a>, ${spot.county}, ${spot.city}</h4>
         <c:set var="userRole" value="${sessionScope['loggedInUserRole']}" />
         <c:set var="userId" value="${sessionScope['loggedInUserId']}" />
 
@@ -73,11 +73,15 @@
                             <!-- construct an "view" link with spot id -->
                             <c:url var="viewLink" value="/spots/spot/${spot.id}/sector/${sector.id}/route/${route.id}" />
                             <tr>
-                                <td class="col-lg-2 mx-auto"><a href="${viewLink}"><strong>${sector.routes.indexOf(route)+1}:  </strong>  ${route.name}</a>
-                           <%--TODO LAZY init
-                                <c:if test="${!empty route.lengths}">
-                                    (${route.lengths.size()+1} longueurs)
-                                </c:if>--%>
+                                <td class="col-md-8 mx-auto"><a href="${viewLink}"><strong>${sector.routes.indexOf(route)+1}:  </strong>  ${route.name}</a>
+
+                                <c:if test="${!empty lengths}">
+                                    <c:choose>
+                                        <c:when test="${lengths.size() > 1}"><c:set var="lengthString" value="longueurs" /></c:when>
+                                        <c:otherwise> <c:set var="lengthString" value="longueur" /></c:otherwise>
+                                    </c:choose>
+                                    (${lengths.size()} ${lengthString}, cotation minimum: ${gradeMin}, cotation maximum: ${gradeMax})
+                                </c:if>
                                 </td>
                                 <c:if test="${userRole eq '1' || userId eq spot.user.id && userId ne null}">
                                     <td class="col-lg-2 mx-auto">

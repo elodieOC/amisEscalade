@@ -55,4 +55,13 @@ public class LengthDAOImpl implements LengthDAO {
         Length theLength = currentSession.get(Length.class, id);
         return theLength;
     }
+
+    @Override
+    public List<Length> findLengthByRouteId(Integer id) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query<Length> query = currentSession.createNamedQuery("findLengthByRouteId", Length.class);
+        query.setParameter("routeId", id);
+        List<Length> lengths = query.getResultList();
+        return lengths;
+    }
 }

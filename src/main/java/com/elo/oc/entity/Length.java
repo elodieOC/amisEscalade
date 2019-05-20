@@ -5,6 +5,10 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "length")
+@org.hibernate.annotations.NamedQueries({
+        @org.hibernate.annotations.NamedQuery(name = "findLengthByRouteId",
+                query = "from Length where route_fk = :routeId")
+})
 public class Length {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

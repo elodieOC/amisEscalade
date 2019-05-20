@@ -13,5 +13,5 @@ public interface LengthDAO {
     void deleteLength(Integer id);
 
     Length findLengthById(Integer id);
-
+    List<Length> findLengthByRouteId(Integer id);
 }
