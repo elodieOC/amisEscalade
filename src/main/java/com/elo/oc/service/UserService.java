@@ -9,6 +9,7 @@ import java.util.Optional;
 public  interface UserService {
 
     void saveUser(User user);
+    void updateUser(User user);
     void adminSaveUser(User user);
     void deleteUser(Integer id);
 

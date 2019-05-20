@@ -17,7 +17,10 @@
 <main role="main" class="flex-shrink-0 mt-5">
     <div class="container col-md-10 mt-5">
     <div class="col-md-offset-2 col-md-7">
-        <h2 class="mb-5 mt-5">Bienvenu-e ${user.username}</h2>
+        <h2 class="d-inline-block mb-5 mt-5 col-md-10">Bienvenu-e ${user.username}</h2>
+        <input type="button" value="Editer Mon Profil"
+               onclick="window.location.href='updateForm'; return false;"
+               class="btn btn-primary" />
         <div class="panel panel-info">
             <div class="panel-body">
                 <table class="table table-striped table-bordered">
@@ -25,32 +28,12 @@
                     <tr>
                         <th>Pseudo</th>
                         <th>Email</th>
-                        <th>Action</th>
                     </tr>
                     </thead>
-                    <!-- construct an "update" link with user id -->
-                    <c:url var="updateLink" value="/user/updateForm">
-                        <c:param name="id" value="${user.id}" />
-                    </c:url>
-
-                    <!-- construct an "delete" link with user id -->
-                    <c:url var="deleteLink" value="/user/delete">
-                        <c:param name="id" value="${user.id}" />
-                    </c:url>
-
                     <tr>
                         <td>${user.username}</td>
                         <td>${user.email}</td>
-
-
-                        <td>
-                            <!-- display the update link --> <a href="${updateLink}">Update</a>
-                            | <a href="${deleteLink}"
-                                 onclick="if (!(confirm('Are you sure you want to delete this user?'))) return false">Delete</a>
-                        </td>
-
                     </tr>
-
                 </table>
 
                <table class="table table-striped table-bordered">
@@ -100,6 +83,9 @@
                    </c:choose>
                 </table>
             </div>
+            <input type="button" value="Supprimer Mon Compte"
+                   onclick="window.location.href='delete'; return false;"
+                   class="btn btn-secondary" />
         </div>
     </div>
 </div>

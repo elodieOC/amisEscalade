@@ -45,6 +45,14 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
+    public void updateUser(User user) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        user.setPassword(Encryption.encrypt(user.getPassword()));
+        user.setUserRole(roleService.findById(user.getMemberOrNot()));
+        currentSession.update(user);
+    }
+
+    @Override
     public void adminSaveUser(User user){
         Session currentSession = sessionFactory.getCurrentSession();
         user.setUserRole(roleService.findById(user.getMemberOrNot()));

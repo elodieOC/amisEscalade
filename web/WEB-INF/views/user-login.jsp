@@ -51,7 +51,8 @@
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block"> Connexion  </button>
                     </div> <!-- form-group// -->
-                    <p class="text-center">Vous n'avez pas de compte? <a href="<c:out value="./register" /> ">Inscription</a> </p>
+                    <a href="<c:url value="/user/resetPasswordForm" /> "><p class="text-center">Mot de passe oublié?</p></a>
+                    <p class="text-center">Vous n'avez pas de compte? <a href="<c:url value="/user/register" /> ">Inscription</a> </p>
                 </form:form>
             </div>
         </div>

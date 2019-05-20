@@ -26,6 +26,12 @@ public class UserServiceImpl implements UserService {
     public void saveUser(User theUser) {
         userDAO.saveUser(theUser);
     }
+
+    @Override
+    public void updateUser(User user) {
+        userDAO.updateUser(user);
+    }
+
     @Override
     public void adminSaveUser(User theUser) {
         userDAO.adminSaveUser(theUser);

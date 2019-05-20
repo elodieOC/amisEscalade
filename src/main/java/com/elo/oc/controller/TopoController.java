@@ -230,7 +230,8 @@ public class TopoController {
 
         String mailTo = theOwner.getEmail();
         String subject = "Un grimpeur a réservé votre Topo";
-        String text ="Vous pouvez envoyer un message à "+theBooker.getEmail()+" pour établir les modalités du prêt de votre Topo." +
+        String text ="Bonjour ami grimpeur!" +
+                "\n\nVous pouvez envoyer un message à "+theBooker.getEmail()+" pour établir les modalités du prêt de votre Topo." +
                 "\nPensez à remettre votre Topo en 'disponible' une fois celui-ci rendu." +
                 "\n\nCordialement," +
                 "\nLes amis de l'escalade";
