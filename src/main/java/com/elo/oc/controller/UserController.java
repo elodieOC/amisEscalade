@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.nio.charset.Charset;
 import java.util.List;
-import java.util.Random;
 
 import static com.elo.oc.utils.GeneratePassword.getAlphaNumericString;
 
@@ -36,7 +34,11 @@ public class UserController {
     @Autowired
     private UserRegistrationValidator userRegistrationValidator;
     @Autowired
-    private UserupdateValidator userupdateValidator;
+    private UserCheckPasswordValidator userCheckPasswordValidator;
+    @Autowired
+    private UserUpdateEmailValidator userUpdateEmailValidator;
+    @Autowired
+    private UserUpdateUserNameValidator userUpdateUserNameValidator;
     @Autowired
     private UserLoginValidator userLoginValidator;
     @Autowired
@@ -259,7 +261,16 @@ public class UserController {
 
     @PostMapping("/{userId}/updateUserProfile")
     public String updateUserProfile(@PathVariable("userId") Integer userId, @Valid @ModelAttribute("user") User theUser, Model theModel, BindingResult theBindingResult, HttpServletRequest request) {
-        userupdateValidator.validate(theUser, theBindingResult);
+        User theUserToUpdate = userService.findUserById(userId);
+        if(!theUser.getEmail().equals(theUserToUpdate.getEmail())){
+            userUpdateEmailValidator.validate(theUser, theBindingResult);
+        }
+         if(!theUser.getUsername().equals(theUserToUpdate.getUsername())){
+            userUpdateUserNameValidator.validate(theUser, theBindingResult);
+        }
+
+        userCheckPasswordValidator.validate(theUser, theBindingResult);
+
         if (theBindingResult.hasErrors()) {
             System.out.println("form has errors");
             List<Role> roles = roleService.getRolesPublic();

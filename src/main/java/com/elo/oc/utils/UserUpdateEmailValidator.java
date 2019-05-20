@@ -8,7 +8,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 @Component
-public class UserupdateValidator implements Validator {
+public class UserUpdateEmailValidator implements Validator {
 
 
     @Autowired
@@ -24,9 +24,9 @@ public class UserupdateValidator implements Validator {
     public void validate(Object o, Errors errors) {
         User user = (User) o;
 
-        if(!user.getPassword().equals(user.getPasswordConfirm())){
-            System.out.println("passwords don't match");
-            errors.rejectValue("passwordConfirm", "registration.password.noMatch");
+        if (userService.findUserWithThisEmail(user.getEmail()).isPresent()) {
+            System.out.println("email already exists in database");
+            errors.rejectValue("email", "registration.email.duplicate");
         }
 
     }

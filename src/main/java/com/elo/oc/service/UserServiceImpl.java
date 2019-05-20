@@ -68,8 +68,8 @@ public class UserServiceImpl implements UserService {
         userDAO.deleteUser(theId);
     }
 
+
     @Override
-    
     public Optional<User> findUserWithThisEmail(String email) {
         return userDAO.getUsers().stream()
                 .filter(user -> user.getEmail().equals(email))
