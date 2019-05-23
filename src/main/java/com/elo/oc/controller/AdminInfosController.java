@@ -40,12 +40,11 @@ public class AdminInfosController {
      * <p>Where an admin can see lists of different infos (list of users, list of roles...)</p>
      * @param theModel attribute passed to jsp page
      * @param request servlet request
-     * @param session servlet session
      * @return page to show depending on user on the page
      */
     @GetMapping("/infos")
-    public String createInit(Model theModel, HttpServletRequest request, HttpSession session) {
-        session = request.getSession();
+    public String createInit(Model theModel, HttpServletRequest request) {
+        HttpSession session = request.getSession();
 
         //if no user is connected: back to login page
         if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
@@ -84,13 +83,12 @@ public class AdminInfosController {
      * @param userId theId id of the user transmitted by the clicking on 'view' in admin/infos page
      * @param theModel attribute passed to jsp page
      * @param request servlet request
-     * @param session servlet session
      * @return page to show depending on user on the page
      */
     @GetMapping("/user/{userId}/profile")
     public String showUserProfile(@PathVariable("userId") Integer userId, Model theModel,
-                                  HttpServletRequest request, HttpSession session) {
-            session = request.getSession();
+                                  HttpServletRequest request) {
+           HttpSession session = request.getSession();
         //if no user is connected: back to login page
         if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
             return "redirect:/user/login";
@@ -121,13 +119,12 @@ public class AdminInfosController {
      * @param userId id of the user transmitted by the clicking on 'update'
      * @param theModel attribute passed to jsp page
      * @param request servlet request
-     * @param session servlet session
      * @return page to show depending on user on the page
      */
     @GetMapping("/user/{userId}/updateForm")
     public String showFormForUpdate(@PathVariable("userId") Integer userId, Model theModel,
-                                    HttpServletRequest request, HttpSession session) {
-        session = request.getSession();
+                                    HttpServletRequest request) {
+       HttpSession session = request.getSession();
         //if no user is connected: back to login page
         if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
             return "redirect:/user/login";
@@ -179,12 +176,11 @@ public class AdminInfosController {
      * <p>after clicking "delete" on a user's profile (admin/user/{userId}/profile page)</p>
      * @param userId id of the user transmitted by the clicking on 'update'
      * @param request servlet request
-     * @param session servlet session
      * @return page to show depending on user on the page, admin/infos if deletion successful
      */
     @GetMapping("/user/{userId}/delete")
-    public String deleteCustomer(@PathVariable("userId") Integer userId, HttpServletRequest request, HttpSession session) {
-        session = request.getSession();
+    public String deleteCustomer(@PathVariable("userId") Integer userId, HttpServletRequest request) {
+      HttpSession session = request.getSession();
 
         if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
             return "redirect:/user/login";
