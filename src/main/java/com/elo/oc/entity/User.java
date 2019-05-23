@@ -22,7 +22,6 @@ import java.util.List;
         @org.hibernate.annotations.NamedQuery(name = "findUserByRole",
                 query = "from User where userRole = :userRole")
 })
-
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

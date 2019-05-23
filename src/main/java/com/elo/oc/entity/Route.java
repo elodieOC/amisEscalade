@@ -32,8 +32,29 @@ public class Route {
     @JoinColumn(name = "sector_fk")
     private Sector sector;
 
-    @OneToMany(mappedBy = "route")
+    @OneToMany(mappedBy = "route", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Length> lengths = new ArrayList<>();
+
+    @Transient
+    private String gradeMin;
+    @Transient
+    private  String gradeMax;
+
+    public String getGradeMin() {
+        return gradeMin;
+    }
+
+    public void setGradeMin(String gradeMin) {
+        this.gradeMin = gradeMin;
+    }
+
+    public String getGradeMax() {
+        return gradeMax;
+    }
+
+    public void setGradeMax(String gradeMax) {
+        this.gradeMax = gradeMax;
+    }
 
     public Route() {
     }

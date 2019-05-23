@@ -1,5 +1,7 @@
 package com.elo.oc.entity;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -45,7 +47,7 @@ public class Sector {
     @JoinColumn(name = "spot_fk")
     private Spot spot;
 
-    @OneToMany(mappedBy = "sector")
+    @OneToMany(mappedBy = "sector", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Route> routes = new ArrayList<>();
 
     public Sector() {

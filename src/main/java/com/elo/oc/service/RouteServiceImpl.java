@@ -44,4 +44,14 @@ public class RouteServiceImpl implements RouteService{
     public List<Route> findRouteBySectorId(Integer id) {
         return routeDAO.findRouteBySectorId(id);
     }
+
+    @Override
+    public String getRouteGradeMax(Integer id) {
+        return routeDAO.getRouteGradeMax(id);
+    }
+
+    @Override
+    public String getRouteGradeMin(Integer id) {
+        return routeDAO.getRouteGradeMin(id);
+    }
 }

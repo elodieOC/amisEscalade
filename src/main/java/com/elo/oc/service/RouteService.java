@@ -14,4 +14,7 @@ public interface RouteService {
 
     Route findRouteById(Integer id);
     List<Route> findRouteBySectorId(Integer id);
+
+    String getRouteGradeMax(Integer id);
+    String getRouteGradeMin(Integer id);
 }

@@ -298,25 +298,12 @@ public class SpotController {
         Spot theSpot = spotService.findSpotWithAllInfosById(spotId);
         Sector theSector = sectorService.findSectorById(sectorId);
         List<Route> routes = theSector.getRoutes();
+        theModel.addAttribute("routes", routes);
         for(Route r : routes) {
-            List<Length> lengths = lengthService.findLengthByRouteId(r.getId());
-            int min = 0; int max = 0;
-            for(Length l : lengths){
-                int lengthGrade = l.getGrade().getId();
-                if(min == 0 && max == 0){
-                    max=lengthGrade;
-                    min=lengthGrade;
-                }
-                if(lengthGrade<=min){
-                    min = lengthGrade;
-                }
-                if(lengthGrade>=max){
-                    max=lengthGrade;
-                }
-                theModel.addAttribute("gradeMax", gradeService.findById(max).getName());
-                theModel.addAttribute("gradeMin", gradeService.findById(min).getName());
+            if(r.getLengths().size()>0){
+                r.setGradeMax(routeService.getRouteGradeMax(r.getId()));
+                r.setGradeMin(routeService.getRouteGradeMin(r.getId()));
             }
-            theModel.addAttribute("lengths", lengths);
         }
         theModel.addAttribute("spot", theSpot);
         theModel.addAttribute("sector", theSector);

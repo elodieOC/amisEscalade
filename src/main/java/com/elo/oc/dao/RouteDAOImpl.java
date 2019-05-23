@@ -1,7 +1,9 @@
 package com.elo.oc.dao;
 
+import com.elo.oc.entity.Grade;
 import com.elo.oc.entity.Length;
 import com.elo.oc.entity.Route;
+import com.elo.oc.service.GradeService;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -56,7 +58,6 @@ public class RouteDAOImpl implements RouteDAO {
     public Route findRouteById(Integer id) {
         Session currentSession = sessionFactory.getCurrentSession();
         Route theRoute = currentSession.get(Route.class, id);
-        Hibernate.initialize(theRoute.getLengths());
         return theRoute;
     }
 
@@ -69,5 +70,44 @@ public class RouteDAOImpl implements RouteDAO {
         return routes;
     }
 
+    @Override
+    public String getRouteGradeMin(Integer id){
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query<Length> query = currentSession.createNamedQuery("findLengthByRouteId", Length.class);
+        query.setParameter("routeId", findRouteById(id));
+        List<Length>lengths = query.getResultList();
+
+        int min = 0;
+        for (Length l:lengths) {
+            int lengthGrade = l.getGrade().getId();
+            if (lengthGrade <= min || min == 0) {
+                min = lengthGrade;
+            }
+        }
+        Route route = findRouteById(id);
+
+        Grade grade = currentSession.get(Grade.class, min);
+        route.setGradeMin(grade.getName());
+        return grade.getName();
+    }
+    @Override
+    public String getRouteGradeMax(Integer id){
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query<Length> query = currentSession.createNamedQuery("findLengthByRouteId", Length.class);
+        query.setParameter("routeId", findRouteById(id));
+        List<Length>lengths = query.getResultList();
+
+        int max = 0;
+        for (Length l:lengths) {
+            int lengthGrade = l.getGrade().getId();
+            if (lengthGrade >= max) {
+                max = lengthGrade;
+            }
+        }
+        Route route = findRouteById(id);
+        Grade grade = currentSession.get(Grade.class, max);
+        route.setGradeMax(grade.getName());
+        return grade.getName();
+    }
 
 }

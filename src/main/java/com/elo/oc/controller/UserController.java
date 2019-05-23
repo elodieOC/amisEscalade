@@ -262,6 +262,7 @@ public class UserController {
     @PostMapping("/{userId}/updateUserProfile")
     public String updateUserProfile(@PathVariable("userId") Integer userId, @Valid @ModelAttribute("user") User theUser, Model theModel, BindingResult theBindingResult, HttpServletRequest request) {
         User theUserToUpdate = userService.findUserById(userId);
+
         if(!theUser.getEmail().equals(theUserToUpdate.getEmail())){
             userUpdateEmailValidator.validate(theUser, theBindingResult);
         }

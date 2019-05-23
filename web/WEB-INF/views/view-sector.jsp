@@ -33,7 +33,7 @@
         <c:set var="userRole" value="${sessionScope['loggedInUserRole']}" />
         <c:set var="userId" value="${sessionScope['loggedInUserId']}" />
 
-        <c:if test="${userRole eq '1' || userId eq spot.user.id && userId ne null}">
+        <c:if test="${userRole eq '1' || userId eq sector.user.id && userId ne null}">
             <div class="d-inline-block col-md-8 mt-3">
                 <p class="text-muted small">Vous êtes administrateur ou vous avez ajouté ce secteur. Vous pouvez l'éditer ou le supprimer.</p>
             </div>
@@ -69,18 +69,18 @@
                         <thead>
                         <th>Voies</th>
                         </thead>
-                        <c:forEach var="route" items="${sector.routes}">
+                        <c:forEach var="route" items="${routes}">
                             <!-- construct an "view" link with spot id -->
                             <c:url var="viewLink" value="/spots/spot/${spot.id}/sector/${sector.id}/route/${route.id}" />
                             <tr>
                                 <td class="col-md-8 mx-auto"><a href="${viewLink}"><strong>${sector.routes.indexOf(route)+1}:  </strong>  ${route.name}</a>
 
-                                <c:if test="${!empty lengths}">
+                                <c:if test="${!empty route.lengths}">
                                     <c:choose>
-                                        <c:when test="${lengths.size() > 1}"><c:set var="lengthString" value="longueurs" /></c:when>
+                                        <c:when test="${route.lengths.size() > 1}"><c:set var="lengthString" value="longueurs" /></c:when>
                                         <c:otherwise> <c:set var="lengthString" value="longueur" /></c:otherwise>
                                     </c:choose>
-                                    (${lengths.size()} ${lengthString}, cotation minimum: ${gradeMin}, cotation maximum: ${gradeMax})
+                                    <span class="text-muted small">(${route.lengths.size()} ${lengthString}, cotation min: ${route.gradeMin}, cotation max: ${route.gradeMax})</span>
                                 </c:if>
                                 </td>
                                 <c:if test="${userRole eq '1' || userId eq spot.user.id && userId ne null}">
