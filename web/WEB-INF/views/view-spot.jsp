@@ -17,16 +17,19 @@
 <main role="main" class="flex-shrink-0 mt-5">
     <div class="container col-md-10 mt-5">
         <h1 class="d-inline-block col-md-8">${spot.name}, ${spot.county}, ${spot.city}
-            <span class="text-muted ml-5 small">(Ajouté par: <c:choose>
-                <c:when test="${empty spot.user.username}">
-                    utilisateur supprimé
-                </c:when>
-                <c:otherwise>
-                    ${spot.user.username}
-                </c:otherwise>
-            </c:choose>)</span></h1>
+            <span class="text-muted ml-5 small">(Ajouté par:
+                <c:choose>
+                     <c:when test="${empty spot.user.username}">
+                         utilisateur supprimé
+                    </c:when>
+                    <c:otherwise>
+                        ${spot.user.username}
+                    </c:otherwise>
+                </c:choose>)
+            </span>
+        </h1>
         <input type="button" value="Ajouter un Secteur"
-               onclick="window.location.href='${spot.id}/ajoutSecteur'; return false;"
+               onclick="window.location.href='${spot.id}/ajout-secteur'; return false;"
                class="btn btn-primary" />
         <c:if test="${spot.tagged}">
             <div class="col-md-8"><h3 class="official-tag">"Officiel Les amis de l’escalade" </h3></div>
@@ -40,9 +43,9 @@
                 <p class="text-muted small">Vous êtes administrateur ou vous avez ajouté ce spot. Vous pouvez l'éditer ou le supprimer.</p>
             </div>
             <!-- construct an "update" link with spot id -->
-            <c:url var="updateLink" value="/spots/spot/${spot.id}/updateFormSpot" />
+            <c:url var="updateLink" value="/spots/${spot.id}/editer" />
             <!-- construct an "delete" link with spot id -->
-            <c:url var="deleteLink" value="/spots/spot/${spot.id}/delete" />
+            <c:url var="deleteLink" value="/spots/${spot.id}/delete" />
             <!-- display the update link -->
             <input type="button" value="Editer"
                    onclick="window.location.href='${updateLink}'; return false;"
@@ -64,9 +67,9 @@
                 <table class="mb-5">
                     <c:forEach var="sector" items="${sectors}">
                         <!-- construct an "view" link with spot id -->
-                        <c:url var="viewLink" value="/spots/spot/${spot.id}/sector/${sector.id}" />
+                        <c:url var="viewLink" value="/spots/${spot.id}/sector/${sector.id}" />
                         <tr>
-                            <td class="col-lg-2 mx-auto"><a href="${viewLink}">${sector.name}</a></td><td class="col-lg-7" style="white-space: pre-line;"><span class="ml-5 text-muted small">(Ajouté par: ${sector.user.username})</span></td>
+                            <td class="col-lg-2 mx-auto"><a href="${viewLink}">${sector.name}</a></td><td class="col-lg-7"><span class="ml-5 text-muted small">(Ajouté par: ${sector.user.username})</span></td>
                         </tr>
                     </c:forEach>
                     </c:otherwise>
@@ -102,10 +105,10 @@
                                     <span class="text-muted ml-2">posté le <c:out value="${comment.date}"/></span>
                                     <c:if test="${userRole eq '1' ||userRole eq '2' || userId eq spot.user.id && userId ne null}">
                                                 <span class="comment-btn"><input type="button" value="Editer"
-                                                                                 onclick="window.location.href='${spot.id}/${comment.id}/updateFormComment'; return false;"
+                                                                                 onclick="window.location.href='${spot.id}/comment/${comment.id}/editer'; return false;"
                                                                                  class="btn btn-primary" />
                                                 <input type="button" value="Supprimer"
-                                                       onclick="window.location.href='deleteComment?spotId=${spot.id}&commentId=${comment.id}'; return false;"
+                                                       onclick="window.location.href='${spot.id}/comment/${comment.id}/delete'; return false;"
                                                        class="btn btn-primary" />
                                                 </span>
                                     </c:if></th>

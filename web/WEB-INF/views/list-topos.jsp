@@ -19,7 +19,7 @@
         <h1 class="mb-5 d-inline-block col-md-8">Liste des Topos</h1>
 
         <input type="button" value="Ajouter Topo"
-               onclick="window.location.href='ajoutTopo'; return false;"
+               onclick="window.location.href='ajout-topo'; return false;"
                class="btn btn-primary" />
 
         <div class="panel panel-info mt-5">
@@ -46,7 +46,7 @@
                             <!-- loop over and print our topos -->
                             <c:forEach var="topo" items="${topos}">
                                 <!-- construct an "view" link with topo id -->
-                                <c:url var="viewLink" value="/topos/topo/${topo.id}" />
+                                <c:url var="viewLink" value="/topos/${topo.id}" />
 
                                 <tr>
                                     <!-- display the view link -->

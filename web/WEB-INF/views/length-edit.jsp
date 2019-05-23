@@ -18,7 +18,7 @@
     <div class="container col-md-10 mt-5">
         <div class="col-md-offset-1 col-md-10">
             <h2 class="mb-5">Editer une voie</h2>
-            <form:form action="updateLength" cssClass="form-horizontal"  method="post" modelAttribute="lengthForm">
+            <form:form action="update" cssClass="form-horizontal"  method="post" modelAttribute="lengthForm">
 
                 <form:errors path="height" cssClass="error"/>
                 <div class="form-group input-group">

@@ -20,7 +20,7 @@
         <div class="col-md-offset-1 col-md-10">
             <h2 class="mb-5">Spot ${spot.name} - Ajouter un commentaire</h2>
             <hr />
-            <form:form action="saveComment" cssClass="form-horizontal"  method="post" modelAttribute="comment">
+            <form:form action="add-comment" cssClass="form-horizontal"  method="post" modelAttribute="comment">
                 <form:hidden path="id" />
 
                 <form:errors path="content" cssClass="error"/>

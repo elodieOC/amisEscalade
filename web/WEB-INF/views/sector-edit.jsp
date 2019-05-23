@@ -18,7 +18,7 @@
     <div class="container col-md-10 mt-5">
         <div class="col-md-offset-1 col-md-10">
             <h2 class="mb-5">Editer un secteur</h2>
-            <form:form action="updateSector" cssClass="form-horizontal"  method="post" modelAttribute="sector">
+            <form:form action="update" cssClass="form-horizontal"  method="post" modelAttribute="sector">
                 <form:hidden path="id" />
 
                 <form:errors path="name" cssClass="error"/>

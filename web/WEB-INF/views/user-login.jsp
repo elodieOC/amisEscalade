@@ -24,7 +24,7 @@
             <br />
             <div class="card bg-light p-4">
                 <h2 class="mt-3 mb-3 text-center">Connexion</h2>
-                <form:form action="logUser" cssClass="form-horizontal"  method="post" modelAttribute="user">
+                <form:form action="log-user" cssClass="form-horizontal"  method="post" modelAttribute="user">
                     <p>
                         <a href="" class="btn btn-block btn-facebook"> <i class="fab fa-facebook-f"></i>   via facebook</a>
                     </p>
@@ -51,8 +51,8 @@
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block"> Connexion  </button>
                     </div> <!-- form-group// -->
-                    <a href="<c:url value="/user/resetPasswordForm" /> "><p class="text-center">Mot de passe oublié?</p></a>
-                    <p class="text-center">Vous n'avez pas de compte? <a href="<c:url value="/user/register" /> ">Inscription</a> </p>
+                    <a href="<c:url value="/user/mot-de-passe-reset" /> "><p class="text-center">Mot de passe oublié?</p></a>
+                    <p class="text-center">Vous n'avez pas de compte? <a href="<c:url value="/user/inscription" /> ">Inscription</a> </p>
                 </form:form>
             </div>
         </div>

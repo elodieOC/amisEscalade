@@ -20,7 +20,7 @@
         <div class="col-lg-6 mx-auto">
             <div class="card bg-light p-4 ">
                 <h2 class="mt-3 mb-3 ">Editer Spot</h2>
-                <form:form action="updateSpot" cssClass="form-horizontal"  method="post" modelAttribute="spot">
+                <form:form action="update" cssClass="form-horizontal"  method="post" modelAttribute="spot">
 
                     <!-- need to associate this data with spot id -->
                     <form:hidden path="id" />

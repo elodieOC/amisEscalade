@@ -29,7 +29,7 @@
             <div class="card bg-light p-4">
                 <h2 class="mt-3 mb-5 text-center">Réinitialisation Mot de Passe</h2>
 
-                <form:form action="resetPassword" cssClass="form-horizontal"  method="post" modelAttribute="user">
+                <form:form action="reset-password" cssClass="form-horizontal"  method="post" modelAttribute="user">
 
                     <form:errors path="email" cssClass="error"/>
                     <div class="form-group input-group mb-5">

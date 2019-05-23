@@ -19,7 +19,7 @@
         <div class="col-md-offset-1 col-lg-6 mx-auto">
             <h2 class="mb-5">Spot ${spot.name} - Ajouter un secteur</h2>
 
-            <form:form action="saveSector" cssClass="form-horizontal"  method="post" modelAttribute="sector">
+            <form:form action="add-sector" cssClass="form-horizontal"  method="post" modelAttribute="sector">
                 <form:hidden path="id" />
 
                 <form:errors path="name" cssClass="error"/>

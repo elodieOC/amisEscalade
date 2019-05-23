@@ -19,7 +19,7 @@
         <div class="col-md-offset-1 col-lg-6 mx-auto">
             <h2 class="mb-5">Voie ${route.name} - Ajouter une longueur</h2>
             <hr />
-            <form:form action="saveLength" cssClass="form-horizontal"  method="post" modelAttribute="lengthForm">
+            <form:form action="add-length" cssClass="form-horizontal"  method="post" modelAttribute="lengthForm">
 
                 <form:errors path="height" cssClass="error"/>
                 <div class="form-group input-group">

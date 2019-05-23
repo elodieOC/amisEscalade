@@ -19,7 +19,7 @@
             <h1 class="mb-5 d-inline-block col-md-8">Liste des Spots</h1>
 
             <input type="button" value="Ajouter Spot"
-                   onclick="window.location.href='ajoutSpot'; return false;"
+                   onclick="window.location.href='ajout-spot'; return false;"
                    class="btn btn-primary" />
 
             <div class="panel panel-info mt-5">
@@ -37,7 +37,7 @@
                         <!-- loop over and print our spots -->
                         <c:forEach var="spot" items="${spots}">
                             <!-- construct an "view" link with spot id -->
-                            <c:url var="viewLink" value="/spots/spot/${spot.id}" />
+                            <c:url var="viewLink" value="/spots/${spot.id}" />
 
                             <tr>
                                 <!-- display the view link -->

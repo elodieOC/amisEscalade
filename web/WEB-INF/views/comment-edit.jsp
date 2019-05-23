@@ -18,7 +18,7 @@
     <div class="container col-md-10 mt-5">
         <div class="col-md-offset-1 col-md-10">
             <h2 class="mb-5">Editer un commentaire</h2>
-            <form:form action="updateComment" cssClass="form-horizontal"  method="post" modelAttribute="comment">
+            <form:form action="update" cssClass="form-horizontal"  method="post" modelAttribute="comment">
                 <form:hidden path="id" />
 
                 <form:errors path="content" cssClass="error"/>

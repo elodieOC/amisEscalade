@@ -29,14 +29,14 @@
         <c:choose>
             <c:when test="${topo.available}">
                 <input type="button" value="Faire une demande de Réservation"
-                       onclick="window.location.href='${topo.id}/reserver'; return false;"
+                       onclick="window.location.href='${topo.id}/book'; return false;"
                        class="btn btn-primary" />
             </c:when>
             <c:otherwise>
                 <c:choose>
                     <c:when test="${userId ne null && userId eq topo.user.id}">
                         <input type="button" value="Rendre le Topo disponible à nouveau"
-                               onclick="window.location.href='${topo.id}/availableAgain'; return false;"
+                               onclick="window.location.href='${topo.id}/make-available'; return false;"
                                class="btn btn-success" />
                     </c:when>
                     <c:otherwise>
@@ -50,9 +50,9 @@
                 <p class="text-muted small">Vous êtes administrateur ou vous avez ajouté ce topo. Vous pouvez l'éditer ou le supprimer.</p>
             </div>
             <!-- construct an "update" link with topo id -->
-            <c:url var="updateLink" value="/topos/topo/${topo.id}/updateFormTopo" />
+            <c:url var="updateLink" value="/topos/${topo.id}/editer" />
             <!-- construct an "delete" link with topo id -->
-            <c:url var="deleteLink" value="/topos/topo/${topo.id}/delete" />
+            <c:url var="deleteLink" value="/topos/${topo.id}/delete" />
             <!-- display the update link -->
             <input type="button" value="Editer"
                    onclick="window.location.href='${updateLink}'; return false;"

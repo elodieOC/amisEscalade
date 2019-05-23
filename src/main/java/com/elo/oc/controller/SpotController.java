@@ -50,7 +50,7 @@ public class SpotController {
      * @param theModel attribute passed to jsp page 
      * @return page with a list of all the spots
      */
-    @GetMapping("/list")
+    @GetMapping("")
     public String listSpots(Model theModel) {
         List<Spot> theSpots = spotService.getSpots();
         theModel.addAttribute("spots", theSpots);
@@ -69,7 +69,7 @@ public class SpotController {
      * @param request  servlet request 
      * @return page to show depending on user on user on the page
      */
-    @GetMapping("/ajoutSpot")
+    @GetMapping("/ajout-spot")
     public String showFormForSpotAdd(Model theModel, HttpServletRequest request) {
         HttpSession session = request.getSession();
 
@@ -92,7 +92,7 @@ public class SpotController {
      * @param request  servlet request  
      * @return page to show depending on user on the page
      */
-    @PostMapping("/saveSpot")
+    @PostMapping("/add-spot")
     public String saveSpot(@Valid @ModelAttribute("spot") Spot theSpot, BindingResult theBindingResult,
                            HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -114,7 +114,7 @@ public class SpotController {
                 theSpot.setUser(userService.findUserByEmail(sessionEmail));
                 System.out.println(theSpot.toString());
                 spotService.saveSpot(theSpot);
-                return "redirect:/spots/spot/"+theSpot.getId();
+                return "redirect:/spots/"+theSpot.getId();
             }
         }
     }
@@ -126,7 +126,7 @@ public class SpotController {
      * @param request  servlet request
      * @return page displaying the details of the spot
      */
-    @GetMapping("/spot/{spotId}")
+    @GetMapping("/{spotId}")
     public String viewSpot(@PathVariable("spotId") Integer spotId, Model theModel, HttpServletRequest request){
         /* Récupération de la session depuis la requête */
         HttpSession session = request.getSession();
@@ -149,7 +149,7 @@ public class SpotController {
      * @param request  servlet request
      * @return page to show depending on user on the page
      */
-    @GetMapping("/spot/{spotId}/updateFormSpot")
+    @GetMapping("/{spotId}/editer")
     public String formForSpotUpdate(@PathVariable("spotId") Integer theSpotId, Model theModel,
                                     HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -178,7 +178,7 @@ public class SpotController {
      * @param theBindingResult the result of validation of the form
      * @return page to show depending on result of process
      */
-    @PostMapping("/spot/{spotId}/updateSpot")
+    @PostMapping("/{spotId}/update")
     public String updateSpot(@PathVariable("spotId") Integer spotId, @Valid @ModelAttribute("spot") Spot theSpot, BindingResult theBindingResult) {
         if (theBindingResult.hasErrors()) {
             System.out.println("form has errors");
@@ -189,7 +189,7 @@ public class SpotController {
             User spotUser =  userService.findUserById(spotToUpdate.getUser().getId());
             theSpot.setUser(spotUser);
             spotService.updateSpot(theSpot);
-            return "redirect:/spots/spot/"+spotId;
+            return "redirect:/spots/"+spotId;
         }
     }
 
@@ -199,7 +199,7 @@ public class SpotController {
      * @param request  servlet request
      * @return page to show depending on user of the page
      */
-    @GetMapping("/spot/{spotId}/delete")
+    @GetMapping("/{spotId}/delete")
     public String deleteCustomer(@PathVariable("spotId") Integer theSpotId, HttpServletRequest request) {
         HttpSession session = request.getSession();
         if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
@@ -214,7 +214,7 @@ public class SpotController {
             return "redirect:/home";
         }
         spotService.deleteSpot(theSpotId);
-        return "redirect:/spots/list";
+        return "redirect:/spots/";
     }
     /*
      **************************************
@@ -229,7 +229,7 @@ public class SpotController {
      * @param request  servlet request
      * @return page to show depending on user of the page
      */
-    @GetMapping("/spot/{spotId}/ajoutSecteur")
+    @GetMapping("/{spotId}/ajout-secteur")
     public String addSectorToSpot(@PathVariable("spotId") Integer theSpotId, Model theModel, HttpServletRequest request) {
         HttpSession session = request.getSession();
         if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
@@ -252,7 +252,7 @@ public class SpotController {
      * @param request  servlet request
      * @return page to show depending on user of the page
      */
-    @PostMapping("/spot/{spotId}/saveSector")
+    @PostMapping("/{spotId}/add-sector")
     public String saveSector(@PathVariable("spotId") Integer theSpotId, @Valid @ModelAttribute("sector") Sector theSector, BindingResult theBindingResult,
                              HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -273,7 +273,7 @@ public class SpotController {
                 theSector.setSpot(spotService.findSpotById(theSpotId));
                 sectorService.saveSector(theSector);
 
-                String redirectingString = "/spots/spot/"+theSpotId+"/sector/"+theSector.getId();
+                String redirectingString = "/spots/"+theSpotId+"/sector/"+theSector.getId();
                 return "redirect:"+redirectingString;
             }
         }
@@ -287,7 +287,7 @@ public class SpotController {
      * @param request  servlet request
      * @return page with the details of a sector
      */
-    @GetMapping("/spot/{spotId}/sector/{sectorId}")
+    @GetMapping("/{spotId}/sector/{sectorId}")
     public String viewSector(@PathVariable("spotId") Integer spotId,@PathVariable("sectorId") Integer sectorId, Model theModel, HttpServletRequest request){
         /* Récupération de la session depuis la requête */
         HttpSession session = request.getSession();
@@ -318,7 +318,7 @@ public class SpotController {
      * @param request  servlet request
      * @return  page to show depending on user of the page
      */
-    @GetMapping("/spot/{spotId}/sector/{sectorId}/updateFormSector")
+    @GetMapping("/{spotId}/sector/{sectorId}/editer")
     public String formForSectorUpdate(@PathVariable("spotId") Integer theSpotId,@PathVariable("sectorId") Integer theSectorId, Model theModel,
                                       HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -347,7 +347,7 @@ public class SpotController {
      * @param theBindingResult the result of validation of the form
      * @return  page to show depending on result of the process
      */
-    @PostMapping("/spot/{spotId}/sector/{sectorId}/updateSector")
+    @PostMapping("/{spotId}/sector/{sectorId}/update")
     public String updateSector(@PathVariable("spotId") Integer spotId,  @PathVariable("sectorId") Integer theSectorId,@Valid @ModelAttribute("sector") Sector theSector, BindingResult theBindingResult) {
         if (theBindingResult.hasErrors()) {
             System.out.println("form has errors");
@@ -359,7 +359,7 @@ public class SpotController {
             theSector.setUser(theSectorToUpdate.getUser());
             sectorService.updateSector(theSector);
 
-            String redirectingString = "/spots/spot/"+spotId+"/sector/"+theSector.getId();
+            String redirectingString = "/spots/"+spotId+"/sector/"+theSector.getId();
             return "redirect:"+redirectingString;
         }
     }
@@ -371,7 +371,7 @@ public class SpotController {
      * @param request  servlet request
      * @return page to show depending on user of the page
      */
-    @GetMapping("/spot/{spotId}/sector/{sectorId}/deleteSector")
+    @GetMapping("/{spotId}/sector/{sectorId}/delete")
     public String deleteSectorFromSpot(@PathVariable("spotId") Integer theSpotId,@PathVariable("sectorId") Integer theSectorId,
                                        HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -387,7 +387,7 @@ public class SpotController {
             return "redirect:/home";
         }
         sectorService.deleteSector(theSectorId);
-        return "redirect:/spots/spot/"+theSpotId;
+        return "redirect:/spots/"+theSpotId;
     }
 
     /*
@@ -403,7 +403,7 @@ public class SpotController {
      * @param request  servlet request
      * @return page to show depending on user of the page
      */
-    @GetMapping("/spot/{spotId}/commenter")
+    @GetMapping("/{spotId}/commenter")
     public String addCommentToSpot(@PathVariable("spotId") Integer spotId, Model theModel, HttpServletRequest request) {
         HttpSession session = request.getSession();
         if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
@@ -430,7 +430,7 @@ public class SpotController {
      * @param request  servlet request
      * @return page to show depending on user of the page
      */
-    @PostMapping("/spot/{spotId}/saveComment")
+    @PostMapping("/{spotId}/add-comment")
     public String saveComment(@PathVariable("spotId") Integer spotId, @Valid @ModelAttribute("comment") Comment theComment, BindingResult theBindingResult,
                               HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -450,7 +450,7 @@ public class SpotController {
                 theComment.setUser(userService.findUserByEmail(sessionEmail));
                 theComment.setSpot(spotService.findSpotById(spotId));
                 commentService.saveComment(theComment);
-                return "redirect:/spots/spot/"+spotId;
+                return "redirect:/spots/"+spotId;
             }
         }
     }
@@ -463,7 +463,7 @@ public class SpotController {
      * @param request  servlet request
      * @return page to show depending on user of the page
      */
-    @GetMapping("/spot/{spotId}/comment/{commentId}/updateFormComment")
+    @GetMapping("/{spotId}/comment/{commentId}/editer")
     public String formForCommentUpdate(@PathVariable("spotId") Integer theSpotId,@PathVariable("commentId") Integer theCommentId, Model theModel,
                                        HttpServletRequest request) {
         HttpSession  session = request.getSession();
@@ -493,7 +493,7 @@ public class SpotController {
      * @param theBindingResult the result of validation of the form
      * @return page to show depending on the result of process
      */
-    @PostMapping("/spot/{spotId}/comment/{commentId}/updateComment")
+    @PostMapping("/{spotId}/comment/{commentId}/update")
     public String updateComment(@PathVariable("spotId") Integer spotId,  @PathVariable("commentId") Integer theCommentId,@Valid @ModelAttribute("comment") Comment theComment, BindingResult theBindingResult) {
         if (theBindingResult.hasErrors()) {
             System.out.println("form has errors");
@@ -505,7 +505,7 @@ public class SpotController {
             theComment.setDate(theCommentToUpdate.getDate());
             theComment.setUser(theCommentToUpdate.getUser());
             commentService.updateComment(theComment);
-            return "redirect:/spots/spot/"+spotId;
+            return "redirect:/spots/"+spotId;
         }
     }
 
@@ -516,8 +516,8 @@ public class SpotController {
      * @param request  servlet request
      * @return page to show depending on user of the page
      */
-    @GetMapping("/deleteComment")
-    public String deleteCommentFromSpot(@RequestParam("spotId") Integer theSpotId,@RequestParam("commentId") Integer theCommentId,
+    @GetMapping("/{spotId}/comment/{commentId}/delete")
+    public String deleteCommentFromSpot(@PathVariable("spotId") Integer theSpotId,@PathVariable("commentId") Integer theCommentId,
                                         HttpServletRequest request) {
         HttpSession session = request.getSession();
         if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
@@ -532,7 +532,7 @@ public class SpotController {
             return "redirect:/home";
         }
         commentService.deleteComment(theCommentId);
-        return "redirect:/spots/spot/"+theSpotId;
+        return "redirect:/spots/"+theSpotId;
     }
 
     /*
@@ -549,7 +549,7 @@ public class SpotController {
      * @param request  servlet request
      * @return page to show depending on user of the page
      */
-    @GetMapping("/spot/{spotId}/sector/{sectorId}/ajoutVoie")
+    @GetMapping("/{spotId}/sector/{sectorId}/ajout-voie")
     public String addRouteToSector(@PathVariable("spotId") Integer spotId, @PathVariable("sectorId") Integer sectorId,
                                   Model theModel, HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -580,7 +580,7 @@ public class SpotController {
      * @param request  servlet request
      * @return page to show depending on user of the page
      */
-    @PostMapping("/spot/{spotId}/sector/{sectorId}/saveRoute")
+    @PostMapping("/{spotId}/sector/{sectorId}/add-route")
     public String saveRoute(@PathVariable("spotId") Integer spotId, @PathVariable("sectorId") Integer sectorId,
                             @Valid @ModelAttribute("routeForm") Route theRoute,  BindingResult theBindingResult,
                             HttpServletRequest request) {
@@ -606,7 +606,7 @@ public class SpotController {
 
                 routeService.saveRoute(routeToSave);
 
-                String redirectingString = "/spots/spot/"+spotId+"/sector/"+sectorId;
+                String redirectingString = "/spots/"+spotId+"/sector/"+sectorId+"route"+routeToSave.getId();
                 return "redirect:"+redirectingString;
             }
         }
@@ -621,7 +621,7 @@ public class SpotController {
      * @param request  servlet request
      * @return page to show depending on user of the page
      */
-    @GetMapping("/spot/{spotId}/sector/{sectorId}/route/{routeId}")
+    @GetMapping("/{spotId}/sector/{sectorId}/route/{routeId}")
     public String viewRoute(@PathVariable("spotId") Integer spotId,@PathVariable("sectorId") Integer sectorId, @PathVariable("routeId") Integer routeId,
                             Model theModel, HttpServletRequest request){
         /* Récupération de la session depuis la requête */
@@ -650,7 +650,7 @@ public class SpotController {
      * @param request  servlet request
      * @return page to show depending on user of the page
      */
-    @GetMapping("/spot/{spotId}/sector/{sectorId}/route/{routeId}/updateFormRoute")
+    @GetMapping("/{spotId}/sector/{sectorId}/route/{routeId}/editer")
     public String formForRouteUpdate(@PathVariable("spotId") Integer theSpotId,@PathVariable("sectorId") Integer theSectorId,@PathVariable("routeId") Integer theRouteId,
                                      Model theModel,  HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -680,7 +680,7 @@ public class SpotController {
      * @param theBindingResult the result of validation of the form
      * @return page to show depending on user of the page
      */
-    @PostMapping("/spot/{spotId}/sector/{sectorId}/route/{routeId}/updateRoute")
+    @PostMapping("/{spotId}/sector/{sectorId}/route/{routeId}/update")
     public String updateRoute(@PathVariable("spotId") Integer theSpotId,  @PathVariable("sectorId") Integer theSectorId, @PathVariable("routeId") Integer theRouteId,
                               @Valid @ModelAttribute("route") Route theRoute, BindingResult theBindingResult) {
         if (theBindingResult.hasErrors()) {
@@ -693,7 +693,7 @@ public class SpotController {
             theRoute.setSector(theRouteToUpdate.getSector());
             routeService.updateRoute(theRoute);
 
-            String redirectingString = "/spots/spot/"+theSpotId+"/sector/"+theSectorId+"/route/"+theRouteId;
+            String redirectingString = "/spots/"+theSpotId+"/sector/"+theSectorId+"/route/"+theRouteId;
             return "redirect:"+redirectingString;
         }
     }
@@ -706,7 +706,7 @@ public class SpotController {
      * @param request  servlet request
      * @return page to show depending on user of the page
      */
-    @GetMapping("/spot/{spotId}/sector/{sectorId}/route/{routeId}/deleteRoute")
+    @GetMapping("/{spotId}/sector/{sectorId}/route/{routeId}/delete")
     public String deleteRouteFromSector(@PathVariable("spotId") Integer theSpotId,@PathVariable("sectorId") Integer theSectorId,@PathVariable("routeId") Integer theRouteId,
                                        HttpServletRequest request) {
         HttpSession  session = request.getSession();
@@ -722,7 +722,7 @@ public class SpotController {
             return "redirect:/home";
         }
         routeService.deleteRoute(theRouteId);
-        String redirectingString = "/spots/spot/"+theSpotId+"/sector/"+theSectorId;
+        String redirectingString = "/spots/"+theSpotId+"/sector/"+theSectorId;
         return "redirect:"+redirectingString;
     }
 
@@ -741,7 +741,7 @@ public class SpotController {
      * @param request  servlet request
      * @return page to show depending on user of the page
      */
-    @GetMapping("/spot/{spotId}/sector/{sectorId}/route/{routeId}/ajoutLongueur")
+    @GetMapping("/{spotId}/sector/{sectorId}/route/{routeId}/ajout-longueur")
     public String addLengthToRoute(@PathVariable("spotId") Integer spotId, @PathVariable("sectorId") Integer sectorId,
                                   @PathVariable("routeId") Integer routeId,
                                   Model theModel, HttpServletRequest request) {
@@ -775,7 +775,7 @@ public class SpotController {
      * @param theModel theModel attribute passed to jsp page
      * @return page to show depending on user of the page
      */
-    @PostMapping("/spot/{spotId}/sector/{sectorId}/route/{routeId}/saveLength")
+    @PostMapping("/{spotId}/sector/{sectorId}/route/{routeId}/add-length")
     public String saveLength(@PathVariable("spotId") Integer spotId, @PathVariable("sectorId") Integer sectorId, @PathVariable("routeId") Integer routeId,
                             @Valid @ModelAttribute("lengthForm") LengthForm theLengthForm,
                              BindingResult theBindingResult, HttpServletRequest request,   Model theModel) {
@@ -808,7 +808,7 @@ public class SpotController {
 
                 lengthService.saveLength(theLength);
 
-                String redirectingString = "/spots/spot/"+spotId+"/sector/"+sectorId+"/route/"+routeId;
+                String redirectingString = "/spots/"+spotId+"/sector/"+sectorId+"/route/"+routeId;
                 return "redirect:"+redirectingString;
             }
         }
@@ -824,7 +824,7 @@ public class SpotController {
      * @param request  servlet request
      * @return page to show depending on user of the page
      */
-    @GetMapping("/spot/{spotId}/sector/{sectorId}/route/{routeId}/length/{lengthId}/updateFormLength")
+    @GetMapping("/{spotId}/sector/{sectorId}/route/{routeId}/length/{lengthId}/editer")
     public String formForLengthUpdate(@PathVariable("spotId") Integer theSpotId,@PathVariable("sectorId") Integer theSectorId,
                                       @PathVariable("routeId") Integer theRouteId,@PathVariable("lengthId") Integer theLengthId,
                                      Model theModel,  HttpServletRequest request) {
@@ -865,7 +865,7 @@ public class SpotController {
      * @param theModel theModel attribute passed to jsp page
      * @return page to show depending on user of the page
      */
-    @PostMapping("/spot/{spotId}/sector/{sectorId}/route/{routeId}/length/{lengthId}/updateLength")
+    @PostMapping("/{spotId}/sector/{sectorId}/route/{routeId}/length/{lengthId}/update")
     public String updateLength(@PathVariable("spotId") Integer theSpotId,  @PathVariable("sectorId") Integer theSectorId,
                                @PathVariable("routeId") Integer theRouteId,@PathVariable("lengthId") Integer theLengthId,
                               @Valid @ModelAttribute("lengthForm") LengthForm theLengthForm, BindingResult theBindingResult, Model theModel) {
@@ -889,7 +889,7 @@ public class SpotController {
 
             lengthService.updateLength(theLengthToUpdate);
 
-            String redirectingString = "/spots/spot/"+theSpotId+"/sector/"+theSectorId+"/route/"+theRouteId;
+            String redirectingString = "/spots/"+theSpotId+"/sector/"+theSectorId+"/route/"+theRouteId;
             return "redirect:"+redirectingString;
         }
     }
@@ -903,7 +903,7 @@ public class SpotController {
      * @param request  servlet request
      * @return page to show depending on user of the page
      */
-    @GetMapping("/spot/{spotId}/sector/{sectorId}/route/{routeId}/length/{lengthId}/deleteLength")
+    @GetMapping("/{spotId}/sector/{sectorId}/route/{routeId}/length/{lengthId}/delete")
     public String deleteLengthFromRoute(@PathVariable("spotId") Integer theSpotId,@PathVariable("sectorId") Integer theSectorId,
                                         @PathVariable("routeId") Integer theRouteId,@PathVariable("lengthId") Integer theLengthId,
                                         HttpServletRequest request) {
@@ -920,7 +920,7 @@ public class SpotController {
             return "redirect:/home";
         }
         lengthService.deleteLength(theLengthId);
-        String redirectingString = "/spots/spot/"+theSpotId+"/sector/"+theSectorId+"/route/"+theRouteId;
+        String redirectingString = "/spots/"+theSpotId+"/sector/"+theSectorId+"/route/"+theRouteId;
         return "redirect:"+redirectingString;
     }
 

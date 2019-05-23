@@ -19,7 +19,7 @@
         <div class="col-md-offset-1 col-lg-6 mx-auto">
             <h2 class="mb-5">Secteur ${sector.name} - Ajouter une voie</h2>
             <hr />
-            <form:form action="saveRoute" cssClass="form-horizontal"  method="post" modelAttribute="routeForm">
+            <form:form action="add-route" cssClass="form-horizontal"  method="post" modelAttribute="routeForm">
 
                 <form:errors path="name" cssClass="error"/>
                 <div class="form-group input-group">

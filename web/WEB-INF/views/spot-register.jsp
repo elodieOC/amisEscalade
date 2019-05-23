@@ -22,7 +22,7 @@
             <br />
             <div class="card bg-light p-4 ">
                 <h2 class="mt-3 mb-3 text-center">Ajouter Spot</h2>
-                <form:form action="saveSpot" cssClass="form-horizontal"  method="post" modelAttribute="spot">
+                <form:form action="add-spot" cssClass="form-horizontal"  method="post" modelAttribute="spot">
 
                     <!-- need to associate this data with spot id -->
                     <form:hidden path="id" />

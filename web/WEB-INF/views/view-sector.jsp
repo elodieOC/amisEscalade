@@ -17,19 +17,22 @@
 <main role="main" class="flex-shrink-0 mt-5">
     <div class="container col-md-10 mt-5">
         <h1 class="d-inline-block col-md-8">Secteur ${sector.name}:
-            <span class="text-muted ml-5 small">(Ajouté par: <c:choose>
-                <c:when test="${empty sector.user.username}">
-                    utilisateur supprimé
-                </c:when>
-                <c:otherwise>
-                    ${sector.user.username}
-                </c:otherwise>
-            </c:choose>)</span></h1>
+            <span class="text-muted ml-5 small">(Ajouté par: 
+                <c:choose>
+                    <c:when test="${empty sector.user.username}">
+                        utilisateur supprimé
+                    </c:when>
+                    <c:otherwise>
+                        ${sector.user.username}
+                    </c:otherwise>
+                </c:choose>)
+            </span>
+        </h1>
         <input type="button" value="Ajouter une Voie"
-               onclick="window.location.href='${sector.id}/ajoutVoie'; return false;"
+               onclick="window.location.href='${sector.id}/ajout-voie'; return false;"
                class="btn btn-primary" />
         <br />
-        <h4 class="col-md-8"><a href="<c:url value="/spots/spot/${spot.id}" />">${spot.name}</a>, ${spot.county}, ${spot.city}</h4>
+        <h4 class="col-md-8"><a href="<c:url value="/spots/${spot.id}" />">${spot.name}</a>, ${spot.county}, ${spot.city}</h4>
         <c:set var="userRole" value="${sessionScope['loggedInUserRole']}" />
         <c:set var="userId" value="${sessionScope['loggedInUserId']}" />
 
@@ -38,9 +41,9 @@
                 <p class="text-muted small">Vous êtes administrateur ou vous avez ajouté ce secteur. Vous pouvez l'éditer ou le supprimer.</p>
             </div>
             <!-- construct an "update" link with spot id -->
-            <c:url var="updateLink" value="/spots/spot/${spot.id}/sector/${sector.id}/updateFormSector" />
+            <c:url var="updateLink" value="/spots/${spot.id}/sector/${sector.id}/editer" />
             <!-- construct an "delete" link with spot id -->
-            <c:url var="deleteLink" value="/spots/spot/${spot.id}/sector/${sector.id}/deleteSector" />
+            <c:url var="deleteLink" value="/spots/${spot.id}/sector/${sector.id}/delete" />
             <!-- display the update link -->
             <input type="button" value="Editer"
                    onclick="window.location.href='${updateLink}'; return false;"
@@ -71,7 +74,7 @@
                         </thead>
                         <c:forEach var="route" items="${routes}">
                             <!-- construct an "view" link with spot id -->
-                            <c:url var="viewLink" value="/spots/spot/${spot.id}/sector/${sector.id}/route/${route.id}" />
+                            <c:url var="viewLink" value="/spots/${spot.id}/sector/${sector.id}/route/${route.id}" />
                             <tr>
                                 <td class="col-md-8 mx-auto"><a href="${viewLink}"><strong>${sector.routes.indexOf(route)+1}:  </strong>  ${route.name}</a>
 
@@ -86,9 +89,9 @@
                                 <c:if test="${userRole eq '1' || userId eq spot.user.id && userId ne null}">
                                     <td class="col-lg-2 mx-auto">
                                         <!-- construct an "update" link with spot id -->
-                                        <c:url var="updateLink" value="/spots/spot/${spot.id}/sector/${sector.id}/route/${route.id}/updateFormRoute" />
+                                        <c:url var="updateLink" value="/spots/${spot.id}/sector/${sector.id}/route/${route.id}/editer" />
                                         <!-- construct an "delete" link with spot id -->
-                                        <c:url var="deleteLink" value="/spots/spot/${spot.id}/sector/${sector.id}/route/${route.id}/deleteRoute" />
+                                        <c:url var="deleteLink" value="/spots/${spot.id}/sector/${sector.id}/route/${route.id}/delete" />
                                         <!-- display the update link -->
                                         <input type="button" value="Editer"
                                                onclick="window.location.href='${updateLink}'; return false;"

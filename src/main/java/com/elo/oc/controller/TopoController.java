@@ -41,7 +41,7 @@ public class TopoController {
      * @param theModel attribute passed to jsp page
      * @return page with a list of all the topos
      */
-    @GetMapping("/list")
+    @GetMapping("")
     public String listTopos(Model theModel) {
         List<Topo> theTopos = topoService.getTopos();
         theModel.addAttribute("topos", theTopos);
@@ -60,7 +60,7 @@ public class TopoController {
      * @param request  servlet request 
      * @return page to show depending on user on user on the page
      */
-    @GetMapping("/ajoutTopo")
+    @GetMapping("/ajout-topo")
     public String showFormForTopoAdd(Model theModel, HttpServletRequest request) {
         HttpSession session = request.getSession();
 
@@ -83,7 +83,7 @@ public class TopoController {
      * @param request  servlet request  
      * @return page to show depending on user on the page
      */
-    @PostMapping("/saveTopo")
+    @PostMapping("/add-topo")
     public String saveTopo(@Valid @ModelAttribute("topo") Topo theTopo, BindingResult theBindingResult,
                            HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -102,7 +102,7 @@ public class TopoController {
                 System.out.println("form is validated");
                 theTopo.setUser(userService.findUserByEmail(sessionEmail));
                 topoService.saveTopo(theTopo);
-                return "redirect:/topos/topo/"+theTopo.getId();
+                return "redirect:/topos/"+theTopo.getId();
             }
         }
     }
@@ -114,7 +114,7 @@ public class TopoController {
      * @param request  servlet request
      * @return page displaying the details of the topo
      */
-    @GetMapping("/topo/{topoId}")
+    @GetMapping("/{topoId}")
     public String viewTopo(@PathVariable("topoId") Integer topoId, Model theModel, HttpServletRequest request){
         HttpSession session = request.getSession();
         if(session.getAttribute("loggedInUserEmail") != null) {
@@ -134,7 +134,7 @@ public class TopoController {
      * @param request  servlet request
      * @return page to show depending on user on the page
      */
-    @GetMapping("/topo/{topoId}/updateFormTopo")
+    @GetMapping("/{topoId}/editer")
     public String formForTopoUpdate(@PathVariable("topoId") Integer theTopoId, Model theModel,
                                     HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -163,7 +163,7 @@ public class TopoController {
      * @param theBindingResult the result of validation of the form
      * @return page to show depending on result of process
      */
-    @PostMapping("/topo/{topoId}/updateTopo")
+    @PostMapping("/{topoId}/update")
     public String updateTopo(@PathVariable("topoId") Integer topoId, @Valid @ModelAttribute("topo") Topo theTopo, BindingResult theBindingResult) {
         if (theBindingResult.hasErrors()) {
             System.out.println("form has errors");
@@ -174,7 +174,7 @@ public class TopoController {
             User topoUser =  userService.findUserById(topoToUpdate.getUser().getId());
             theTopo.setUser(topoUser);
             topoService.updateTopo(theTopo);
-            return "redirect:/topos/topo/"+topoId;
+            return "redirect:/topos/"+topoId;
         }
     }
 
@@ -184,7 +184,7 @@ public class TopoController {
      * @param request  servlet request
      * @return page to show depending on user of the page
      */
-    @GetMapping("/topo/{topoId}/delete")
+    @GetMapping("/{topoId}/delete")
     public String deleteCustomer(@PathVariable("topoId") Integer theTopoId, HttpServletRequest request) {
         HttpSession session = request.getSession();
         if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
@@ -199,7 +199,7 @@ public class TopoController {
             return "redirect:/home";
         }
         topoService.deleteTopo(theTopoId);
-        return "redirect:/topos/list";
+        return "redirect:/topos/";
     }
     /*
      **************************************
@@ -214,7 +214,7 @@ public class TopoController {
      * @param request servlet request
      * @return topo page
      */
-    @GetMapping("/topo/{topoId}/reserver")
+    @GetMapping("/{topoId}/book")
     public String askForTopo(@PathVariable("topoId") Integer theTopoId, HttpServletRequest request){
         HttpSession session = request.getSession();
         if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
@@ -236,7 +236,7 @@ public class TopoController {
                 "\n\nCordialement," +
                 "\nLes amis de l'escalade";
         emailService.sendSimpleMessage(mailTo, subject, text);
-        return "redirect:/topos/topo/"+theTopoId;
+        return "redirect:/topos/"+theTopoId;
     }
 
     /**
@@ -245,7 +245,7 @@ public class TopoController {
      * @param request server request
      * @return topo page
      */
-    @GetMapping("/topo/{topoId}/availableAgain")
+    @GetMapping("/{topoId}/make-available")
     public String makeTopoAvailableAgain(@PathVariable("topoId") Integer theTopoId, HttpServletRequest request){
         HttpSession session = request.getSession();
         if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
@@ -262,7 +262,7 @@ public class TopoController {
         }
         theTopo.setAvailable(true);
         topoService.updateTopo(theTopo);
-        return "redirect:/topos/topo/"+theTopoId;
+        return "redirect:/topos/"+theTopoId;
     }
 
 }

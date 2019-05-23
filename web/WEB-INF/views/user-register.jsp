@@ -25,7 +25,7 @@
             <div class="card bg-light p-4 ">
                 <h2 class="mt-3 mb-3 text-center">Création de compte</h2>
 
-                <form:form action="saveUser" cssClass="form-horizontal"  method="post" modelAttribute="user">
+                <form:form action="add-user" cssClass="form-horizontal"  method="post" modelAttribute="user">
                     <!-- need to associate this data with user id -->
                     <form:hidden path="id" />
                     <p>

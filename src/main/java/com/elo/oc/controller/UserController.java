@@ -56,7 +56,7 @@ public class UserController {
      * @param theModel attribute passed to jsp page
      * @return register page
      */
-    @GetMapping("/register")
+    @GetMapping("/inscription")
     public String showRegisterForm(Model theModel) {
         User theUser = new User();
         List<Role> roles = roleService.getRolesPublic();
@@ -73,7 +73,7 @@ public class UserController {
      * @param theModel attribute passed to jsp page
      * @return page to show depending on result of process
      */
-    @PostMapping("/saveUser")
+    @PostMapping("/add-user")
     public String saveUser(@Valid @ModelAttribute("user") User theUser, BindingResult theBindingResult,
                            HttpServletRequest request, Model theModel) {
         userRegistrationValidator.validate(theUser, theBindingResult);
@@ -113,7 +113,7 @@ public class UserController {
      * @param theModel attribute passed to jsp page
      * @return reset password page
      */
-    @GetMapping("/resetPasswordForm")
+    @GetMapping("/mot-de-passe-reset")
     public String showFormResetPassword(Model theModel){
         ResetPassForm resetPassForm = new ResetPassForm();
         theModel.addAttribute("user", resetPassForm);
@@ -127,7 +127,7 @@ public class UserController {
      * @param theBindingResult  the result of validation of the form
      * @return login page
      */
-    @PostMapping("/resetPassword")
+    @PostMapping("/reset-password")
     public String resetPassword(@Valid @ModelAttribute("user") ResetPassForm resetPassForm, BindingResult theBindingResult, Model theModel){
         resetPasswordValidator.validate(resetPassForm, theBindingResult);
         int success = 0;
@@ -165,7 +165,7 @@ public class UserController {
      * @param request servlet request
      * @return page to show depending on process result
      */
-    @PostMapping("/logUser")
+    @PostMapping("/log-user")
     public String connectUser(@ModelAttribute("user") User theUser, BindingResult theBindingResult,  HttpServletRequest request) {
 
         userLoginValidator.validate(theUser, theBindingResult);
@@ -179,7 +179,7 @@ public class UserController {
             session.setAttribute("loggedInUserEmail", userToLogIn.getEmail());
             session.setAttribute("loggedInUserId", userToLogIn.getId());
             session.setAttribute("loggedInUserRole", userToLogIn.getUserRole().getId());
-            String redirectString = "/user/"+userToLogIn.getId()+"/profile";
+            String redirectString = "/user/"+userToLogIn.getId();
             return "redirect:"+redirectString;
         }
     }
@@ -194,7 +194,7 @@ public class UserController {
      * @param request servlet request
      * @return page to show depending on user on the page
      */
-    @GetMapping("/{userId}/profile")
+    @GetMapping("/{userId}")
     public String showUserProfile(@PathVariable("userId") Integer userId,Model theModel, HttpServletRequest request) {
         HttpSession session = request.getSession();
         if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
@@ -237,7 +237,7 @@ public class UserController {
      * User update and delete
      * ************************************
      */
-    @GetMapping("/{userId}/updateForm")
+    @GetMapping("/{userId}/editer")
     public String showFormForUpdate(@PathVariable("userId") Integer theId, Model theModel, HttpServletRequest request) {
         HttpSession session = request.getSession();
         if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
@@ -259,7 +259,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/{userId}/updateUserProfile")
+    @PostMapping("/{userId}/update")
     public String updateUserProfile(@PathVariable("userId") Integer userId, @Valid @ModelAttribute("user") User theUser, Model theModel, BindingResult theBindingResult, HttpServletRequest request) {
         User theUserToUpdate = userService.findUserById(userId);
 

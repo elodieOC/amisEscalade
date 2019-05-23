@@ -19,7 +19,7 @@
     <div class="col-md-offset-2 col-md-7">
         <h2 class="d-inline-block mb-5 mt-5 col-md-10">Bienvenu-e ${user.username}</h2>
         <input type="button" value="Editer Mon Profil"
-               onclick="window.location.href='updateForm'; return false;"
+               onclick="window.location.href='editer'; return false;"
                class="btn btn-primary" />
         <div class="panel panel-info">
             <div class="panel-body">

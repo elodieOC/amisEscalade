@@ -17,20 +17,23 @@
 <main role="main" class="flex-shrink-0 mt-5">
     <div class="container col-md-10 mt-5">
         <h1 class="d-inline-block col-md-8">Voie ${route.name}:
-            <span class="text-muted ml-5 small">(Ajouté par: <c:choose>
-                <c:when test="${empty route.user.username}">
-                    utilisateur supprimé
-                </c:when>
-                <c:otherwise>
-                    ${route.user.username}
-                </c:otherwise>
-            </c:choose>)</span></h1>
+            <span class="text-muted ml-5 small">(Ajouté par:
+                <c:choose>
+                    <c:when test="${empty route.user.username}">
+                        utilisateur supprimé
+                    </c:when>
+                    <c:otherwise>
+                        ${route.user.username}
+                    </c:otherwise>
+                </c:choose>)
+            </span>
+        </h1>
         <input type="button" value="Ajouter une Longueur"
-               onclick="window.location.href='${route.id}/ajoutLongueur'; return false;"
+               onclick="window.location.href='${route.id}/ajout-longueur'; return false;"
                class="btn btn-primary" />
         <br />
-        <h4 class="col-md-8">Spot <a href="<c:url value="/spots/spot/${spot.id}" />">${spot.name}</a>,
-            Secteur <a href="<c:url value="/spots/spot/${spot.id}/sector/${sector.id}" />">${sector.name}</a>,
+        <h4 class="col-md-8">Spot <a href="<c:url value="/spots/${spot.id}" />">${spot.name}</a>,
+            Secteur <a href="<c:url value="/spots/${spot.id}/sector/${sector.id}" />">${sector.name}</a>,
             ${spot.county}, ${spot.city}</h4>
         <c:set var="userRole" value="${sessionScope['loggedInUserRole']}" />
         <c:set var="userId" value="${sessionScope['loggedInUserId']}" />
@@ -40,9 +43,9 @@
                 <p class="text-muted small">Vous êtes administrateur ou vous avez ajouté cette voie. Vous pouvez l'éditer ou la supprimer.</p>
             </div>
             <!-- construct an "update" link with spot id -->
-            <c:url var="updateLink" value="/spots/spot/${spot.id}/sector/${sector.id}/route/${route.id}/updateFormRoute" />
+            <c:url var="updateLink" value="/spots/${spot.id}/sector/${sector.id}/route/${route.id}/editer" />
             <!-- construct an "delete" link with spot id -->
-            <c:url var="deleteLink" value="/spots/spot/${spot.id}/sector/${sector.id}/route/${route.id}/deleteRoute" />
+            <c:url var="deleteLink" value="/spots/${spot.id}/sector/${sector.id}/route/${route.id}/delete" />
             <!-- display the update link -->
             <input type="button" value="Editer"
                    onclick="window.location.href='${updateLink}'; return false;"
@@ -70,9 +73,9 @@
                                     <c:if test="${userRole eq '1' || userId eq spot.user.id && userId ne null}">
                                         <td class="col-lg-2 mx-auto">
                                             <!-- construct an "update" link with spot id -->
-                                            <c:url var="updateLink" value="/spots/spot/${spot.id}/sector/${sector.id}/route/${route.id}/length/${length.id}/updateFormLength" />
+                                            <c:url var="updateLink" value="/spots/${spot.id}/sector/${sector.id}/route/${route.id}/length/${length.id}/editer" />
                                             <!-- construct an "delete" link with spot id -->
-                                            <c:url var="deleteLink" value="/spots/spot/${spot.id}/sector/${sector.id}/route/${route.id}/length/${length.id}/deleteLength" />
+                                            <c:url var="deleteLink" value="/spots/${spot.id}/sector/${sector.id}/route/${route.id}/length/${length.id}/delete" />
                                             <!-- display the update link -->
                                             <input type="button" value="Editer"
                                                    onclick="window.location.href='${updateLink}'; return false;"
