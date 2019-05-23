@@ -86,22 +86,6 @@
                                     <span class="text-muted small">(${route.lengths.size()} ${lengthString}, cotation min: ${route.gradeMin}, cotation max: ${route.gradeMax})</span>
                                 </c:if>
                                 </td>
-                                <c:if test="${userRole eq '1' || userId eq spot.user.id && userId ne null}">
-                                    <td class="col-lg-2 mx-auto">
-                                        <!-- construct an "update" link with spot id -->
-                                        <c:url var="updateLink" value="/spots/${spot.id}/sector/${sector.id}/route/${route.id}/editer" />
-                                        <!-- construct an "delete" link with spot id -->
-                                        <c:url var="deleteLink" value="/spots/${spot.id}/sector/${sector.id}/route/${route.id}/delete" />
-                                        <!-- display the update link -->
-                                        <input type="button" value="Editer"
-                                               onclick="window.location.href='${updateLink}'; return false;"
-                                               class="btn btn-secondary" />
-                                        <!-- display the delete link -->
-                                        <input type="button" value="Supprimer"
-                                               onclick="window.location.href='${deleteLink}'; return false;"
-                                               class="btn btn-secondary" />
-                                    </td>
-                                </c:if>
                             </tr>
                         </c:forEach>
                     </table>

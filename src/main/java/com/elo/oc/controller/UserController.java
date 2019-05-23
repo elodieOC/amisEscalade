@@ -62,7 +62,7 @@ public class UserController {
         List<Role> roles = roleService.getRolesPublic();
         theModel.addAttribute("roles", roles);
         theModel.addAttribute("user", theUser);
-        return "user-register";
+        return "add-user";
     }
 
     /**
@@ -81,7 +81,7 @@ public class UserController {
         if (theBindingResult.hasErrors()) {
             List<Role> roles = roleService.getRolesPublic();
             theModel.addAttribute("roles", roles);
-            return "user-register";
+            return "add-user";
         }
         else{
             userService.saveUser(theUser);
@@ -105,7 +105,7 @@ public class UserController {
     public String showLoginForm(Model theModel){
         User theUser = new User();
         theModel.addAttribute("user", theUser);
-        return "user-login";
+        return "login";
     }
 
     /**
@@ -117,7 +117,7 @@ public class UserController {
     public String showFormResetPassword(Model theModel){
         ResetPassForm resetPassForm = new ResetPassForm();
         theModel.addAttribute("user", resetPassForm);
-        return "user-resetPassword";
+        return "reset-password-user";
     }
 
     /**
@@ -132,7 +132,7 @@ public class UserController {
         resetPasswordValidator.validate(resetPassForm, theBindingResult);
         int success = 0;
         if (theBindingResult.hasErrors()) {
-            return "user-resetPassword";
+            return "reset-password-user";
         }
         else{
             User theUser = userService.findUserByEmail(resetPassForm.getEmail());
@@ -155,7 +155,7 @@ public class UserController {
             userService.updateUser(theUser);
             success = 1;
             theModel.addAttribute("success", success);
-            return "user-resetPassword";
+            return "reset-password-user";
         }
     }
     /**
@@ -172,7 +172,7 @@ public class UserController {
         HttpSession session = request.getSession();
 
         if (theBindingResult.hasErrors()) {
-            return "user-login";
+            return "login";
         }
         else{
             User userToLogIn = userService.findUserByUsername(theUser.getUsername());
@@ -212,7 +212,7 @@ public class UserController {
             theModel.addAttribute("user", theUser);
             theModel.addAttribute("topos", theUser.getTopos());
             theModel.addAttribute("spots", theUser.getSpots());
-            return "user-profile";
+            return "view-user";
 
         }
     }
@@ -255,7 +255,7 @@ public class UserController {
             List<Role> roles = roleService.getRolesPublic();
             theModel.addAttribute("roles", roles);
             theModel.addAttribute("user", theUser);
-            return "user-update";
+            return "edit-user";
         }
     }
 
@@ -276,7 +276,7 @@ public class UserController {
             System.out.println("form has errors");
             List<Role> roles = roleService.getRolesPublic();
             theModel.addAttribute("roles", roles);
-            return "user-update";
+            return "edit-user";
         } else {
             System.out.println("form is validated");
             HttpSession session = request.getSession();

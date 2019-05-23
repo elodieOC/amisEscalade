@@ -30,7 +30,7 @@
                         </tr>
                         </thead>
                         <!-- construct an "update" link with user id -->
-                        <c:url var="updateLink" value="/admin/user/${user.id}/updateForm" />
+                        <c:url var="updateLink" value="/admin/user/${user.id}/editer" />
 
                         <!-- construct an "delete" link with user id -->
                         <c:url var="deleteLink" value="/admin/user/${user.id}/delete" />
@@ -42,9 +42,9 @@
 
 
                             <td>
-                                <!-- display the update link --> <a href="${updateLink}">Update</a>
+                                <!-- display the update link --> <a href="${updateLink}">Editer</a>
                                 | <a href="${deleteLink}"
-                                     onclick="if (!(confirm('Are you sure you want to delete this user?'))) return false">Delete</a>
+                                     onclick="if (!(confirm('Are you sure you want to delete this user?'))) return false">Supprimer</a>
                             </td>
 
                         </tr>

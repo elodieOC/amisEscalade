@@ -8,8 +8,6 @@ import com.elo.oc.service.UserService;
 import com.elo.oc.utils.SessionCheck;
 import com.elo.oc.utils.TopoRegistrationValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -72,7 +70,7 @@ public class TopoController {
             System.out.println("user "+ userService.findUserByEmail(sessionEmail).getUsername()+" logged in");
             Topo theTopo = new Topo();
             theModel.addAttribute("topo", theTopo);
-            return "topo-register";}
+            return "add-topo";}
     }
 
     /**
@@ -97,7 +95,7 @@ public class TopoController {
             topoRegistrationValidator.validate(theTopo, theBindingResult);
             if (theBindingResult.hasErrors()) {
                 System.out.println("form has errors");
-                return "topo-register";
+                return "add-topo";
             } else {
                 System.out.println("form is validated");
                 theTopo.setUser(userService.findUserByEmail(sessionEmail));
@@ -151,7 +149,7 @@ public class TopoController {
                 return "redirect:/home";
             }
             theModel.addAttribute("topo", theTopo);
-            return "topo-update";
+            return "edit-topo";
         }
     }
 
@@ -167,7 +165,7 @@ public class TopoController {
     public String updateTopo(@PathVariable("topoId") Integer topoId, @Valid @ModelAttribute("topo") Topo theTopo, BindingResult theBindingResult) {
         if (theBindingResult.hasErrors()) {
             System.out.println("form has errors");
-            return "topo-update";
+            return "edit-topo";
         } else {
             System.out.println("form is validated");
             Topo topoToUpdate = topoService.findTopoById(topoId);

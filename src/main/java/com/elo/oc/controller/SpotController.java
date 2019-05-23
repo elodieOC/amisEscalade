@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 /**
  *<h2>Controller for all Spots</h2>
@@ -81,7 +80,7 @@ public class SpotController {
             System.out.println("user "+ userService.findUserByEmail(sessionEmail).getUsername()+" logged in");
             Spot theSpot = new Spot();
             theModel.addAttribute("spot", theSpot);
-            return "spot-register";}
+            return "add-spot";}
     }
 
     /**
@@ -108,7 +107,7 @@ public class SpotController {
 
             if (theBindingResult.hasErrors()) {
                 System.out.println("form has errors");
-                return "spot-register";
+                return "add-spot";
             } else {
                 System.out.println("form is validated");
                 theSpot.setUser(userService.findUserByEmail(sessionEmail));
@@ -166,7 +165,7 @@ public class SpotController {
                 return "redirect:/home";
             }
             theModel.addAttribute("spot", theSpot);
-            return "spot-update";
+            return "edit-spot";
         }
     }
 
@@ -182,7 +181,7 @@ public class SpotController {
     public String updateSpot(@PathVariable("spotId") Integer spotId, @Valid @ModelAttribute("spot") Spot theSpot, BindingResult theBindingResult) {
         if (theBindingResult.hasErrors()) {
             System.out.println("form has errors");
-            return "spot-update";
+            return "edit-spot";
         } else {
             System.out.println("form is validated");
             Spot spotToUpdate = spotService.findSpotById(spotId);
@@ -335,7 +334,7 @@ public class SpotController {
                 return "redirect:/home";
             }
             theModel.addAttribute("sector", theSector);
-            return "sector-edit";
+            return "edit-sector";
         }
     }
 
@@ -351,7 +350,7 @@ public class SpotController {
     public String updateSector(@PathVariable("spotId") Integer spotId,  @PathVariable("sectorId") Integer theSectorId,@Valid @ModelAttribute("sector") Sector theSector, BindingResult theBindingResult) {
         if (theBindingResult.hasErrors()) {
             System.out.println("form has errors");
-            return "sector-edit";
+            return "edit-sector";
         } else {
             System.out.println("form is validated");
             Sector theSectorToUpdate = sectorService.findSectorById(theSectorId);
@@ -481,7 +480,7 @@ public class SpotController {
                 return "redirect:/home";
             }
             theModel.addAttribute("comment", theComment);
-            return "comment-edit";
+            return "edit-comment";
         }
     }
 
@@ -497,7 +496,7 @@ public class SpotController {
     public String updateComment(@PathVariable("spotId") Integer spotId,  @PathVariable("commentId") Integer theCommentId,@Valid @ModelAttribute("comment") Comment theComment, BindingResult theBindingResult) {
         if (theBindingResult.hasErrors()) {
             System.out.println("form has errors");
-            return "comment-edit";
+            return "edit-comment";
         } else {
             System.out.println("form is validated");
             Comment theCommentToUpdate = commentService.findCommentById(theCommentId);
@@ -606,7 +605,7 @@ public class SpotController {
 
                 routeService.saveRoute(routeToSave);
 
-                String redirectingString = "/spots/"+spotId+"/sector/"+sectorId+"route"+routeToSave.getId();
+                String redirectingString = "/spots/"+spotId+"/sector/"+sectorId+"/route/"+routeToSave.getId();
                 return "redirect:"+redirectingString;
             }
         }
@@ -667,7 +666,7 @@ public class SpotController {
                 return "redirect:/home";
             }
             theModel.addAttribute("route", theRoute);
-            return "route-edit";
+            return "edit-route";
         }
     }
 
@@ -685,7 +684,7 @@ public class SpotController {
                               @Valid @ModelAttribute("route") Route theRoute, BindingResult theBindingResult) {
         if (theBindingResult.hasErrors()) {
             System.out.println("form has errors");
-            return "route-edit";
+            return "edit-route";
         } else {
             System.out.println("form is validated");
             Route theRouteToUpdate = routeService.findRouteById(theRouteId);
@@ -850,7 +849,7 @@ public class SpotController {
             }
             theModel.addAttribute("lengthForm", form);
             theModel.addAttribute("grades", grades);
-            return "length-edit";
+            return "edit-length";
         }
     }
 
@@ -875,7 +874,7 @@ public class SpotController {
             System.out.println("form has errors");
             List<Grade> grades = gradeService.getGrades();
             theModel.addAttribute("grades", grades);
-            return "length-edit";
+            return "edit-length";
         } else {
             System.out.println("form is validated");
             Length theLengthToUpdate = lengthService.findLengthById(theLengthId);

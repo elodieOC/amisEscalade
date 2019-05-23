@@ -16,7 +16,7 @@
 <c:import url="inc/choose-navbar.jsp" />
 <main role="main" class="flex-shrink-0 mt-5">
     <div class="container col-md-10 mt-5">
-        <div class="col-md-offset-1 col-md-10">
+        <div class="col-md-offset-1 col-md-10 col-lg-6 mx-auto">
             <h2 class="mb-5">Editer une voie</h2>
             <form:form action="update" cssClass="form-horizontal"  method="post" modelAttribute="lengthForm">
 

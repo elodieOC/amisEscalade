@@ -71,13 +71,13 @@ public class AdminInfosController {
                 theModel.addAttribute("spots", theSpots);
                 theModel.addAttribute("grades", theGrades);
                 theModel.addAttribute("ratings", theRatings);
-                return "admin-infos";
+                return "admin-list-infos";
             }
         }
     }
 
     /**
-     *<p>Page admin/user/{userId}/profile</p>
+     *<p>Page admin/user/{userId}</p>
      * <p>Where an admin can access the profile of a user, update and delete it
      * <p>after clicking "update" on a user line in the list of users appearing in admin/infos page</p>
      * @param userId theId id of the user transmitted by the clicking on 'view' in admin/infos page
@@ -107,7 +107,7 @@ public class AdminInfosController {
                     theModel.addAttribute("user", theUser);
                     theModel.addAttribute("spots", theUser.getSpots());
                     theModel.addAttribute("topos", theUser.getTopos());
-                    return "admin-user-profile";
+                    return "admin-view-user";
                 }
             }
         }
@@ -121,7 +121,7 @@ public class AdminInfosController {
      * @param request servlet request
      * @return page to show depending on user on the page
      */
-    @GetMapping("/user/{userId}/updateForm")
+    @GetMapping("/user/{userId}/editer")
     public String showFormForUpdate(@PathVariable("userId") Integer userId, Model theModel,
                                     HttpServletRequest request) {
        HttpSession session = request.getSession();
@@ -143,26 +143,26 @@ public class AdminInfosController {
                 List<Role> roles = roleService.getRoles();
                 theModel.addAttribute("roles", roles);
                 theModel.addAttribute("user", theUser);
-                return "admin-user-update";
+                return "admin-edit-user";
             }
         }
     }
 
     /**
-     * <p>Page admin/user/{userId}/saveUser</p>
+     * <p>Page admin/user/{userId}/update</p>
      * <p>Where the app confirms or not the update
      * <p>after confirming updating (admin/user/{userId}/updateForm page)</p>
      * @param theUser the user being updated
      * @param theBindingResult the result of validation of the update
      * @return profile page if update valid, stays on updateForm if not
      */
-    @PostMapping("/user/{userId}/saveUser")
+    @PostMapping("/user/{userId}/update")
     public String updateUser(@PathVariable("userId") Integer userId, @Valid @ModelAttribute("user") User theUser, BindingResult theBindingResult, Model theModel) {
 
         if (theBindingResult.hasErrors()) {
             List<Role> roles = roleService.getRoles();
             theModel.addAttribute("roles", roles);
-            return "admin-user-update";
+            return "admin-edit-user";
         }
         else {
             userService.adminSaveUser(theUser);
