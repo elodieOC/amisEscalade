@@ -1,5 +1,8 @@
 package com.elo.oc.entity;
 
+
+import org.hibernate.annotations.Immutable;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -8,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "grade")
+@Immutable
 public class Grade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

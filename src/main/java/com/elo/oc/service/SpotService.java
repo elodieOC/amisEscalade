@@ -21,4 +21,5 @@ public interface SpotService {
     Optional<Spot> findSpotWithThisName(String name);
 
     List<Spot> findSpotByUserId(Integer id);
+    List<Spot> search(String city, String county, String name, String nbrSecteurs, String username);
 }

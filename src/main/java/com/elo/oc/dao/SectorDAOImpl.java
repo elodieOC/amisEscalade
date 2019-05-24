@@ -1,5 +1,7 @@
 package com.elo.oc.dao;
 
+import com.elo.oc.entity.Grade;
+import com.elo.oc.entity.Length;
 import com.elo.oc.entity.Route;
 import com.elo.oc.entity.Sector;
 import org.hibernate.Hibernate;
@@ -86,4 +88,6 @@ public class SectorDAOImpl implements SectorDAO {
         List<Sector> sectors = query.getResultList();
         return sectors;
     }
+
+
 }

@@ -63,5 +63,22 @@ th, td{
     color: #377ef2;
 }
 
+/* Style the submit search button */
+.search-btn {
+    float: left;
+    width: 100%;
+    padding: 3px;
+    background: #2196F3;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    cursor: pointer;
+}
+
+.search-btn:hover {
+    background: #0b7dda;
+}
+
+
 
 

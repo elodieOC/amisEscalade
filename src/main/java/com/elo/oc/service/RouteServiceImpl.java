@@ -51,6 +51,11 @@ public class RouteServiceImpl implements RouteService{
     }
 
     @Override
+    public List<Route> findRouteBySpotId(Integer id) {
+        return routeDAO.findRouteBySpotId(id);
+    }
+
+    @Override
     public String getRouteGradeMin(Integer id) {
         return routeDAO.getRouteGradeMin(id);
     }

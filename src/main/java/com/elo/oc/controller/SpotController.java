@@ -1,12 +1,14 @@
 package com.elo.oc.controller;
 
 import com.elo.oc.dto.LengthForm;
+import com.elo.oc.dto.SearchForm;
 import com.elo.oc.entity.*;
 import com.elo.oc.entity.Sector;
 import com.elo.oc.service.*;
 import com.elo.oc.utils.LengthFormValidator;
 import com.elo.oc.utils.SessionCheck;
 import com.elo.oc.utils.SpotRegistrationValidator;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 /**
  *<h2>Controller for all Spots</h2>
@@ -52,6 +55,15 @@ public class SpotController {
     @GetMapping("")
     public String listSpots(Model theModel) {
         List<Spot> theSpots = spotService.getSpots();
+        SearchForm searchForm = new SearchForm();
+        theModel.addAttribute("spots", theSpots);
+        theModel.addAttribute("searchForm", searchForm);
+        return "list-spots";
+    }
+
+   @PostMapping("/recherche")
+    public String searchSpots(@ModelAttribute("searchForm") SearchForm searchForm, Model theModel) {
+        List<Spot> theSpots = spotService.search(searchForm.getCity(), searchForm.getCounty(), searchForm.getName(), searchForm.getNbrSector(), searchForm.getUserName());
         theModel.addAttribute("spots", theSpots);
         return "list-spots";
     }

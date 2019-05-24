@@ -1,12 +1,19 @@
 package com.elo.oc.entity;
 
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "spot")
@@ -52,12 +59,25 @@ public class Spot {
     @OneToMany (mappedBy = "spot")//attribut Spot spot de Comment
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany (mappedBy = "spot")//attribut Spot spot de Sector
-    private List<Sector> sectors = new ArrayList<>();
+    @Fetch(FetchMode.SUBSELECT)
+    @OneToMany (mappedBy = "spot", fetch = FetchType.EAGER)//attribut Spot spot de Sector
+    private Set<Sector> sectors = new HashSet<>();
+
+    /*@Fetch(FetchMode.SUBSELECT)
+    @OneToMany (mappedBy = "spot")//attribut Spot spot de route
+    private Set<Route> routes = new HashSet<>();*/
 
     public Spot() {
 
     }
+/*
+    public Set<Route> getRoutes() {
+        return routes;
+    }
+
+    public void setRoutes(Set<Route> routes) {
+        this.routes = routes;
+    }*/
 
     public Boolean getTagged() {
         return tagged;
@@ -115,24 +135,20 @@ public class Spot {
         this.comments = comments;
     }
 
-    public List<Sector> getSectors() {
+    public Set<Sector> getSectors() {
         return sectors;
     }
 
-    public void setSectors(List<Sector> sectors) {
+    public void setSectors(Set<Sector> sectors) {
         this.sectors = sectors;
     }
 
     @Override
     public String toString() {
         return "Spot{" +
-                "id=" + id +
                 ", name='" + name + '\'' +
                 ", city='" + city + '\'' +
                 ", county='" + county + '\'' +
-                ", user= " +
-                "[id " + user.getId() +"], [name "+user.getUsername()+"], [email "+user.getEmail()+
-                "], [role "+user.getUserRole().getRoleName()+"] "+
                 '}';
     }
 }

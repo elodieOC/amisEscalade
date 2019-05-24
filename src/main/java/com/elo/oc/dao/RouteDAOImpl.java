@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
@@ -27,7 +28,8 @@ public class RouteDAOImpl implements RouteDAO {
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<Route> cq = cb.createQuery(Route.class);
         Root<Route> root = cq.from(Route.class);
-        cq.select(root);
+        cq.select(root).distinct(true);
+        root.fetch("lengths", JoinType.INNER);
         Query query = session.createQuery(cq);
         return query.getResultList();
     }
@@ -58,6 +60,7 @@ public class RouteDAOImpl implements RouteDAO {
     public Route findRouteById(Integer id) {
         Session currentSession = sessionFactory.getCurrentSession();
         Route theRoute = currentSession.get(Route.class, id);
+        Hibernate.initialize(theRoute.getLengths());
         return theRoute;
     }
 
@@ -66,6 +69,15 @@ public class RouteDAOImpl implements RouteDAO {
         Session currentSession = sessionFactory.getCurrentSession();
         Query<Route> query = currentSession.createNamedQuery("findRouteBySectorId", Route.class);
         query.setParameter("sectorId", id);
+        List<Route> routes = query.getResultList();
+        return routes;
+    }
+
+    @Override
+    public List<Route> findRouteBySpotId(Integer id) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query<Route> query = currentSession.createNamedQuery("findRouteBySpotId", Route.class);
+        query.setParameter("spotId", id);
         List<Route> routes = query.getResultList();
         return routes;
     }

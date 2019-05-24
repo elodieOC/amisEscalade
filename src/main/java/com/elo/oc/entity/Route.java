@@ -12,7 +12,9 @@ import java.util.List;
 @Table(name = "route")
 @org.hibernate.annotations.NamedQueries({
         @org.hibernate.annotations.NamedQuery(name = "findRouteBySectorId",
-                query = "from Route where sector_fk = :sectorId")
+                query = "from Route where sector_fk = :sectorId"),
+        @org.hibernate.annotations.NamedQuery(name = "findRouteBySpotId",
+                query = "from Route where spot_fk = :spotId")
 })
 public class Route {
     @Id
