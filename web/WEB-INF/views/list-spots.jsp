@@ -58,11 +58,6 @@
                                 </td>
                                 <td>
                                     <div class="form-group input-group">
-                                        <form:input path="userName" cssClass="form-control p-2" placeholder="Chercher par utilisateur"  type="text" />
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="form-group input-group">
                                         <button class="search-btn" type="submit"><i class="fa fa-search"></i></button>
                                     </div>
                                 </td>
@@ -92,7 +87,7 @@
                                 <td><a href="${viewLink}">${spot.name}</a></td>
                                 <td>${spot.county}</td>
                                 <td>${spot.city}</td>
-                                <td>${spot.sectors.size()}</td>
+                                <td>${spot.nbrSecteurs}</td>
                                 <c:choose>
                                     <c:when test="${empty spot.user.username}">
                                         <td>utilisateur supprimé</td>

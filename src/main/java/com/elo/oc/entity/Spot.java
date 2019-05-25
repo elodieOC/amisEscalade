@@ -63,6 +63,17 @@ public class Spot {
     @OneToMany (mappedBy = "spot", fetch = FetchType.EAGER)//attribut Spot spot de Sector
     private Set<Sector> sectors = new HashSet<>();
 
+    @Column(name = "nbrSecteurs")
+    private int nbrSecteurs;
+
+    public int getNbrSecteurs() {
+        return nbrSecteurs;
+    }
+
+    public void setNbrSecteurs(int nbrSecteurs) {
+        this.nbrSecteurs = nbrSecteurs;
+    }
+
     /*@Fetch(FetchMode.SUBSELECT)
     @OneToMany (mappedBy = "spot")//attribut Spot spot de route
     private Set<Route> routes = new HashSet<>();*/

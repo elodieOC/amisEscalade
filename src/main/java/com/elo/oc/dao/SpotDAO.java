@@ -20,6 +20,6 @@ public interface SpotDAO {
     List<Spot> findSpotByUserId(Integer id);
     List<Spot> findSpotWithOfficialTag();
 
-    List<Spot> search(String city, String county, String name, String nbrSecteurs, String username);
+    List<Spot> search(String city, String county, String name, int nbrSecteurs);
 
 }

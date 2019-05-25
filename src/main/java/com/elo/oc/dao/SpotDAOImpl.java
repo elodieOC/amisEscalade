@@ -39,34 +39,19 @@ public class SpotDAOImpl implements SpotDAO {
     }
 
     @Override
-    public List<Spot> search(String city, String county, String name, String nbrSecteurs, String username) {
+    public List<Spot> search(String city, String county, String name, int nbrSecteurs) {
         Session currentSession = sessionFactory.getCurrentSession();
-        if(!city.equals("")){
-            Query <Spot>  query = currentSession.createQuery("select s from Spot s where s.city like '%'||:city||'%' ", Spot.class);
-            query.setParameter("city", city);
-            return query.getResultList();
-        }
-        if(!username.equals("")){
-            Query <Spot>  query = currentSession.createQuery("select s from Spot s where s.username like '%'||:username||'%' ", Spot.class);
-            query.setParameter("username", username);
-            return query.getResultList();
-        }
-        if(!county.equals("")){
-            Query <Spot>  query = currentSession.createQuery("select s from Spot s where s.county like '%'||:county||'%' ", Spot.class);
-            query.setParameter("county", county);
-            return query.getResultList();
-        }
-        if(!name.equals("")){
-            Query <Spot>  query = currentSession.createQuery("select s from Spot s where s.name like '%'||:name||'%' ", Spot.class);
-            query.setParameter("name", name);
-            return query.getResultList();
-        }
-        if(!name.equals("")){
-            Query <Spot>  query = currentSession.createQuery("select s from Spot s where s.nbrSecteurs like '%'||:nbrSecteurs||'%' ", Spot.class);
-            query.setParameter("nbrSecteurs", nbrSecteurs);
-            return query.getResultList();
-        }
-        return getSpots();
+
+        Query<Spot> query = currentSession.createQuery("select s from Spot s where " +
+                "(s.name like '%'||:name||'%' or name is null) " +
+                "and (s.city like '%'||:city||'%' or city is null) " +
+                "and (s.county like '%'||:county||'%' or county is null) " +
+                "and (s.nbrSecteurs = :nbrSecteurs or s.nbrSecteurs between :nbrSecteurs and 10000) ");
+        query.setParameter("city", city);
+        query.setParameter("county", county);
+        query.setParameter("name", name);
+        query.setParameter("nbrSecteurs", nbrSecteurs);
+        return query.getResultList();
     }
 
     @Override

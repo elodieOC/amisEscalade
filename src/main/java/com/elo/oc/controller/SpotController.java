@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import sun.awt.SunHints;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -61,9 +62,20 @@ public class SpotController {
         return "list-spots";
     }
 
+    /**
+     * <p>Page displays the list of spots filtered with searched fields</p>
+     * @param searchForm entity containing fields that can be searched
+     * @param theModel attribute passed to jsp page
+     * @return page with filtered list of spots
+     */
    @PostMapping("/recherche")
     public String searchSpots(@ModelAttribute("searchForm") SearchForm searchForm, Model theModel) {
-        List<Spot> theSpots = spotService.search(searchForm.getCity(), searchForm.getCounty(), searchForm.getName(), searchForm.getNbrSector(), searchForm.getUserName());
+        int nbr = 0;
+        if(!searchForm.getNbrSector().equals("")){
+            nbr = Integer.parseInt(searchForm.getNbrSector());
+       }
+
+        List<Spot> theSpots = spotService.search(searchForm.getCity(), searchForm.getCounty(), searchForm.getName(), nbr);
         theModel.addAttribute("spots", theSpots);
         return "list-spots";
     }

@@ -1,9 +1,6 @@
 package com.elo.oc.dao;
 
-import com.elo.oc.entity.Grade;
-import com.elo.oc.entity.Length;
-import com.elo.oc.entity.Route;
-import com.elo.oc.entity.Sector;
+import com.elo.oc.entity.*;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -35,6 +32,9 @@ public class SectorDAOImpl implements SectorDAO {
     @Override
     public void saveSector(Sector sector) {
         Session currentSession = sessionFactory.getCurrentSession();
+        Spot spot = sector.getSpot();
+        spot.setNbrSecteurs(spot.getNbrSecteurs()+1);
+        currentSession.update(spot);
         currentSession.saveOrUpdate(sector);
     }
 

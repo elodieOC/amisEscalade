@@ -5,8 +5,6 @@ import java.util.List;
 
 public class SearchForm {
 
-
-   private String userName;
    private String name;
    private String county;
    private String city;
@@ -31,14 +29,6 @@ public class SearchForm {
 
     public void setNbrLengths(String nbrLengths) {
         this.nbrLengths = nbrLengths;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 
     public String getName() {

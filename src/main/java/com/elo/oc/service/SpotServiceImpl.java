@@ -23,8 +23,8 @@ public class SpotServiceImpl implements SpotService {
     }
 
     @Override
-    public List<Spot> search(String city, String county, String name, String nbrSecteurs, String username) {
-        return spotDAO.search(city, county, name, nbrSecteurs, username);
+    public List<Spot> search(String city, String county, String name, int nbrSecteurs) {
+        return spotDAO.search(city, county, name, nbrSecteurs);
     }
 
     @Override
