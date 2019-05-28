@@ -1,12 +1,10 @@
 package com.elo.oc.service;
 
 import com.elo.oc.dao.SpotDAO;
-import com.elo.oc.entity.Sector;
 import com.elo.oc.entity.Spot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -36,35 +34,32 @@ public class SpotServiceImpl implements SpotService {
         while (itr.hasNext())
         {
             boolean bool = true;
+
             Spot s = (Spot) itr.next();
             if(nbrSectors != null && s.getSectors().size() != nbrSectors){
                 bool = false;
             }
-           /* if(nbrRoutes != null) {
-                int sumRoutes = 0;
-                for (Sector sector : s.getSectors()) {
-                    sumRoutes += sector.getRoutes().size();
-                }
-                if (sumRoutes != nbrRoutes) {
-                    bool = false;
-                }
-            }*/
-
             if(cotMin.length()!=0){
-                int spotGradeMin = s.getGradeMinId();
-                System.out.println("SPOT_MIN: " +spotGradeMin);
-                int minGradeSearchForm = Integer.parseInt(cotMin);
-                System.out.println("SEARCHED_MIN: " +minGradeSearchForm);
-                if(minGradeSearchForm < spotGradeMin){
+                Integer spotGradeMin = s.getGradeMinId();
+                Integer minGradeSearchForm = Integer.parseInt(cotMin);
+                if(spotGradeMin == 0){
                     bool = false;
+                }
+                else if(minGradeSearchForm != spotGradeMin){
+                    if(minGradeSearchForm > spotGradeMin){
+                        bool = false;
+                    }
                 }
                 System.out.println(minGradeSearchForm+" < "+spotGradeMin);
                 System.out.println("BOOL: "+bool);
             }
             if(cotMax.length() != 0){
-                int spotGradeMax = s.getGradeMaxId();
-                int maxGradeSearchForm = Integer.parseInt(cotMax);
-                if(maxGradeSearchForm > spotGradeMax){
+                Integer spotGradeMax = s.getGradeMaxId();
+                if(spotGradeMax == 0){
+                    bool = false;
+                }
+                Integer maxGradeSearchForm = Integer.parseInt(cotMax);
+                if(maxGradeSearchForm < spotGradeMax){
                     bool = false;
                 }
                 System.out.println(maxGradeSearchForm+" < "+spotGradeMax);
@@ -132,9 +127,9 @@ public class SpotServiceImpl implements SpotService {
     public void displayGrade(List<Spot> theSpots) {
         for (Spot s : theSpots) {
             if (s.getGradeMaxId() != 0) {
-                 s.setGradeMax(gradeService.findById(s.getGradeMaxId()).getName());
+                s.setGradeMax(gradeService.findById(s.getGradeMaxId()).getName());
             } else {
-                 s.setGradeMax("n/a");
+                s.setGradeMax("n/a");
             }
 
             if(s.getGradeMinId() != 0) {

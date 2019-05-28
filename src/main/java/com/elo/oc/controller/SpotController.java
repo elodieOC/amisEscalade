@@ -8,18 +8,15 @@ import com.elo.oc.service.*;
 import com.elo.oc.utils.LengthFormValidator;
 import com.elo.oc.utils.SessionCheck;
 import com.elo.oc.utils.SpotRegistrationValidator;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import sun.awt.SunHints;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 /**
  *<h2>Controller for all Spots</h2>
@@ -72,7 +69,7 @@ public class SpotController {
      */
    @PostMapping("/recherche")
     public String searchSpots(@ModelAttribute("searchForm") SearchForm searchForm, Model theModel) {
-        int nbrSectors = 0;
+        Integer nbrSectors = null;
         if(!searchForm.getNbrSector().equals("")){
             nbrSectors = Integer.parseInt(searchForm.getNbrSector());
        }

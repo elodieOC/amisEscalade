@@ -31,7 +31,7 @@
                     <table class="table mt-3">
                         <thead class="thead-light">
                         <tr>
-                            <th colspan="6">Recherche</th>
+                            <th colspan="8">Recherche</th>
                         </tr>
                         <tr>
                             <form:form action="recherche"  method="post" modelAttribute="searchForm">

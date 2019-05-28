@@ -53,6 +53,9 @@ public class Spot {
     @JoinColumn(name = "climb_user_fk")
     private User user;
 
+    @Column(name = "image")
+    private String image;
+
     @OneToMany (mappedBy = "spot")//attribut Spot spot de Comment
     private List<Comment> comments = new ArrayList<>();
 
