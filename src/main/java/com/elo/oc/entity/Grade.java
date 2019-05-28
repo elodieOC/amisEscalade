@@ -12,6 +12,10 @@ import java.util.List;
 @Entity
 @Table(name = "grade")
 @Immutable
+@org.hibernate.annotations.NamedQueries({
+        @org.hibernate.annotations.NamedQuery(name = "findGradeByName",
+                query = "from Grade where name = :name")
+})
 public class Grade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

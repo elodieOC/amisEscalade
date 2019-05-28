@@ -32,9 +32,6 @@ public class SectorDAOImpl implements SectorDAO {
     @Override
     public void saveSector(Sector sector) {
         Session currentSession = sessionFactory.getCurrentSession();
-        Spot spot = sector.getSpot();
-        spot.setNbrSecteurs(spot.getNbrSecteurs()+1);
-        currentSession.update(spot);
         currentSession.saveOrUpdate(sector);
     }
 

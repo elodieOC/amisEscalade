@@ -1,9 +1,7 @@
 package com.elo.oc.dao;
 
-import com.elo.oc.entity.Comment;
-import com.elo.oc.entity.Sector;
-import com.elo.oc.entity.Spot;
-import com.elo.oc.entity.User;
+import com.elo.oc.entity.*;
+import com.elo.oc.service.GradeService;
 import org.hibernate.FetchMode;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
@@ -11,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.FetchType;
 import javax.persistence.TypedQuery;
@@ -19,6 +18,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Repository
@@ -39,20 +39,29 @@ public class SpotDAOImpl implements SpotDAO {
     }
 
     @Override
-    public List<Spot> search(String city, String county, String name, int nbrSecteurs) {
+    public List<Spot> search(String city, String county, String name, String username) {
         Session currentSession = sessionFactory.getCurrentSession();
 
-        Query<Spot> query = currentSession.createQuery("select s from Spot s where " +
-                "(s.name like '%'||:name||'%' or name is null) " +
-                "and (s.city like '%'||:city||'%' or city is null) " +
-                "and (s.county like '%'||:county||'%' or county is null) " +
-                "and (s.nbrSecteurs = :nbrSecteurs or s.nbrSecteurs between :nbrSecteurs and 10000) ");
+        Query<Spot> query = currentSession.createQuery("select distinct s from Spot s " +
+                "left join fetch s.sectors sectors " +
+                "left join fetch sectors.routes routes  " +
+                "where(s.name like '%'||:name||'%' or s.name is null) " +
+                "and (s.city like '%'||:city||'%' or s.city is null) " +
+                "and (s.county like '%'||:county||'%' or s.county is null) ");
+
         query.setParameter("city", city);
         query.setParameter("county", county);
         query.setParameter("name", name);
-        query.setParameter("nbrSecteurs", nbrSecteurs);
+/*
+       String queryString = "select s from Spot s where 1=1 ";
+       if(!StringUtils.isEmpty(city)){queryString+= "and s.city like '%'||:city||'%'";}
+       Query<Spot> query = currentSession.createQuery(queryString);
+       if(!StringUtils.isEmpty(city)){query.setParameter("city", city);}*/
+
         return query.getResultList();
     }
+
+
 
     @Override
     public void saveSpot(Spot spot) {

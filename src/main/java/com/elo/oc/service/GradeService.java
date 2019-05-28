@@ -11,6 +11,7 @@ public interface GradeService {
 
     List < Grade > getGrades();
     Grade findById(Integer id);
+    Grade findGradeByName(String name);
 
 
 

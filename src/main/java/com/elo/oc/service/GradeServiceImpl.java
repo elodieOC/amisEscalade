@@ -31,6 +31,11 @@ public class GradeServiceImpl implements GradeService {
     }
 
     @Override
+    public Grade findGradeByName(String name) {
+        return gradeDAO.findGradeByName(name);
+    }
+
+    @Override
     public Grade findById(Integer id) {
         return gradeDAO.findById(id);
     }

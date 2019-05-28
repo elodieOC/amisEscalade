@@ -58,6 +58,33 @@
                                 </td>
                                 <td>
                                     <div class="form-group input-group">
+                                        <form:input path="username" cssClass="form-control p-2" placeholder="Chercher par utilisateur"  type="text" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group input-group">
+                                        <form:select  path="gradeMin" cssClass="form-control" >
+                                            <form:option value="" selected="">Chercher par cotation min</form:option>
+                                            <c:forEach var="cot" items="${grades}">
+                                                <form:option value="${cot.id}">${cot.name}</form:option>
+                                            </c:forEach>
+                                        </form:select>
+                                    </div> <!-- form-group end.// -->
+
+                                </td>
+                                <td>
+                                    <div class="form-group input-group">
+                                        <form:select  path="gradeMax" cssClass="form-control" >
+                                            <form:option value="" selected="">Chercher par cotation max</form:option>
+                                            <c:forEach var="cot" items="${grades}">
+                                                <form:option value="${cot.id}">${cot.name}</form:option>
+                                            </c:forEach>
+                                        </form:select>
+                                    </div> <!-- form-group end.// -->
+
+                                </td>
+                                <td>
+                                    <div class="form-group input-group">
                                         <button class="search-btn" type="submit"><i class="fa fa-search"></i></button>
                                     </div>
                                 </td>
@@ -72,8 +99,9 @@
                             <th>Région</th>
                             <th>Ville</th>
                             <th>Secteurs</th>
+                            <th>Cotation Min</th>
+                            <th>Cotation max</th>
                             <th>Ajouté par</th>
-                            <th>Voies</th>
                         </tr>
 
                         </thead>
@@ -87,15 +115,17 @@
                                 <td><a href="${viewLink}">${spot.name}</a></td>
                                 <td>${spot.county}</td>
                                 <td>${spot.city}</td>
-                                <td>${spot.nbrSecteurs}</td>
+                                <td>${spot.sectors.size()}</td>
+                                <td>${spot.gradeMin}</td>
+                                <td>${spot.gradeMax}</td>
                                 <c:choose>
-                                    <c:when test="${empty spot.user.username}">
-                                        <td>utilisateur supprimé</td>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <td>${spot.user.username}</td>
-                                    </c:otherwise>
-                                </c:choose>
+                                <c:when test="${empty spot.user.username}">
+                                    <td>utilisateur supprimé</td>
+                                </c:when>
+                                <c:otherwise>
+                                    <td>${spot.user.username}</td>
+                                </c:otherwise>
+                            </c:choose>
                             </tr></tbody>
                         </c:forEach>
                     </table>

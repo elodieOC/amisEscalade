@@ -10,10 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "spot")
@@ -59,37 +56,74 @@ public class Spot {
     @OneToMany (mappedBy = "spot")//attribut Spot spot de Comment
     private List<Comment> comments = new ArrayList<>();
 
-    @Fetch(FetchMode.SUBSELECT)
-    @OneToMany (mappedBy = "spot", fetch = FetchType.EAGER)//attribut Spot spot de Sector
+    @OneToMany (mappedBy = "spot")//attribut Spot spot de Sector
     private Set<Sector> sectors = new HashSet<>();
 
-    @Column(name = "nbrSecteurs")
-    private int nbrSecteurs;
-
-    public int getNbrSecteurs() {
-        return nbrSecteurs;
+    @Transient
+    public int getNbrRoutes(){
+        int r = 0;
+        for(Sector s: this.getSectors()){
+           r += s.getRoutes().size();
+        }
+        return r;
     }
 
-    public void setNbrSecteurs(int nbrSecteurs) {
-        this.nbrSecteurs = nbrSecteurs;
+    @Transient
+    public Integer getGradeMaxId() {
+        int max = 0;
+        for(Sector s: this.getSectors()){
+            for(Route r:s.getRoutes()){
+              for(Length l : r.getLengths()){
+                  int lengthGrade = l.getGrade().getId();
+                  if (lengthGrade >= max) {
+                      max = lengthGrade;
+                  }
+              }
+            }
+        }
+        return max;
     }
 
-    /*@Fetch(FetchMode.SUBSELECT)
-    @OneToMany (mappedBy = "spot")//attribut Spot spot de route
-    private Set<Route> routes = new HashSet<>();*/
+    @Transient
+    public Integer getGradeMinId() {
+        int min = 0;
+        for(Sector s: this.getSectors()){
+            for(Route r:s.getRoutes()){
+              for(Length l : r.getLengths()){
+                  int lengthGrade = l.getGrade().getId();
+                  if (lengthGrade <= min || min == 0) {
+                      min = lengthGrade;
+                  }
+              }
+            }
+        }
+        return min;
+    }
+
+    @Transient
+    private String gradeMax;
+    @Transient
+    private String gradeMin;
+
+    public String getGradeMax() {
+        return gradeMax;
+    }
+
+    public void setGradeMax(String gradeMax) {
+        this.gradeMax = gradeMax;
+    }
+
+    public String getGradeMin() {
+        return gradeMin;
+    }
+
+    public void setGradeMin(String gradeMin) {
+        this.gradeMin = gradeMin;
+    }
 
     public Spot() {
 
     }
-/*
-    public Set<Route> getRoutes() {
-        return routes;
-    }
-
-    public void setRoutes(Set<Route> routes) {
-        this.routes = routes;
-    }*/
-
     public Boolean getTagged() {
         return tagged;
     }

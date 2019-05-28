@@ -55,9 +55,11 @@ public class SpotController {
      */
     @GetMapping("")
     public String listSpots(Model theModel) {
-        List<Spot> theSpots = spotService.getSpots();
+        List<Spot> theSpots = spotService.search("", "", "", null, "", "", "");
+        spotService.displayGrade(theSpots);
         SearchForm searchForm = new SearchForm();
         theModel.addAttribute("spots", theSpots);
+        theModel.addAttribute("grades", gradeService.getGrades());
         theModel.addAttribute("searchForm", searchForm);
         return "list-spots";
     }
@@ -70,13 +72,15 @@ public class SpotController {
      */
    @PostMapping("/recherche")
     public String searchSpots(@ModelAttribute("searchForm") SearchForm searchForm, Model theModel) {
-        int nbr = 0;
+        int nbrSectors = 0;
         if(!searchForm.getNbrSector().equals("")){
-            nbr = Integer.parseInt(searchForm.getNbrSector());
+            nbrSectors = Integer.parseInt(searchForm.getNbrSector());
        }
 
-        List<Spot> theSpots = spotService.search(searchForm.getCity(), searchForm.getCounty(), searchForm.getName(), nbr);
+        List<Spot> theSpots = spotService.search(searchForm.getCity(), searchForm.getCounty(), searchForm.getName(), nbrSectors, searchForm.getUsername(), searchForm.getGradeMin(), searchForm.getGradeMax());
+        spotService.displayGrade(theSpots);
         theModel.addAttribute("spots", theSpots);
+        theModel.addAttribute("grades", gradeService.getGrades());
         return "list-spots";
     }
 

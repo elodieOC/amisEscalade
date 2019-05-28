@@ -9,10 +9,37 @@ public class SearchForm {
    private String county;
    private String city;
    private String nbrSector;
+   private String gradeMin;
+   private String gradeMax;
    private String nbrRoute;
    private String nbrLengths;
+   private String username;
 
     public SearchForm() {
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getGradeMin() {
+        return gradeMin;
+    }
+
+    public void setGradeMin(String gradeMin) {
+        this.gradeMin = gradeMin;
+    }
+
+    public String getGradeMax() {
+        return gradeMax;
+    }
+
+    public void setGradeMax(String gradeMax) {
+        this.gradeMax = gradeMax;
     }
 
     public String getNbrRoute() {

@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface SpotService {
 
-    public List <Spot> getSpots();
+    List <Spot> getSpots();
 
     void saveSpot(Spot spot);
     void updateSpot(Spot spot);
@@ -21,5 +21,6 @@ public interface SpotService {
     Optional<Spot> findSpotWithThisName(String name);
 
     List<Spot> findSpotByUserId(Integer id);
-    List<Spot> search(String city, String county, String name, int nbrSecteurs);
+    List<Spot> search(String city, String county, String name, Integer nbrSectors, String username,  String cotMin, String cotMax);
+    void displayGrade(List<Spot> theSpots);
 }

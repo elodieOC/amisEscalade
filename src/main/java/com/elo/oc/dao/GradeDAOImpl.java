@@ -6,7 +6,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.Query;
+import org.hibernate.query.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -29,6 +29,15 @@ public class GradeDAOImpl implements GradeDAO {
         Session currentSession = sessionFactory.getCurrentSession();
         currentSession.delete(id);
 
+    }
+
+    @Override
+    public Grade findGradeByName(String name) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query<Grade> query = currentSession.createNamedQuery("findGradeByName", Grade.class);
+        query.setParameter("name", name);
+        Grade result = query.getSingleResult();
+        return result;
     }
 
     @Override
