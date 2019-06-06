@@ -22,7 +22,7 @@
             <br />
             <div class="card bg-light p-4 ">
                 <h2 class="mt-3 mb-3 text-center">Ajouter Spot</h2>
-                <form:form action="add-spot" cssClass="form-horizontal"  method="post" modelAttribute="spot">
+                <form:form action="add-spot" cssClass="form-horizontal"  method="post" modelAttribute="spot" enctype="multipart/form-data">
 
                     <!-- need to associate this data with spot id -->
                     <form:hidden path="id" />
@@ -49,6 +49,12 @@
                             <span class="input-group-text span-large-5">Région </span>
                         </div>
                         <form:input path="county" cssClass="form-control p-4" placeholder="Région du Spot" type="text" />
+                    </div> <!-- form-group// -->
+
+                    <form:errors path="imageFile" cssClass="error" />
+                    <div class="form-group input-group mb-5">
+                        <form:label path="imageFile" cssClass="text-muted mr-3">Ajouter une image: </form:label>
+                        <form:input path="imageFile"  type="file" name="file" />
                     </div> <!-- form-group// -->
 
                     <c:set var="userRole" value="${sessionScope['loggedInUserRole']}" />

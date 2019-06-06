@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -45,6 +46,11 @@ public class WebMvcConfig implements WebMvcConfigurer{
         registry
                 .addResourceHandler("/resources/**")
                 .addResourceLocations("/resources/");
+    }
+    // Bean name must be "multipartResolver", by default Spring uses method name as bean name.
+    @Bean
+    public MultipartResolver multipartResolver() {
+        return new StandardServletMultipartResolver();
     }
 
 }

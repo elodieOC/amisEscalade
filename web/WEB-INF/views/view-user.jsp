@@ -14,9 +14,9 @@
     <c:import url="inc/headContent.jsp"/>
 </head>
 <c:import url="inc/choose-navbar.jsp" />
-<main role="main" class="flex-shrink-0 mt-5">
-    <div class="container col-md-10 mt-5">
-    <div class="col-md-offset-2 col-md-7">
+<main role="main" class="flex-shrink-0 mt-5 col-md-12">
+    <div class="container col-md-10 mt-5 offset-2">
+    <div class="col-md-10">
         <h2 class="d-inline-block mb-5 mt-5 col-md-10">Bienvenu-e ${user.username}</h2>
         <input type="button" value="Editer Mon Profil"
                onclick="window.location.href='editer'; return false;"

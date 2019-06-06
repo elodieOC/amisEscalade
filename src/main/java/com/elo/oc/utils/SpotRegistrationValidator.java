@@ -8,6 +8,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
+import java.io.File;
+import java.io.InputStream;
+import java.util.Collection;
+
+
 @Component
 public class SpotRegistrationValidator implements Validator {
 
@@ -25,11 +32,18 @@ public class SpotRegistrationValidator implements Validator {
     public void validate(Object o, Errors errors) {
         Spot spot = (Spot) o;
 
+       try{
+           byte[] file = spot.getImageFile().getBytes();
+           spot.setImage(file);
+       }
+       catch (Exception e){
+           e.getMessage();
+       }
+
         if (spotService.findSpotWithThisName(spot.getName()).isPresent()) {
             System.out.println("spot already exists in database");
             errors.rejectValue("name", "registration.spot.duplicate");
-        }
-        else {
+        } else {
             System.out.println("spot not found in database, ready to validate");
         }
 

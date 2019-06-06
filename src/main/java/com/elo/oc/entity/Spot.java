@@ -1,14 +1,11 @@
 package com.elo.oc.entity;
 
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+import org.hibernate.annotations.Type;
+import org.springframework.lang.Nullable;
+import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.*;
 
@@ -53,8 +50,16 @@ public class Spot {
     @JoinColumn(name = "climb_user_fk")
     private User user;
 
+    @Lob
+    @Nullable
     @Column(name = "image")
-    private String image;
+    private byte[] image;
+
+    @Transient
+    private MultipartFile imageFile;
+
+    @Transient
+    private String base64;
 
     @OneToMany (mappedBy = "spot")//attribut Spot spot de Comment
     private List<Comment> comments = new ArrayList<>();
@@ -107,6 +112,30 @@ public class Spot {
     private String gradeMax;
     @Transient
     private String gradeMin;
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public String getBase64() {
+        return this.base64 = Base64.encode(this.image);
+    }
+
+    public void setBase64(String base64) {
+        this.base64 = base64;
+    }
+
+    public MultipartFile getImageFile() {
+        return imageFile;
+    }
+
+    public void setImageFile(MultipartFile imageFile) {
+        this.imageFile = imageFile;
+    }
 
     public String getGradeMax() {
         return gradeMax;

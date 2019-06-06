@@ -12,10 +12,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -93,11 +95,22 @@ public class TopoController {
             String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
             System.out.println("user "+ userService.findUserByEmail(sessionEmail).getUsername()+" logged in");
             topoRegistrationValidator.validate(theTopo, theBindingResult);
+
+
             if (theBindingResult.hasErrors()) {
                 System.out.println("form has errors");
                 return "add-topo";
             } else {
                 System.out.println("form is validated");
+
+                if(!theTopo.getImageFile().isEmpty()) {
+                    MultipartFile file = theTopo.getImageFile();
+                    try{
+                        theTopo.setImage(file.getBytes());
+                    }catch (IOException e){
+                        e.printStackTrace();
+                    }
+                }
                 theTopo.setUser(userService.findUserByEmail(sessionEmail));
                 topoService.saveTopo(theTopo);
                 return "redirect:/topos/"+theTopo.getId();

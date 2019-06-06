@@ -14,10 +14,10 @@
     <c:import url="inc/headContent.jsp"/>
 </head>
 <c:import url="inc/choose-navbar.jsp" />
-<main role="main" class="flex-shrink-0 mt-5">
-    <div class="container col-md-10 mt-5">
+<main role="main" class="flex-shrink-0 mt-5 col-md-12">
+    <div class="container col-md-10 mt-5 offset-2">
         <h1 class="d-inline-block col-md-8">${spot.name}, ${spot.county}, ${spot.city}
-            <span class="text-muted ml-5 small">(Ajouté par:
+            <span class="text-muted ml-3 small">(Ajouté par:
                 <c:choose>
                      <c:when test="${empty spot.user.username}">
                          utilisateur supprimé
@@ -54,6 +54,14 @@
             <input type="button" value="Supprimer"
                    onclick="window.location.href='${deleteLink}'; return false;"
                    class="btn btn-secondary" />
+        </c:if>
+
+        <c:if test="${!empty spot.image}" >
+        <div class="panel panel-info mt-5 col-md-8">
+            <div class="img offset-1">
+                <img src='data:image/jpg;base64,${spot.base64}' class="img-fluid d-block"/>
+            </div>
+        </div>
         </c:if>
 
         <div class="panel panel-info mt-5">

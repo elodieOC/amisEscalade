@@ -19,7 +19,7 @@
         <div class="col-md-offset-1 col-lg-6 mx-auto">
             <h2 class="mb-5">Secteur ${sector.name} - Ajouter une voie</h2>
             <hr />
-            <form:form action="add-route" cssClass="form-horizontal"  method="post" modelAttribute="routeForm">
+            <form:form action="add-route" cssClass="form-horizontal"  method="post" modelAttribute="routeForm" enctype="multipart/form-data">
 
                 <form:errors path="name" cssClass="error"/>
                 <div class="form-group input-group">
@@ -28,6 +28,12 @@
                     </div>
                     <form:input path="name" cssClass="form-control p-4" placeholder="Nom" type="text" />
                 </div><!-- form-group// -->
+
+                <form:errors path="imageFile" cssClass="error" />
+                <div class="form-group input-group mb-5">
+                    <form:label path="imageFile" cssClass="text-muted mr-3">Ajouter une image: </form:label>
+                    <form:input path="imageFile"  type="file" name="file" />
+                </div> <!-- form-group// -->
 
                 <div class="row mb-2">
                     <button class="btn btn-lg btn-primary mb-2 ml-4" type="submit">Ajouter</button>

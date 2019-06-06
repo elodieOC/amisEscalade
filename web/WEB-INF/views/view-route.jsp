@@ -14,8 +14,8 @@
     <c:import url="inc/headContent.jsp"/>
 </head>
 <c:import url="inc/choose-navbar.jsp" />
-<main role="main" class="flex-shrink-0 mt-5">
-    <div class="container col-md-10 mt-5">
+<main role="main" class="flex-shrink-0 mt-5  col-md-12">
+    <div class="container col-md-10 mt-5 offset-2">
         <h1 class="d-inline-block col-md-8">Voie ${route.name}:
             <span class="text-muted ml-5 small">(Ajouté par:
                 <c:choose>
@@ -67,11 +67,11 @@
                         <table class="mb-5">
                             <c:forEach var="length" items="${route.lengths}">
                                 <tr>
-                                    <td class="col-md-10 mx-auto"><strong>Longueur ${route.lengths.indexOf(length)+1}:  </strong>
+                                    <td class="col-md-8 mx-auto"><strong>Longueur ${route.lengths.indexOf(length)+1}:  </strong>
                                         cotation ${length.grade.name} (${length.grade.rating.name}), ${length.bolts} spits, hauteur ${length.height}m
                                     </td>
                                     <c:if test="${userRole eq '1' || userId eq spot.user.id && userId ne null}">
-                                        <td class="col-lg-2 mx-auto">
+                                        <td class="col-md-2 mx-auto">
                                             <!-- construct an "update" link with spot id -->
                                             <c:url var="updateLink" value="/spots/${spot.id}/sector/${sector.id}/route/${route.id}/length/${length.id}/editer" />
                                             <!-- construct an "delete" link with spot id -->

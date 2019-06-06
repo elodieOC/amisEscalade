@@ -14,12 +14,12 @@
     <c:import url="inc/headContent.jsp"/>
 </head>
 <c:import url="inc/choose-navbar.jsp" />
-<main role="main" class="flex-shrink-0 mt-5">
+<main role="main" class="flex-shrink-0 mt-5 col-md-12">
 
     <c:set var="userRole" value="${sessionScope['loggedInUserRole']}" />
     <c:set var="userId" value="${sessionScope['loggedInUserId']}" />
 
-    <div class="container col-md-10 mt-5">
+    <div class="container col-md-10 mt-5 offset-2">
         <h1 class="d-inline-block col-md-8">${topo.name}
             <span class="text-muted ml-5 small">(Ajouté par:  ${topo.user.username}, Disponible:
                 <c:choose>
@@ -85,6 +85,14 @@
                 </table>
             </div>
         </div>
+
+        <c:if test="${!empty topo.image}" >
+            <div class="panel panel-info mt-5 mb-5 col-md-8">
+                <div class="img offset-1">
+                    <img src='data:image/jpg;base64,${topo.base64}' class="img-fluid d-block"/>
+                </div>
+            </div>
+        </c:if>
     </div>
 </main>
 <c:import url="inc/footer.jsp"/>

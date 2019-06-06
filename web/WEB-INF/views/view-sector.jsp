@@ -14,8 +14,8 @@
     <c:import url="inc/headContent.jsp"/>
 </head>
 <c:import url="inc/choose-navbar.jsp" />
-<main role="main" class="flex-shrink-0 mt-5">
-    <div class="container col-md-10 mt-5">
+<main role="main" class="flex-shrink-0 mt-5 col-md-12">
+    <div class="container col-md-10 mt-5 offset-2">
         <h1 class="d-inline-block col-md-8">Secteur ${sector.name}:
             <span class="text-muted ml-5 small">(Ajouté par: 
                 <c:choose>

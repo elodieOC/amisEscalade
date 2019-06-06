@@ -1,5 +1,9 @@
 package com.elo.oc.entity;
 
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+import org.springframework.lang.Nullable;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -66,6 +70,17 @@ public class Topo {
     @NotNull
     @Column(name = "available")
     private Boolean available = false;
+
+    @Lob
+    @Nullable
+    @Column(name = "image")
+    private byte[] image;
+
+    @Transient
+    private MultipartFile imageFile;
+
+    @Transient
+    private String base64;
 
     @ManyToOne //plusieurs topos pour un seul user
     @JoinColumn(name = "climb_user_fk")
@@ -146,6 +161,30 @@ public class Topo {
         this.user = user;
     }
 
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public MultipartFile getImageFile() {
+        return imageFile;
+    }
+
+    public void setImageFile(MultipartFile imageFile) {
+        this.imageFile = imageFile;
+    }
+
+    public String getBase64() {
+        return this.base64 = Base64.encode(this.image);
+    }
+
+    public void setBase64(String base64) {
+        this.base64 = base64;
+    }
 
     @Override
     public String toString() {

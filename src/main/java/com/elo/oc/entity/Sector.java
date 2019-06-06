@@ -1,6 +1,9 @@
 package com.elo.oc.entity;
 
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.lang.Nullable;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -38,6 +41,17 @@ public class Sector {
     @Size(max = 255, message = "maximum 255 caractères")
     @Column(name = "access")
     private String access;
+
+    @Lob
+    @Nullable
+    @Column(name = "image")
+    private byte[] image;
+
+    @Transient
+    private MultipartFile imageFile;
+
+    @Transient
+    private String base64;
 
     @ManyToOne //plusieurs secteurs pour un seul user
     @JoinColumn(name = "climb_user_fk")
@@ -105,6 +119,30 @@ public class Sector {
 
     public void setRoutes(List<Route> routes) {
         this.routes = routes;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage( byte[] image) {
+        this.image = image;
+    }
+
+    public MultipartFile getImageFile() {
+        return imageFile;
+    }
+
+    public void setImageFile(MultipartFile imageFile) {
+        this.imageFile = imageFile;
+    }
+
+    public String getBase64() {
+        return this.base64 = Base64.encode(this.image);
+    }
+
+    public void setBase64(String base64) {
+        this.base64 = base64;
     }
 
     @Override

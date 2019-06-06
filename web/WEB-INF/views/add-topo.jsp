@@ -22,7 +22,7 @@
             <br />
             <div class="card bg-light p-4 ">
                 <h2 class="mt-3 mb-3 text-center">Ajouter Topo</h2>
-                <form:form action="add-topo" cssClass="form-horizontal"  method="post" modelAttribute="topo">
+                <form:form action="add-topo" cssClass="form-horizontal"  method="post" modelAttribute="topo" enctype="multipart/form-data">
 
                     <!-- need to associate this data with topo id -->
                     <form:hidden path="id" />
@@ -78,6 +78,12 @@
                         <label for="description">Description:</label>
                         <form:textarea path="description" cssClass="form-control p-4" placeholder="Description" rows="2" />
                     </div><!-- form-group// -->
+
+                    <form:errors path="imageFile" cssClass="error" />
+                    <div class="form-group input-group mb-5">
+                        <form:label path="imageFile" cssClass="text-muted mr-3">Ajouter une image: </form:label>
+                        <form:input path="imageFile"  type="file" name="file" />
+                    </div> <!-- form-group// -->
 
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block"> Envoyer  </button>

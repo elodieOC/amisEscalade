@@ -19,7 +19,7 @@
         <div class="col-md-offset-1 col-lg-6 mx-auto">
             <h2 class="mb-5">Spot ${spot.name} - Ajouter un secteur</h2>
 
-            <form:form action="add-sector" cssClass="form-horizontal"  method="post" modelAttribute="sector">
+            <form:form action="add-sector" cssClass="form-horizontal"  method="post" modelAttribute="sector" enctype="multipart/form-data">
                 <form:hidden path="id" />
 
                 <form:errors path="name" cssClass="error"/>
@@ -43,6 +43,12 @@
                     <label for="access">Accès:</label>
                     <form:textarea path="access" cssClass="form-control p-4" placeholder="Accès" rows="2" />
                 </div><!-- form-group// -->
+
+                <form:errors path="imageFile" cssClass="error" />
+                <div class="form-group input-group mb-5">
+                    <form:label path="imageFile" cssClass="text-muted mr-3">Ajouter une image: </form:label>
+                    <form:input path="imageFile"  type="file" name="file" />
+                </div> <!-- form-group// -->
 
                 <div class="row mb-2">
                     <button class="btn btn-lg btn-primary mb-2 ml-4" type="submit">Ajouter</button>
