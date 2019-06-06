@@ -87,7 +87,7 @@ public class UserController {
             userService.saveUser(theUser);
             session.setAttribute("loggedInUserEmail", theUser.getEmail());
             session.setAttribute("loggedInUserId", theUser.getId());
-            String redirectString = "/user/"+session.getAttribute("loggedInUserId")+"/profile";
+            String redirectString = "/user/"+session.getAttribute("loggedInUserId");
             return "redirect:"+redirectString;
         }
     }

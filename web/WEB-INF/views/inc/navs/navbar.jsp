@@ -28,7 +28,7 @@
                 <li class="nav-item ml-4">
                     <a class="nav-link js-scroll-trigger" href="<c:url value="/contact" />">Contact</a>
                 </li>
-                <li class="nav-item ml-4"><a class="nav-link js-scroll-trigger" href="<c:url value="/user/register" />"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
+                <li class="nav-item ml-4"><a class="nav-link js-scroll-trigger" href="<c:url value="/user/inscription" />"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
                 <li class="nav-item ml-4"><a class="nav-link js-scroll-trigger"  href="<c:url value="/user/login" /> "><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
             </ul>
         </div>
