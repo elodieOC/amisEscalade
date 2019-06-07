@@ -23,7 +23,7 @@
                         <img class="mt-5" src="<c:url value="/resources/img/logo.JPG" />" alt="logo amis de l'escalade">
                     </div>
                     <h2 class="text-white-50 mx-auto mt-2 mb-5">Venez partager et échanger sur l'escalade avec la communauté.</h2>
-                    <a href="<c:out value="about.jsp" />" class="btn btn-secondary js-scroll-trigger">A propos de nous</a>
+                    <a href="<c:url value="/about" />" class="btn btn-secondary js-scroll-trigger">A propos de nous</a>
                 </div>
             </div>
         </header>

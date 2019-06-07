@@ -34,7 +34,7 @@
         <br />
         <h3 class="col-md-8">Spot <a href="<c:url value="/spots/${spot.id}" />">${spot.name}</a>,
             Secteur <a href="<c:url value="/spots/${spot.id}/sector/${sector.id}" />">${sector.name}</a>,
-            ${spot.county}, ${spot.city}</h3>
+            <span>${spot.county}, ${spot.city}</span></h3>
         <c:set var="userRole" value="${sessionScope['loggedInUserRole']}" />
         <c:set var="userId" value="${sessionScope['loggedInUserId']}" />
 

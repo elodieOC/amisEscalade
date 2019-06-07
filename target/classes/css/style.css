@@ -65,9 +65,8 @@ th, td{
 
 /* Style the submit search button */
 .search-btn {
-    float: left;
     width: 100%;
-    padding: 3px;
+    padding: 4px;
     background: #2196F3;
     color: white;
     font-size: 17px;
@@ -98,6 +97,7 @@ th, td{
     flex-basis: 20%; /* change this value for each breakpoint*/
 }
 
+
 input:read-only{
     font-size: 14px;
 }
@@ -105,6 +105,17 @@ input:-moz-read-only{
     font-size: 14px;
 }
 
+#search-list li{
+    display: inline-block;
+    margin-left: 2vh;
+}
+.bg-light-gray{
+    background-color: #DCDCDC;
+}
+
+#search-header button{
+    display: none;
+}
 /* Portrait tablets and small desktops */
 @media (min-width: 768px) and (max-width: 991px) {
     .card-deck .card {
@@ -119,14 +130,23 @@ input:-moz-read-only{
 @media only screen and (max-width: 768px) {
     h1{
         font-size: 20px;
+        font-weight: bold;
     }
     h1 .small{
         font-size: smaller;
         display: block;
         margin-top: 1vh;
+        font-weight: normal;
     }
     h3{
         font-size: 16px;
+        font-weight: bold;
+    }
+    h3 span{
+        display: block;
+    }
+    h2{
+        font-weight: bold;
     }
     .sector-small{
         display: block;
@@ -142,6 +162,17 @@ input:-moz-read-only{
     }
     .card-img-top {
         height: 40vw;
+    }
+    #search-list{
+        display: none;
+    }
+    #search-list li{
+        display: block;
+        margin-left: 0;
+        margin-bottom: 2vh;
+    }
+    #search-header button{
+        display: inline-block;
     }
 }
 

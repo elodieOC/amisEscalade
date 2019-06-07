@@ -19,7 +19,7 @@
         <div class="col-md-10">
             <h2 class="d-inline-block mb-sm-5 mt-5 col-md-10">Bienvenu-e ${user.username}</h2>
             <input type="button" value="Editer Mon Profil"
-                   onclick="window.location.href='editer'; return false;"
+                   onclick="window.location.href='${user.id}/editer'; return false;"
                    class="btn btn-primary ml-4 ml-sm-0 mb-5 mb-sm-0" />
 
             <div class="form-group input-group col-10 col-sm-8">
@@ -48,6 +48,10 @@
                         <c:forEach var="spot" items="${spots}">
                             <!-- construct an "view" link with spot id -->
                             <c:url var="viewLink" value="/spots/${spot.id}" />
+                            <!-- construct an "update" link with spot id -->
+                            <c:url var="updateLink" value="/spots/${spot.id}/editer" />
+                            <!-- construct an "delete" link with spot id -->
+                            <c:url var="deleteLink" value="/spots/${spot.id}/delete" />
                             <div class="card mb-5 d-inline-block">
                                 <a href="${viewLink}" class="text-decoration-none">
                                     <h4 class="card-header">${spot.name}</h4>
@@ -67,6 +71,15 @@
                                         </div>
                                     </a>
                                 </div>
+                                <div class="card-footer">
+                                    <input type="button" value="Editer"
+                                           onclick="window.location.href='${updateLink}'; return false;"
+                                           class="btn btn-primary " />
+                                    <!-- display the delete link -->
+                                    <input type="button" value="Supprimer"
+                                           onclick="window.location.href='${deleteLink}'; return false;"
+                                           class="btn btn-secondary " />
+                                </div>
                             </div>
                         </c:forEach>
                     </div> <!--End of card-deck -->
@@ -84,6 +97,10 @@
                         <c:forEach var="topo" items="${topos}">
                             <!-- construct an "view" link with spot id -->
                             <c:url var="viewLink" value="/topos/${topo.id}" />
+                            <!-- construct an "update" link with topo id -->
+                            <c:url var="updateLink" value="/topos/${topo.id}/editer" />
+                            <!-- construct an "delete" link with topo id -->
+                            <c:url var="deleteLink" value="/topos/${topo.id}/delete" />
                             <div class="card mb-5 d-inline-block">
                                 <a href="${viewLink}" class="text-decoration-none">
                                     <h4 class="card-header">${topo.name}</h4>
@@ -103,6 +120,15 @@
                                         </div>
                                     </a>
                                 </div>
+                                <div class="card-footer">
+                                    <input type="button" value="Editer"
+                                           onclick="window.location.href='${updateLink}'; return false;"
+                                           class="btn btn-primary " />
+                                    <!-- display the delete link -->
+                                    <input type="button" value="Supprimer"
+                                           onclick="window.location.href='${deleteLink}'; return false;"
+                                           class="btn btn-secondary" />
+                                </div>
                             </div>
                         </c:forEach>
                     </div> <!--End of card-deck -->
@@ -113,7 +139,7 @@
         </div>
         <input type="button" value="Supprimer Mon Compte"
                onclick="window.location.href='delete'; return false;"
-               class="btn btn-secondary ml-5 mb-5" />
+               class="btn btn-danger ml-5 mb-5" />
     </div>
     </div>
     </div>

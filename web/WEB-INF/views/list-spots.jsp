@@ -12,133 +12,131 @@
 <head>
     <title>Liste des Spots</title>
     <c:import url="inc/headContent.jsp"/>
+    <script src="<c:url value="/resources/js/search-toggle.js" />"></script>
 </head>
 <c:import url="inc/choose-navbar.jsp" />
 <main role="main" class="flex-shrink-0 mt-5">
     <div class="container col-md-10 mt-5">
-        <div class="panel panel-info mt-5">
-            <div class="panel-body">
-                <c:set var="userRole" value="${sessionScope['loggedInUserRole']}" />
-                <c:set var="userId" value="${sessionScope['loggedInUserId']}" />
-                <div class="panel-heading">
-                    <h1 class="panel-title d-inline-block mr-5">Liste des Spots</h1>
-                    <input type="button" value="Ajouter Spot"
-                           onclick="window.location.href='ajout-spot'; return false;"
-                           class="btn btn-primary" />
+        <div class="mt-5">
+            <c:set var="userRole" value="${sessionScope['loggedInUserRole']}" />
+            <c:set var="userId" value="${sessionScope['loggedInUserId']}" />
+            <h1 class="d-inline-block mr-5">Liste des Spots</h1>
+            <input type="button" value="Ajouter Spot"
+                   onclick="window.location.href='ajout-spot'; return false;"
+                   class="btn btn-primary" />
 
-                    <!--TODO modifier table en list car table non responsive -->
-                    <table class="table mt-3">
-                        <thead class="thead-light">
-                        <tr>
-                            <th colspan="8">Recherche</th>
-                        </tr>
-                        <tr>
-                            <form:form action="recherche"  method="post" modelAttribute="searchForm">
 
-                                <td>
-                                    <div class="form-group input-group">
-                                        <form:input id="searchName" path="name" cssClass="form-control p-2" placeholder="Par nom" type="text" />
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="form-group input-group">
-                                        <form:input path="county" cssClass="form-control p-2" placeholder="Par région" type="text" />
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="form-group input-group">
-                                        <form:input path="city" cssClass="form-control p-2" placeholder="Par ville" type="text" />
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="form-group input-group">
-                                        <form:input path="nbrSector" cssClass="form-control p-2" placeholder="Par nbr de secteurs"  type="text" />
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="form-group input-group">
-                                        <form:input path="username" cssClass="form-control p-2" placeholder="Par utilisateur"  type="text" />
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="form-group input-group">
-                                        <form:select  path="gradeMin" cssClass="form-control" >
-                                            <form:option value="" selected="">Par cotation min</form:option>
-                                            <c:forEach var="cot" items="${grades}">
-                                                <form:option value="${cot.id}">${cot.name}</form:option>
-                                            </c:forEach>
-                                        </form:select>
-                                    </div> <!-- form-group end.// -->
+            <h3 class="mt-5 mb-5 mb-sm-0 col-12 p-2 bg-light-gray" id="search-header">
+                <button class="navbar-toggler" type="button" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
+                Recherche
+            </h3>
+                <ul class="list-unstyled mb-5" id="search-list">
 
-                                </td>
-                                <td>
-                                    <div class="form-group input-group">
-                                        <form:select  path="gradeMax" cssClass="form-control" >
-                                            <form:option value="" selected="">Par cotation max</form:option>
-                                            <c:forEach var="cot" items="${grades}">
-                                                <form:option value="${cot.id}">${cot.name}</form:option>
-                                            </c:forEach>
-                                        </form:select>
-                                    </div> <!-- form-group end.// -->
+                    <form:form action="recherche"  method="post" modelAttribute="searchForm">
+                    <li>
+                        <div class="form-group input-group">
+                            <form:input id="searchName" path="name" cssClass="form-control p-2" placeholder="Par nom" type="text" />
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-group input-group">
+                            <form:input path="county" cssClass="form-control p-2" placeholder="Par région" type="text" />
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-group input-group">
+                            <form:input path="city" cssClass="form-control p-2" placeholder="Par ville" type="text" />
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-group input-group">
+                            <form:input path="nbrSector" cssClass="form-control p-2" placeholder="Par nbr de secteurs"  type="text" />
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-group input-group">
+                            <form:input path="username" cssClass="form-control p-2" placeholder="Par utilisateur"  type="text" />
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-group input-group">
+                            <form:select  path="gradeMin" cssClass="form-control" >
+                                <form:option value="" selected="">Par cotation min</form:option>
+                                <c:forEach var="cot" items="${grades}">
+                                    <form:option value="${cot.id}">${cot.name}</form:option>
+                                </c:forEach>
+                            </form:select>
+                        </div> <!-- form-group end.// -->
 
-                                </td>
-                                <td>
-                                    <div class="form-group input-group">
-                                        <button class="search-btn" type="submit"><i class="fa fa-search"></i></button>
-                                    </div>
-                                </td>
-                            </form:form>
-                        </tr>
-                    </table>
+                    </li>
+                    <li>
+                        <div class="form-group input-group">
+                            <form:select  path="gradeMax" cssClass="form-control" >
+                                <form:option value="" selected="">Par cotation max</form:option>
+                                <c:forEach var="cot" items="${grades}">
+                                    <form:option value="${cot.id}">${cot.name}</form:option>
+                                </c:forEach>
+                            </form:select>
+                        </div> <!-- form-group end.// -->
 
-                    <div class="card-deck mb-5 mx-auto">
-                        <!-- loop over and print our spots -->
-                        <c:forEach var="spot" items="${spots}">
-                            <!-- construct an "view" link with spot id -->
-                            <c:url var="viewLink" value="/spots/${spot.id}" />
-                            <div class="card mb-5 d-inline-block">
-                                <a href="${viewLink}" class="text-decoration-none">
-                                    <h4 class="card-header">${spot.name}</h4>
-                                </a>
-                                <div class="card-body">
+                    </li>
+                    <li>
+                        <div class="form-group input-group">
+                            <button class="search-btn" type="submit"><i class="fa fa-search"></i></button>
+                        </div>
+                    </li>
 
-                                    <h5 class="card-subtitle mb-3 text-muted">${spot.county}, ${spot.city}</h5>
-                                    <a href="${viewLink}" class="text-decoration-none">
-                                        <div class="thumbnail">
-                                            <c:choose>
-                                                <c:when test="${empty spot.image}">
-                                                    <img src="<c:url value="/resources/img/noimage-thumbnail.png" />" class="card-img-top img-thumbnail">
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <img src='data:image/jpg;base64,${spot.base64}' class="card-img-top img-thumbnail">
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </div>
-                                    </a>
-                                    <div class="card-text mt-5">
-                                        <ul class="list-unstyled">
-                                            <li>Secteurs: ${spot.sectors.size()}</li>
-                                            <li>Cot min: ${spot.gradeMin}</li>
-                                            <li>Cot max: ${spot.gradeMax}</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="card-footer text-muted small">
-                                    Ajouté par:
+                    </form:form>
+                </ul>
+
+            <div class="card-deck mb-5 mx-auto">
+                <!-- loop over and print our spots -->
+                <c:forEach var="spot" items="${spots}">
+                    <!-- construct an "view" link with spot id -->
+                    <c:url var="viewLink" value="/spots/${spot.id}" />
+                    <div class="card mb-5 d-inline-block">
+                        <a href="${viewLink}" class="text-decoration-none">
+                            <h4 class="card-header">${spot.name}</h4>
+                        </a>
+                        <div class="card-body">
+
+                            <h5 class="card-subtitle mb-3 text-muted">${spot.county}, ${spot.city}</h5>
+                            <a href="${viewLink}" class="text-decoration-none">
+                                <div class="thumbnail">
                                     <c:choose>
-                                        <c:when test="${empty spot.user.username}">
-                                            utilisateur supprimé
+                                        <c:when test="${empty spot.image}">
+                                            <img src="<c:url value="/resources/img/noimage-thumbnail.png" />" class="card-img-top img-thumbnail">
                                         </c:when>
                                         <c:otherwise>
-                                            ${spot.user.username}
+                                            <img src='data:image/jpg;base64,${spot.base64}' class="card-img-top img-thumbnail">
                                         </c:otherwise>
                                     </c:choose>
                                 </div>
+                            </a>
+                            <div class="card-text mt-5">
+                                <ul class="list-unstyled">
+                                    <li>Secteurs: ${spot.sectors.size()}</li>
+                                    <li>Cot min: ${spot.gradeMin}</li>
+                                    <li>Cot max: ${spot.gradeMax}</li>
+                                </ul>
                             </div>
-                        </c:forEach>
-                    </div> <!--End of card-deck -->
-                </div>
-            </div>
+                        </div>
+                        <div class="card-footer text-muted small">
+                            Ajouté par:
+                            <c:choose>
+                                <c:when test="${empty spot.user.username}">
+                                    utilisateur supprimé
+                                </c:when>
+                                <c:otherwise>
+                                    ${spot.user.username}
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div> <!--End of card-deck -->
         </div>
     </div>
 </main>

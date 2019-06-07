@@ -7,15 +7,13 @@
 <link href="<c:url value="/resources/vendor/bootstrap/css/bootstrap.min.css"/>" rel="stylesheet">
 <link href="<c:url value="/resources/vendor/bootstrap/css/bootstrap-grid.min.css"/>" rel="stylesheet">
 <link href="<c:url value="/resources/vendor/bootstrap/css/bootstrap-reboot.min.css"/>" rel="stylesheet">
-
-<!-- Bootstrap core JavaScript -->
-<script src="<c:url value="/resources/vendor/jquery/jquery.min.js" />"></script>
-<script src="<c:url value="/resources/vendor/bootstrap/js/bootstrap.bundle.min.js" />"></script>
 <!-- Plugin JavaScript -->
 <script src="<c:url value="/resources/vendor/jquery-easing/jquery.easing.min.js" />"></script>
 <script src="<c:url value="/resources/js/jquery-1.11.1.min.js" />"></script>
-<script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
-
+<!-- Bootstrap core JavaScript -->
+<script src="<c:url value="/resources/vendor/jquery/jquery.min.js" />"></script>
+<script src="<c:url value="/resources/vendor/bootstrap/js/bootstrap.bundle.min.js" />"></script>
+<script src="<c:url value="/resources/vendor/bootstrap/js/bootstrap.min.js" />"></script>
 
 <!-- Custom fonts for this template -->
 <link href="<c:url value="/resources/vendor/fontawesome-free/css/all.css"/>" rel="stylesheet">
