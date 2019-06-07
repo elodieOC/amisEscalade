@@ -92,43 +92,52 @@
                         </tr>
                     </table>
 
-                    <table  class="table table-striped table-bordered">
-                        <thead class="thead-light">
-                        <tr>
-                            <th>Nom</th>
-                            <th>Région</th>
-                            <th>Ville</th>
-                            <th>Secteurs</th>
-                            <th>Cotation Min</th>
-                            <th>Cotation max</th>
-                            <th>Ajouté par</th>
-                        </tr>
-
-                        </thead>
+                    <div class="card-deck mb-5 mx-auto">
                         <!-- loop over and print our spots -->
                         <c:forEach var="spot" items="${spots}">
                             <!-- construct an "view" link with spot id -->
                             <c:url var="viewLink" value="/spots/${spot.id}" />
-                            <tbody>
-                            <tr>
-                                <!-- display the view link -->
-                                <td><a href="${viewLink}">${spot.name}</a></td>
-                                <td>${spot.county}</td>
-                                <td>${spot.city}</td>
-                                <td>${spot.sectors.size()}</td>
-                                <td>${spot.gradeMin}</td>
-                                <td>${spot.gradeMax}</td>
-                                <c:choose>
-                                <c:when test="${empty spot.user.username}">
-                                    <td>utilisateur supprimé</td>
-                                </c:when>
-                                <c:otherwise>
-                                    <td>${spot.user.username}</td>
-                                </c:otherwise>
-                            </c:choose>
-                            </tr></tbody>
+                            <div class="card mb-5 d-inline-block">
+                                <a href="${viewLink}" class="text-decoration-none">
+                                    <h4 class="card-header">${spot.name}</h4>
+                                </a>
+                                <div class="card-body">
+
+                                    <h5 class="card-subtitle mb-3 text-muted">${spot.county}, ${spot.city}</h5>
+                                    <a href="${viewLink}" class="text-decoration-none">
+                                        <div class="thumbnail">
+                                            <c:choose>
+                                                <c:when test="${empty spot.image}">
+                                                    <img src="<c:url value="/resources/img/noimage-thumbnail.png" />" class="card-img-top img-thumbnail">
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <img src='data:image/jpg;base64,${spot.base64}' class="card-img-top img-thumbnail">
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </div>
+                                    </a>
+                                    <div class="card-text mt-5">
+                                        <ul class="list-unstyled">
+                                            <li>Secteurs: ${spot.sectors.size()}</li>
+                                            <li>Cot min: ${spot.gradeMin}</li>
+                                            <li>Cot max: ${spot.gradeMax}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-footer text-muted small">
+                                    Ajouté par:
+                                    <c:choose>
+                                        <c:when test="${empty spot.user.username}">
+                                            utilisateur supprimé
+                                        </c:when>
+                                        <c:otherwise>
+                                            ${spot.user.username}
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                            </div>
                         </c:forEach>
-                    </table>
+                    </div>
                 </div>
             </div>
         </div>
