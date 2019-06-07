@@ -20,7 +20,7 @@
         <div class="col-lg-6 mx-auto">
             <div class="card bg-light p-4 ">
                 <h2 class="mt-3 mb-3 ">Editer Spot</h2>
-                <form:form action="update" cssClass="form-horizontal"  method="post" modelAttribute="spot">
+                <form:form action="update" cssClass="form-horizontal"  method="post" modelAttribute="spot" enctype="multipart/form-data">
 
                     <!-- need to associate this data with spot id -->
                     <form:hidden path="id" />
@@ -47,6 +47,22 @@
                             <span class="input-group-text span-large-5"> Région</span>
                         </div>
                         <form:input path="county" cssClass="form-control p-4" placeholder="Région du Spot" type="text" />
+                    </div> <!-- form-group// -->
+
+                    <div class="thumbnail">
+                        <c:choose>
+                            <c:when test="${empty spot.image}">
+                                <img src="<c:url value="/resources/img/noimage-thumbnail.png" />" class="img-thumbnail">
+                            </c:when>
+                            <c:otherwise>
+                                <img src='data:image/jpg;base64,${spot.base64}' class="img-thumbnail">
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                    <form:errors path="imageFile" cssClass="error" />
+                    <div class="form-group input-group mb-5">
+                        <form:label path="imageFile" cssClass="text-muted mr-3">Editer l'image: </form:label>
+                        <form:input path="imageFile"  type="file" name="file" />
                     </div> <!-- form-group// -->
 
                     <c:set var="userRole" value="${sessionScope['loggedInUserRole']}" />

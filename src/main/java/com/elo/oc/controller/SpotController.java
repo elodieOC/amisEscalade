@@ -5,12 +5,10 @@ import com.elo.oc.dto.SearchForm;
 import com.elo.oc.entity.*;
 import com.elo.oc.entity.Sector;
 import com.elo.oc.service.*;
+import com.elo.oc.utils.ImageFileProcessing;
 import com.elo.oc.utils.LengthFormValidator;
 import com.elo.oc.utils.SessionCheck;
 import com.elo.oc.utils.SpotRegistrationValidator;
-import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
-import jdk.nashorn.internal.ir.annotations.Immutable;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,17 +16,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.mail.Multipart;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.awt.*;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.sql.Blob;
 import java.util.List;
 /**
  *<h2>Controller for all Spots</h2>
@@ -147,17 +138,8 @@ public class SpotController {
             } else {
                 System.out.println("form is validated");
 
-                if(!theSpot.getImageFile().isEmpty()) {
-                    MultipartFile file = theSpot.getImageFile();
-                    try{
-                        theSpot.setImage(file.getBytes());
-                    }catch (IOException e){
-                        e.printStackTrace();
-                    }
-                }
-                else{
-                    theSpot.setImage(null);
-                }
+                theSpot.setImage(ImageFileProcessing.getImageForEntityAddFromForm(theSpot.getImageFile()));
+
                 theSpot.setUser(userService.findUserByEmail(sessionEmail));
                 System.out.println(theSpot.toString());
                 spotService.saveSpot(theSpot);
@@ -235,6 +217,14 @@ public class SpotController {
             Spot spotToUpdate = spotService.findSpotById(spotId);
             User spotUser =  userService.findUserById(spotToUpdate.getUser().getId());
             theSpot.setUser(spotUser);
+
+            if(!theSpot.getImageFile().isEmpty()){
+                theSpot.setImage(ImageFileProcessing.getImageForEntityEditFromForm(theSpot.getImageFile()));
+            }
+            else {
+                theSpot.setImage(spotToUpdate.getImage());
+            }
+
             spotService.updateSpot(theSpot);
             return "redirect:/spots/"+spotId;
         }
@@ -316,14 +306,7 @@ public class SpotController {
                 return "add-sector-toSpot";
             } else {
                 System.out.println("form is validated");
-                if(!theSector.getImageFile().isEmpty()) {
-                    MultipartFile file = theSector.getImageFile();
-                    try{
-                        theSector.setImage(file.getBytes());
-                    }catch (IOException e){
-                        e.printStackTrace();
-                    }
-                }
+                theSector.setImage(ImageFileProcessing.getImageForEntityAddFromForm(theSector.getImageFile()));
                 theSector.setUser(userService.findUserByEmail(sessionEmail));
                 theSector.setSpot(spotService.findSpotById(theSpotId));
                 sectorService.saveSector(theSector);
@@ -412,6 +395,12 @@ public class SpotController {
             Sector theSectorToUpdate = sectorService.findSectorById(theSectorId);
             theSector.setSpot(theSectorToUpdate.getSpot());
             theSector.setUser(theSectorToUpdate.getUser());
+            if(!theSector.getImageFile().isEmpty()){
+                theSector.setImage(ImageFileProcessing.getImageForEntityEditFromForm(theSector.getImageFile()));
+            }
+            else {
+                theSector.setImage(theSectorToUpdate.getImage());
+            }
             sectorService.updateSector(theSector);
 
             String redirectingString = "/spots/"+spotId+"/sector/"+theSector.getId();
@@ -655,14 +644,7 @@ public class SpotController {
                 System.out.println("form is validated");
 
                 Route routeToSave = new Route();
-                if(!routeToSave.getImageFile().isEmpty()) {
-                    MultipartFile file = routeToSave.getImageFile();
-                    try{
-                        routeToSave.setImage(file.getBytes());
-                    }catch (IOException e){
-                        e.printStackTrace();
-                    }
-                }
+                routeToSave.setImage(ImageFileProcessing.getImageForEntityAddFromForm(routeToSave.getImageFile()));
                 routeToSave.setUser(userService.findUserByEmail(sessionEmail));
                 routeToSave.setSector(sectorService.findSectorById(sectorId));
                 routeToSave.setName(theRoute.getName());
@@ -754,6 +736,12 @@ public class SpotController {
             Route theRouteToUpdate = routeService.findRouteById(theRouteId);
             theRoute.setUser(theRouteToUpdate.getUser());
             theRoute.setSector(theRouteToUpdate.getSector());
+            if(!theRoute.getImageFile().isEmpty()){
+                theRoute.setImage(ImageFileProcessing.getImageForEntityEditFromForm(theRoute.getImageFile()));
+            }
+            else {
+                theRoute.setImage(theRouteToUpdate.getImage());
+            }
             routeService.updateRoute(theRoute);
 
             String redirectingString = "/spots/"+theSpotId+"/sector/"+theSectorId+"/route/"+theRouteId;

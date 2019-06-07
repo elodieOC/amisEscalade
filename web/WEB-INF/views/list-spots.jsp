@@ -28,6 +28,7 @@
                            onclick="window.location.href='ajout-spot'; return false;"
                            class="btn btn-primary" />
 
+                    <!--TODO modifier table en list car table non responsive -->
                     <table class="table mt-3">
                         <thead class="thead-light">
                         <tr>

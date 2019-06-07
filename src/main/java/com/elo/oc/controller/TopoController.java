@@ -5,6 +5,7 @@ import com.elo.oc.entity.User;
 import com.elo.oc.service.EmailService;
 import com.elo.oc.service.TopoService;
 import com.elo.oc.service.UserService;
+import com.elo.oc.utils.ImageFileProcessing;
 import com.elo.oc.utils.SessionCheck;
 import com.elo.oc.utils.TopoRegistrationValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +13,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -103,14 +102,8 @@ public class TopoController {
             } else {
                 System.out.println("form is validated");
 
-                if(!theTopo.getImageFile().isEmpty()) {
-                    MultipartFile file = theTopo.getImageFile();
-                    try{
-                        theTopo.setImage(file.getBytes());
-                    }catch (IOException e){
-                        e.printStackTrace();
-                    }
-                }
+                theTopo.setImage(ImageFileProcessing.getImageForEntityAddFromForm(theTopo.getImageFile()));
+
                 theTopo.setUser(userService.findUserByEmail(sessionEmail));
                 topoService.saveTopo(theTopo);
                 return "redirect:/topos/"+theTopo.getId();
@@ -176,6 +169,8 @@ public class TopoController {
      */
     @PostMapping("/{topoId}/update")
     public String updateTopo(@PathVariable("topoId") Integer topoId, @Valid @ModelAttribute("topo") Topo theTopo, BindingResult theBindingResult) {
+        topoRegistrationValidator.validate(theTopo, theBindingResult);
+
         if (theBindingResult.hasErrors()) {
             System.out.println("form has errors");
             return "edit-topo";
@@ -184,6 +179,14 @@ public class TopoController {
             Topo topoToUpdate = topoService.findTopoById(topoId);
             User topoUser =  userService.findUserById(topoToUpdate.getUser().getId());
             theTopo.setUser(topoUser);
+
+            if(!theTopo.getImageFile().isEmpty()){
+                theTopo.setImage(ImageFileProcessing.getImageForEntityEditFromForm(theTopo.getImageFile()));
+            }
+            else {
+                theTopo.setImage(topoToUpdate.getImage());
+            }
+
             topoService.updateTopo(theTopo);
             return "redirect:/topos/"+topoId;
         }

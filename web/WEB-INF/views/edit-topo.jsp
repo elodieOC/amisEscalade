@@ -19,7 +19,7 @@
         <div class="col-lg-6 mx-auto">
             <div class="card bg-light p-4 ">
                 <h2 class="mt-3 mb-3 ">Editer Topo</h2>
-                <form:form action="update" cssClass="form-horizontal"  method="post" modelAttribute="topo">
+                <form:form action="update" cssClass="form-horizontal"  method="post" modelAttribute="topo" enctype="multipart/form-data">
 
                     <!-- need to associate this data with topo id -->
                     <form:hidden path="id" />
@@ -75,6 +75,22 @@
                         <label for="description">Description:</label>
                         <form:textarea path="description" cssClass="form-control p-4" placeholder="Description" rows="2" />
                     </div><!-- form-group// -->
+
+                <div class="thumbnail">
+                    <c:choose>
+                        <c:when test="${empty topo.image}">
+                            <img src="<c:url value="/resources/img/noimage-thumbnail.png" />" class="img-thumbnail">
+                        </c:when>
+                        <c:otherwise>
+                            <img src='data:image/jpg;base64,${topo.base64}' class="img-thumbnail">
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+                    <form:errors path="imageFile" cssClass="error" />
+                    <div class="form-group input-group mt-5 mb-5">
+                        <form:label path="imageFile" cssClass="text-muted mr-3">Editer l'image: </form:label>
+                        <form:input path="imageFile"  type="file" name="file" />
+                    </div> <!-- form-group// -->
 
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block"> Envoyer  </button>

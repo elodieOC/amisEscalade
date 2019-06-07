@@ -18,7 +18,7 @@
     <div class="container col-md-10 mt-5">
         <div class="col-md-offset-1 col-md-10">
             <h2 class="mb-5">Editer un secteur</h2>
-            <form:form action="update" cssClass="form-horizontal"  method="post" modelAttribute="sector">
+            <form:form action="update" cssClass="form-horizontal"  method="post" modelAttribute="sector" enctype="multipart/form-data">
                 <form:hidden path="id" />
 
                 <form:errors path="name" cssClass="error"/>
@@ -44,6 +44,22 @@
                     <label for="access">Accès:</label>
                     <form:textarea path="access" cssClass="form-control p-4" placeholder="Accès" rows="2" />
                 </div><!-- form-group// -->
+
+                <div class="thumbnail">
+                    <c:choose>
+                        <c:when test="${empty sector.image}">
+                            <img src="<c:url value="/resources/img/noimage-thumbnail.png" />" class="img-thumbnail">
+                        </c:when>
+                        <c:otherwise>
+                            <img src='data:image/jpg;base64,${sector.base64}' class="img-thumbnail">
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+                <form:errors path="imageFile" cssClass="error" />
+                <div class="form-group input-group mb-5">
+                    <form:label path="imageFile" cssClass="text-muted mr-3">Editer l'image: </form:label>
+                    <form:input path="imageFile"  type="file" name="file" />
+                </div> <!-- form-group// -->
 
                 <div class="row mb-2">
                     <button class="btn btn-lg btn-primary mb-2 ml-4" type="submit">Editer</button>
