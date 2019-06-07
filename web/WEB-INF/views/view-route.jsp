@@ -15,9 +15,9 @@
 </head>
 <c:import url="inc/choose-navbar.jsp" />
 <main role="main" class="flex-shrink-0 mt-5  col-md-12">
-    <div class="container col-md-10 mt-5 offset-2">
-        <h1 class="d-inline-block col-md-8">Voie ${route.name}:
-            <span class="text-muted ml-5 small">(Ajouté par:
+    <div class="container col-md-10 mt-5 offset-md-2">
+        <h1 class="d-inline-block col-md-8">Voie ${route.name}
+            <span class="text-muted ml-1 small">(Ajouté par:
                 <c:choose>
                     <c:when test="${empty route.user.username}">
                         utilisateur supprimé
@@ -30,11 +30,11 @@
         </h1>
         <input type="button" value="Ajouter une Longueur"
                onclick="window.location.href='${route.id}/ajout-longueur'; return false;"
-               class="btn btn-primary" />
+               class="btn btn-primary ml-4 ml-sm-0 mb-5 mb-sm-0" />
         <br />
-        <h4 class="col-md-8">Spot <a href="<c:url value="/spots/${spot.id}" />">${spot.name}</a>,
+        <h3 class="col-md-8">Spot <a href="<c:url value="/spots/${spot.id}" />">${spot.name}</a>,
             Secteur <a href="<c:url value="/spots/${spot.id}/sector/${sector.id}" />">${sector.name}</a>,
-            ${spot.county}, ${spot.city}</h4>
+            ${spot.county}, ${spot.city}</h3>
         <c:set var="userRole" value="${sessionScope['loggedInUserRole']}" />
         <c:set var="userId" value="${sessionScope['loggedInUserId']}" />
 
@@ -49,29 +49,28 @@
             <!-- display the update link -->
             <input type="button" value="Editer"
                    onclick="window.location.href='${updateLink}'; return false;"
-                   class="btn btn-secondary" />
+                   class="btn btn-secondary ml-4 ml-sm-0 mb-5 mb-sm-0" />
             <!-- display the delete link -->
             <input type="button" value="Supprimer"
                    onclick="window.location.href='${deleteLink}'; return false;"
-                   class="btn btn-secondary" />
+                   class="btn btn-secondary ml-4 ml-sm-0 mb-5 mb-sm-0" />
         </c:if>
 
         <div class="panel panel-info mt-5">
-            <h2 class="d-inline-block col-md-8 mb-5">Informations</h2>
             <div class="panel-body mb-5">
+                <h2 class="d-inline-block col-md-8 mb-5">Informations</h2>
                 <c:choose>
                     <c:when test="${empty route.lengths}">
                         <p class="col-md-8">Il n'y a pas encore de secteur ajouté pour ce spot
                     </c:when>
                     <c:otherwise>
-                        <table class="mb-5">
+                        <ul class="list-unstyled">
                             <c:forEach var="length" items="${route.lengths}">
-                                <tr>
-                                    <td class="col-md-8 mx-auto"><strong>Longueur ${route.lengths.indexOf(length)+1}:  </strong>
-                                        cotation ${length.grade.name} (${length.grade.rating.name}), ${length.bolts} spits, hauteur ${length.height}m
-                                    </td>
+                                    <li class="ml-4"><strong>Longueur ${route.lengths.indexOf(length)+1}:  </strong>
+                                        <span class=" route-li">cotation ${length.grade.name} (${length.grade.rating.name}), ${length.bolts} spits, hauteur ${length.height}m</span>
+                                    </li>
                                     <c:if test="${userRole eq '1' || userId eq spot.user.id && userId ne null}">
-                                        <td class="col-md-2 mx-auto">
+                                        <li>
                                             <!-- construct an "update" link with spot id -->
                                             <c:url var="updateLink" value="/spots/${spot.id}/sector/${sector.id}/route/${route.id}/length/${length.id}/editer" />
                                             <!-- construct an "delete" link with spot id -->
@@ -79,16 +78,15 @@
                                             <!-- display the update link -->
                                             <input type="button" value="Editer"
                                                    onclick="window.location.href='${updateLink}'; return false;"
-                                                   class="btn btn-secondary" />
+                                                   class="btn btn-secondary ml-4 ml-sm-0 mb-5 mb-sm-0" />
                                             <!-- display the delete link -->
                                             <input type="button" value="Supprimer"
                                                    onclick="window.location.href='${deleteLink}'; return false;"
-                                                   class="btn btn-secondary" />
-                                        </td>
+                                                   class="btn btn-secondary ml-4 ml-sm-0 mb-5 mb-sm-0" />
+                                        </li>
                                     </c:if>
-                                </tr>
                             </c:forEach>
-                        </table>
+                        </ul>
                     </c:otherwise>
                 </c:choose>
             </div>

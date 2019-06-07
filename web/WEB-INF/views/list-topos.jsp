@@ -16,63 +16,68 @@
 <c:import url="inc/choose-navbar.jsp" />
 <main role="main" class="flex-shrink-0 mt-5">
     <div class="container col-md-10 mt-5">
-        <h1 class="mb-5 d-inline-block col-md-8">Liste des Topos</h1>
-
-        <input type="button" value="Ajouter Topo"
-               onclick="window.location.href='ajout-topo'; return false;"
-               class="btn btn-primary" />
-
         <div class="panel panel-info mt-5">
             <div class="panel-body">
-                <c:set var="userRole" value="${sessionScope['loggedInUserRole']}" />
-                <c:set var="userId" value="${sessionScope['loggedInUserId']}" />
+                <div class="panel-heading">
+                    <h1 class="panel-title mr-5 mb-5 d-inline-block ">Liste des Topos</h1>
+                    <input type="button" value="Ajouter Topo"
+                           onclick="window.location.href='ajout-topo'; return false;"
+                           class="btn btn-primary" />
 
-                <div class="card-deck mb-5 mx-auto">
-                    <!-- loop over and print our spots -->
-                    <c:forEach var="topo" items="${topos}">
-                        <!-- construct an "view" link with spot id -->
-                        <c:url var="viewLink" value="/topos/${topo.id}" />
-                        <div class="card mb-5 d-inline-block">
-                            <a href="${viewLink}" class="text-decoration-none">
-                                <h4 class="card-header">${topo.name}, ${topo.county}, ${topo.city}</h4>
-                            </a>
-                            <div class="card-body">
+                    <div class="panel panel-info mt-5">
+                        <div class="panel-body">
+                            <c:set var="userRole" value="${sessionScope['loggedInUserRole']}" />
+                            <c:set var="userId" value="${sessionScope['loggedInUserId']}" />
 
-                                <h5 class="card-subtitle mb-3 text-muted">Disponible:
-                                    <c:choose>
-                                        <c:when test="${topo.available}">Oui,</c:when>
-                                        <c:otherwise>Non,</c:otherwise>
-                                    </c:choose>Date de parution: ${topo.dateRelease}</h5>
-                                <a href="${viewLink}" class="text-decoration-none">
-                                    <div class="thumbnail">
-                                        <c:choose>
-                                            <c:when test="${empty topo.image}">
-                                                <img src="<c:url value="/resources/img/noimage-thumbnail.png" />" class="card-img-top img-thumbnail">
-                                            </c:when>
-                                            <c:otherwise>
-                                                <img src='data:image/jpg;base64,${topo.base64}' class="card-img-top img-thumbnail">
-                                            </c:otherwise>
-                                        </c:choose>
+                            <div class="card-deck mb-5 mx-auto">
+                                <!-- loop over and print our spots -->
+                                <c:forEach var="topo" items="${topos}">
+                                    <!-- construct an "view" link with spot id -->
+                                    <c:url var="viewLink" value="/topos/${topo.id}" />
+                                    <div class="card mb-5 d-inline-block">
+                                        <a href="${viewLink}" class="text-decoration-none">
+                                            <h4 class="card-header">${topo.name}, ${topo.county}, ${topo.city}</h4>
+                                        </a>
+                                        <div class="card-body">
+
+                                            <h5 class="card-subtitle mb-3 text-muted">Disponible:
+                                                <c:choose>
+                                                    <c:when test="${topo.available}">Oui,</c:when>
+                                                    <c:otherwise>Non,</c:otherwise>
+                                                </c:choose>Date de parution: ${topo.dateRelease}</h5>
+                                            <a href="${viewLink}" class="text-decoration-none">
+                                                <div class="thumbnail">
+                                                    <c:choose>
+                                                        <c:when test="${empty topo.image}">
+                                                            <img src="<c:url value="/resources/img/noimage-thumbnail.png" />" class="card-img-top img-thumbnail">
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <img src='data:image/jpg;base64,${topo.base64}' class="card-img-top img-thumbnail">
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </div>
+                                            </a>
+                                            <div class="card-text mt-5">
+                                                    ${topo.description}
+                                            </div>
+                                        </div>
+                                        <div class="card-footer text-muted small">
+                                            Ajouté par:
+                                            <c:choose>
+                                                <c:when test="${empty topo.user.username}">
+                                                    utilisateur supprimé
+                                                </c:when>
+                                                <c:otherwise>
+                                                    ${topo.user.username}
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </div>
                                     </div>
-                                </a>
-                                <div class="card-text mt-5">
-                                        ${topo.description}
-                                </div>
-                            </div>
-                            <div class="card-footer text-muted small">
-                                Ajouté par:
-                                <c:choose>
-                                    <c:when test="${empty topo.user.username}">
-                                        utilisateur supprimé
-                                    </c:when>
-                                    <c:otherwise>
-                                        ${topo.user.username}
-                                    </c:otherwise>
-                                </c:choose>
-                            </div>
+                                </c:forEach>
+                            </div> <!--End of card-deck -->
                         </div>
-                    </c:forEach>
-                </div> <!--End of card-deck -->
+                    </div>
+                </div>
             </div>
         </div>
     </div>

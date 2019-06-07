@@ -15,80 +15,108 @@
 </head>
 <c:import url="inc/choose-navbar.jsp" />
 <main role="main" class="flex-shrink-0 mt-5 col-md-12">
-    <div class="container col-md-10 mt-5 offset-2">
-    <div class="col-md-10">
-        <h2 class="d-inline-block mb-5 mt-5 col-md-10">Bienvenu-e ${user.username}</h2>
-        <input type="button" value="Editer Mon Profil"
-               onclick="window.location.href='editer'; return false;"
-               class="btn btn-primary" />
-        <div class="panel panel-info">
-            <div class="panel-body">
-                <table class="table table-striped table-bordered">
-                    <thead class="thead-dark">
-                    <tr>
-                        <th>Pseudo</th>
-                        <th>Email</th>
-                    </tr>
-                    </thead>
-                    <tr>
-                        <td>${user.username}</td>
-                        <td>${user.email}</td>
-                    </tr>
-                </table>
+    <div class="container col-md-10 mt-5 offset-md-2">
+        <div class="col-md-10">
+            <h2 class="d-inline-block mb-sm-5 mt-5 col-md-10">Bienvenu-e ${user.username}</h2>
+            <input type="button" value="Editer Mon Profil"
+                   onclick="window.location.href='editer'; return false;"
+                   class="btn btn-primary ml-4 ml-sm-0 mb-5 mb-sm-0" />
 
-               <table class="table table-striped table-bordered">
-                   <thead class="thead-dark">
-                    <tr>
-                        <th>Spots</th>
-                    </tr>
-                   </thead>
-                   <c:if test="${ empty spots }">
-                       <tr><td>Vous n'avez pas encore ajouté de spot</td></tr>
-                   </c:if>
-                   <c:if test="${ !empty spots }">
-                    <c:forEach var="spot" items="${spots}" >
-                        <tr> <td>${spot.name}</td></tr>
-                    </c:forEach>
-                   </c:if>
-                </table>
+            <div class="form-group input-group col-10 col-sm-8">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                </div>
+                <input  class="form-control p-4" placeholder="${user.username}" type="text" readonly="true"/>
+            </div> <!-- form-group// -->
 
-               <table class="table table-striped table-bordered">
-                   <thead class="thead-dark">
-                   <tr><th colspan="7">Topos</th></tr>
-                    <tr>
-                        <th>Titre</th>
-                        <th>Ville</th>
-                        <th>Région</th>
-                        <th>Pays</th>
-                        <th>Description</th>
-                        <th>Date de parution</th>
-                        <th>Disponible</th>
-                    </tr>
-                   </thead>
-                   <c:choose>
-                       <c:when test="${empty topos}"><tr><td colspan="7">Vous n'avez pas encore ajouté de topo</td></tr></c:when>
-                       <c:otherwise>
-                           <c:forEach var="topo" items="${topos}" >
-                               <tr>
-                                   <td>${topo.name}</td>
-                                   <td>${topo.city}</td>
-                                   <td>${topo.county}</td>
-                                   <td>${topo.country}</td>
-                                   <td>${topo.description}</td>
-                                   <td>${topo.dateRelease}</td>
-                                   <td>${topo.available}</td>
-                               </tr>
-                           </c:forEach>
-                       </c:otherwise>
-                   </c:choose>
-                </table>
-            </div>
-            <input type="button" value="Supprimer Mon Compte"
-                   onclick="window.location.href='delete'; return false;"
-                   class="btn btn-secondary" />
+            <div class="form-group input-group col-10 col-sm-8">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                </div>
+                <input  class="form-control p-4" placeholder="${user.email}" type="text" readonly="true"/>
+            </div> <!-- form-group// -->
+
+
+            <h3 class="ml-4 mt-5 mb-5">Mes Spots</h3>
+            <c:choose>
+                <c:when test="${empty spots}">
+                   <p>Vous n'avez pas encore ajouté de spots
+                </c:when>
+                <c:otherwise>
+                    <div class="card-deck mb-5 mx-auto">
+                        <!-- loop over and print our spots -->
+                        <c:forEach var="spot" items="${spots}">
+                            <!-- construct an "view" link with spot id -->
+                            <c:url var="viewLink" value="/spots/${spot.id}" />
+                            <div class="card mb-5 d-inline-block">
+                                <a href="${viewLink}" class="text-decoration-none">
+                                    <h4 class="card-header">${spot.name}</h4>
+                                </a>
+                                <div class="card-body">
+                                    <h5 class="card-subtitle mb-3 text-muted">${spot.county}, ${spot.city}</h5>
+                                    <a href="${viewLink}" class="text-decoration-none">
+                                        <div class="thumbnail">
+                                            <c:choose>
+                                                <c:when test="${empty spot.image}">
+                                                    <img src="<c:url value="/resources/img/noimage-thumbnail.png" />" class="card-img-top img-thumbnail">
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <img src='data:image/jpg;base64,${spot.base64}' class="card-img-top img-thumbnail">
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </div> <!--End of card-deck -->
+                </c:otherwise>
+            </c:choose>
+
+            <h3 class="ml-4 mt-5 mb-5">Mes Topos</h3>
+            <c:choose>
+                <c:when test="${empty topos}">
+                   <p class="ml-4 mb-5">Vous n'avez pas encore ajouté de topos
+                </c:when>
+                <c:otherwise>
+                    <div class="card-deck mb-5 mx-auto">
+                        <!-- loop over and print our spots -->
+                        <c:forEach var="topo" items="${topos}">
+                            <!-- construct an "view" link with spot id -->
+                            <c:url var="viewLink" value="/topos/${topo.id}" />
+                            <div class="card mb-5 d-inline-block">
+                                <a href="${viewLink}" class="text-decoration-none">
+                                    <h4 class="card-header">${topo.name}</h4>
+                                </a>
+                                <div class="card-body">
+                                    <h5 class="card-subtitle mb-3 text-muted">${topo.county}, ${topo.city}</h5>
+                                    <a href="${viewLink}" class="text-decoration-none">
+                                        <div class="thumbnail">
+                                            <c:choose>
+                                                <c:when test="${empty topo.image}">
+                                                    <img src="<c:url value="/resources/img/noimage-thumbnail.png" />" class="card-img-top img-thumbnail">
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <img src='data:image/jpg;base64,${topo.base64}' class="card-img-top img-thumbnail">
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </div> <!--End of card-deck -->
+                </c:otherwise>
+            </c:choose>
+
+
         </div>
+        <input type="button" value="Supprimer Mon Compte"
+               onclick="window.location.href='delete'; return false;"
+               class="btn btn-secondary ml-5 mb-5" />
     </div>
-</div>
+    </div>
+    </div>
 </main>
 </body>
 

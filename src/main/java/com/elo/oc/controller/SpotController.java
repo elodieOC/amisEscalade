@@ -21,6 +21,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
+//TODO ajouter suppression image?
 /**
  *<h2>Controller for all Spots</h2>
  * <p>Concerns spots, comments, routes and lengths</p>

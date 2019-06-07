@@ -19,9 +19,9 @@
     <c:set var="userRole" value="${sessionScope['loggedInUserRole']}" />
     <c:set var="userId" value="${sessionScope['loggedInUserId']}" />
 
-    <div class="container col-md-10 mt-5 offset-2">
+    <div class="container col-md-10 mt-5 offset-md-2">
         <h1 class="d-inline-block col-md-8">${topo.name}
-            <span class="text-muted ml-5 small">(Ajouté par:  ${topo.user.username}, Disponible:
+            <span class="text-muted ml-3 small">(Ajouté par:  ${topo.user.username}, Disponible:
                 <c:choose>
                     <c:when test="${topo.available}">Oui</c:when>
                     <c:otherwise>Non</c:otherwise>
@@ -30,14 +30,14 @@
             <c:when test="${topo.available}">
                 <input type="button" value="Faire une demande de Réservation"
                        onclick="window.location.href='${topo.id}/book'; return false;"
-                       class="btn btn-primary" />
+                       class="btn btn-primary ml-4 ml-sm-0 mb-5 mb-sm-0" />
             </c:when>
             <c:otherwise>
                 <c:choose>
                     <c:when test="${userId ne null && userId eq topo.user.id}">
                         <input type="button" value="Rendre le Topo disponible à nouveau"
                                onclick="window.location.href='${topo.id}/make-available'; return false;"
-                               class="btn btn-success" />
+                               class="btn btn-success ml-4 ml-sm-0 mb-5 mb-sm-0" />
                     </c:when>
                     <c:otherwise>
                         <input type="button" value="Topo déjà réservé" class="btn btn-success"/></c:otherwise>
@@ -56,11 +56,11 @@
             <!-- display the update link -->
             <input type="button" value="Editer"
                    onclick="window.location.href='${updateLink}'; return false;"
-                   class="btn btn-secondary" />
+                   class="btn btn-secondary ml-4 ml-sm-0 mb-5 mb-sm-0" />
             <!-- display the delete link -->
             <input type="button" value="Supprimer"
                    onclick="window.location.href='${deleteLink}'; return false;"
-                   class="btn btn-secondary" />
+                   class="btn btn-secondary ml-4 ml-sm-0 mb-5 mb-sm-0" />
         </c:if>
 
         <div class="panel panel-info mt-5">
@@ -88,7 +88,7 @@
 
         <c:if test="${!empty topo.image}" >
             <div class="panel panel-info mt-5 mb-5 col-md-8">
-                <div class="img offset-1">
+                <div class="img offset-md-1">
                     <img src='data:image/jpg;base64,${topo.base64}' class="img-fluid d-block"/>
                 </div>
             </div>

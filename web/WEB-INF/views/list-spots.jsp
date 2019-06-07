@@ -16,8 +16,6 @@
 <c:import url="inc/choose-navbar.jsp" />
 <main role="main" class="flex-shrink-0 mt-5">
     <div class="container col-md-10 mt-5">
-
-
         <div class="panel panel-info mt-5">
             <div class="panel-body">
                 <c:set var="userRole" value="${sessionScope['loggedInUserRole']}" />
@@ -39,33 +37,33 @@
 
                                 <td>
                                     <div class="form-group input-group">
-                                        <form:input id="searchName" path="name" cssClass="form-control p-2" placeholder="Chercher par nom" type="text" />
+                                        <form:input id="searchName" path="name" cssClass="form-control p-2" placeholder="Par nom" type="text" />
                                     </div>
                                 </td>
                                 <td>
                                     <div class="form-group input-group">
-                                        <form:input path="county" cssClass="form-control p-2" placeholder="Chercher par région" type="text" />
+                                        <form:input path="county" cssClass="form-control p-2" placeholder="Par région" type="text" />
                                     </div>
                                 </td>
                                 <td>
                                     <div class="form-group input-group">
-                                        <form:input path="city" cssClass="form-control p-2" placeholder="Chercher par ville" type="text" />
+                                        <form:input path="city" cssClass="form-control p-2" placeholder="Par ville" type="text" />
                                     </div>
                                 </td>
                                 <td>
                                     <div class="form-group input-group">
-                                        <form:input path="nbrSector" cssClass="form-control p-2" placeholder="Chercher par nbr de secteurs"  type="text" />
+                                        <form:input path="nbrSector" cssClass="form-control p-2" placeholder="Par nbr de secteurs"  type="text" />
                                     </div>
                                 </td>
                                 <td>
                                     <div class="form-group input-group">
-                                        <form:input path="username" cssClass="form-control p-2" placeholder="Chercher par utilisateur"  type="text" />
+                                        <form:input path="username" cssClass="form-control p-2" placeholder="Par utilisateur"  type="text" />
                                     </div>
                                 </td>
                                 <td>
                                     <div class="form-group input-group">
                                         <form:select  path="gradeMin" cssClass="form-control" >
-                                            <form:option value="" selected="">Chercher par cotation min</form:option>
+                                            <form:option value="" selected="">Par cotation min</form:option>
                                             <c:forEach var="cot" items="${grades}">
                                                 <form:option value="${cot.id}">${cot.name}</form:option>
                                             </c:forEach>
@@ -76,7 +74,7 @@
                                 <td>
                                     <div class="form-group input-group">
                                         <form:select  path="gradeMax" cssClass="form-control" >
-                                            <form:option value="" selected="">Chercher par cotation max</form:option>
+                                            <form:option value="" selected="">Par cotation max</form:option>
                                             <c:forEach var="cot" items="${grades}">
                                                 <form:option value="${cot.id}">${cot.name}</form:option>
                                             </c:forEach>

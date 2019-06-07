@@ -15,9 +15,9 @@
 </head>
 <c:import url="inc/choose-navbar.jsp" />
 <main role="main" class="flex-shrink-0 mt-5 col-md-12">
-    <div class="container col-md-10 mt-5 offset-2">
-        <h1 class="d-inline-block col-md-8">Secteur ${sector.name}:
-            <span class="text-muted ml-5 small">(Ajouté par: 
+    <div class="container col-md-10 mt-5 offset-md-2">
+        <h1 class="d-inline-block col-md-8">Secteur ${sector.name}
+            <span class="text-muted ml-1 small">(Ajouté par:
                 <c:choose>
                     <c:when test="${empty sector.user.username}">
                         utilisateur supprimé
@@ -30,9 +30,9 @@
         </h1>
         <input type="button" value="Ajouter une Voie"
                onclick="window.location.href='${sector.id}/ajout-voie'; return false;"
-               class="btn btn-primary" />
+               class="btn btn-primary ml-4 ml-sm-0 mb-5 mb-sm-0" />
         <br />
-        <h4 class="col-md-8"><a href="<c:url value="/spots/${spot.id}" />">${spot.name}</a>, ${spot.county}, ${spot.city}</h4>
+        <h3 class="col-md-8"><a href="<c:url value="/spots/${spot.id}" />">Spot ${spot.name}</a>, ${spot.county}, ${spot.city}</h3>
         <c:set var="userRole" value="${sessionScope['loggedInUserRole']}" />
         <c:set var="userId" value="${sessionScope['loggedInUserId']}" />
 
@@ -47,48 +47,40 @@
             <!-- display the update link -->
             <input type="button" value="Editer"
                    onclick="window.location.href='${updateLink}'; return false;"
-                   class="btn btn-secondary" />
+                   class="btn btn-secondary ml-4 ml-sm-0 mb-5 mb-sm-0" />
             <!-- display the delete link -->
             <input type="button" value="Supprimer"
                    onclick="window.location.href='${deleteLink}'; return false;"
-                   class="btn btn-secondary" />
+                   class="btn btn-secondary ml-4 ml-sm-0 mb-5 mb-sm-0" />
         </c:if>
 
         <div class="panel panel-info mt-5 col-md-10">
             <div class="panel-body mb-5">
-                <table class="mb-5 table table-borderless">
-                    <thead>
-                    <th>Informations</th>
-                    </thead>
-                    <tr>
-                        <td class="col-lg-2 mx-auto">Situation:</td><td class="col-lg-7" style="white-space: pre-line;">${sector.location}</td>
-                    </tr>
-                    <tr>
-                        <td class="col-lg-2 mx-auto">Accès:</td><td class="col-lg-7" style="white-space: pre-line;">${sector.access}</td>
-                    </tr>
-                </table>
+                <h3><strong>Informations</strong></h3>
+                <ul class="list-unstyled">
+                    <li>Situation:</li>
+                    <li style="white-space: pre-line;">${sector.location}</li>
+
+                    <li class="mt-5">Accès:</li>
+                    <li style="white-space: pre-line;">${sector.access}</li>
+                </ul>
                 <c:if test="${!empty sector.routes}">
-                    <table class="table table-borderless mb-5">
-                        <thead>
-                        <th>Voies</th>
-                        </thead>
+                <h3 class="mt-5"><strong>Voies</strong></h3>
+                <ul class="list-unstyled">
                         <c:forEach var="route" items="${routes}">
                             <!-- construct an "view" link with spot id -->
                             <c:url var="viewLink" value="/spots/${spot.id}/sector/${sector.id}/route/${route.id}" />
-                            <tr>
-                                <td class="col-md-8 mx-auto"><a href="${viewLink}"><strong>${sector.routes.indexOf(route)+1}:  </strong>  ${route.name}</a>
-
-                                <c:if test="${!empty route.lengths}">
-                                    <c:choose>
-                                        <c:when test="${route.lengths.size() > 1}"><c:set var="lengthString" value="longueurs" /></c:when>
-                                        <c:otherwise> <c:set var="lengthString" value="longueur" /></c:otherwise>
-                                    </c:choose>
-                                    <span class="text-muted small">(${route.lengths.size()} ${lengthString}, cotation min: ${route.gradeMin}, cotation max: ${route.gradeMax})</span>
-                                </c:if>
-                                </td>
-                            </tr>
+                                <li><a href="${viewLink}"><strong>${sector.routes.indexOf(route)+1}:  </strong>  ${route.name}</a>
+                                    <c:if test="${!empty route.lengths}">
+                                        <c:choose>
+                                            <c:when test="${route.lengths.size() > 1}"><c:set var="lengthString" value="longueurs" /></c:when>
+                                            <c:otherwise> <c:set var="lengthString" value="longueur" /></c:otherwise>
+                                        </c:choose>
+                                        <span class="text-muted sector-small">(${route.lengths.size()} ${lengthString}, cotation min: ${route.gradeMin}, cotation max: ${route.gradeMax})</span>
+                                    </c:if>
+                                </li>
                         </c:forEach>
-                    </table>
+                    </ul>
                 </c:if>
             </div>
         </div>
