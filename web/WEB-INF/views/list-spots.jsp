@@ -137,7 +137,7 @@
                                 </div>
                             </div>
                         </c:forEach>
-                    </div>
+                    </div> <!--End of card-deck -->
                 </div>
             </div>
         </div>

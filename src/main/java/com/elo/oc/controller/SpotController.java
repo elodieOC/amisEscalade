@@ -155,6 +155,9 @@ public class SpotController {
                         e.printStackTrace();
                     }
                 }
+                else{
+                    theSpot.setImage(null);
+                }
                 theSpot.setUser(userService.findUserByEmail(sessionEmail));
                 System.out.println(theSpot.toString());
                 spotService.saveSpot(theSpot);
