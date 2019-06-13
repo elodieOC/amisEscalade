@@ -644,15 +644,14 @@ public class SpotController {
             } else {
                 System.out.println("form is validated");
 
-                Route routeToSave = new Route();
-                routeToSave.setImage(ImageFileProcessing.getImageForEntityAddFromForm(routeToSave.getImageFile()));
-                routeToSave.setUser(userService.findUserByEmail(sessionEmail));
-                routeToSave.setSector(sectorService.findSectorById(sectorId));
-                routeToSave.setName(theRoute.getName());
+                theRoute.setImage(ImageFileProcessing.getImageForEntityAddFromForm(theRoute.getImageFile()));
+                theRoute.setUser(userService.findUserByEmail(sessionEmail));
+                theRoute.setSector(sectorService.findSectorById(sectorId));
+                theRoute.setName(theRoute.getName());
 
-                routeService.saveRoute(routeToSave);
+                routeService.saveRoute(theRoute);
 
-                String redirectingString = "/spots/"+spotId+"/sector/"+sectorId+"/route/"+routeToSave.getId();
+                String redirectingString = "/spots/"+spotId+"/sector/"+sectorId+"/route/"+theRoute.getId();
                 return "redirect:"+redirectingString;
             }
         }
