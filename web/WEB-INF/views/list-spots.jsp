@@ -25,78 +25,80 @@
                    onclick="window.location.href='ajout-spot'; return false;"
                    class="btn btn-primary" />
 
+            <div class="mt-5 mb-5 col-12 card shadow bg-light">
+                <div class="card-header" id="search-header">
+                    <button class="navbar-toggler " type="button" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <strong>Recherche</strong>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled" id="search-list">
+                        <form:form action="recherche"  method="post" modelAttribute="searchForm">
+                            <li>
+                                <div class="form-group input-group">
+                                    <form:input id="searchName" path="name" cssClass="form-control p-2" placeholder="Par nom" type="text" />
+                                </div>
+                            </li>
+                            <li>
+                                <div class="form-group input-group">
+                                    <form:input path="county" cssClass="form-control p-2" placeholder="Par région" type="text" />
+                                </div>
+                            </li>
+                            <li>
+                                <div class="form-group input-group">
+                                    <form:input path="city" cssClass="form-control p-2" placeholder="Par ville" type="text" />
+                                </div>
+                            </li>
+                            <li>
+                                <div class="form-group input-group">
+                                    <form:input path="nbrSector" cssClass="form-control p-2" placeholder="Par nbr de secteurs"  type="text" />
+                                </div>
+                            </li>
+                            <li>
+                                <div class="form-group input-group">
+                                    <form:input path="username" cssClass="form-control p-2" placeholder="Par utilisateur"  type="text" />
+                                </div>
+                            </li>
+                            <li>
+                                <div class="form-group input-group">
+                                    <form:select  path="gradeMin" cssClass="form-control" >
+                                        <form:option value="" selected="">Par cotation min</form:option>
+                                        <c:forEach var="cot" items="${grades}">
+                                            <form:option value="${cot.id}">${cot.name}</form:option>
+                                        </c:forEach>
+                                    </form:select>
+                                </div> <!-- form-group end.// -->
 
-            <h3 class="mt-5 mb-5 mb-sm-0 col-12 p-2 bg-light-gray" id="search-header">
-                <button class="navbar-toggler" type="button" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="fas fa-bars"></i>
-                </button>
-                Recherche
-            </h3>
-                <ul class="list-unstyled mb-5" id="search-list">
+                            </li>
+                            <li>
+                                <div class="form-group input-group">
+                                    <form:select  path="gradeMax" cssClass="form-control" >
+                                        <form:option value="" selected="">Par cotation max</form:option>
+                                        <c:forEach var="cot" items="${grades}">
+                                            <form:option value="${cot.id}">${cot.name}</form:option>
+                                        </c:forEach>
+                                    </form:select>
+                                </div> <!-- form-group end.// -->
 
-                    <form:form action="recherche"  method="post" modelAttribute="searchForm">
-                    <li>
-                        <div class="form-group input-group">
-                            <form:input id="searchName" path="name" cssClass="form-control p-2" placeholder="Par nom" type="text" />
-                        </div>
-                    </li>
-                    <li>
-                        <div class="form-group input-group">
-                            <form:input path="county" cssClass="form-control p-2" placeholder="Par région" type="text" />
-                        </div>
-                    </li>
-                    <li>
-                        <div class="form-group input-group">
-                            <form:input path="city" cssClass="form-control p-2" placeholder="Par ville" type="text" />
-                        </div>
-                    </li>
-                    <li>
-                        <div class="form-group input-group">
-                            <form:input path="nbrSector" cssClass="form-control p-2" placeholder="Par nbr de secteurs"  type="text" />
-                        </div>
-                    </li>
-                    <li>
-                        <div class="form-group input-group">
-                            <form:input path="username" cssClass="form-control p-2" placeholder="Par utilisateur"  type="text" />
-                        </div>
-                    </li>
-                    <li>
-                        <div class="form-group input-group">
-                            <form:select  path="gradeMin" cssClass="form-control" >
-                                <form:option value="" selected="">Par cotation min</form:option>
-                                <c:forEach var="cot" items="${grades}">
-                                    <form:option value="${cot.id}">${cot.name}</form:option>
-                                </c:forEach>
-                            </form:select>
-                        </div> <!-- form-group end.// -->
+                            </li>
+                            <li>
+                                <div class="form-group input-group">
+                                    <button class="search-btn" type="submit"><i class="fa fa-search"></i></button>
+                                </div>
+                            </li>
 
-                    </li>
-                    <li>
-                        <div class="form-group input-group">
-                            <form:select  path="gradeMax" cssClass="form-control" >
-                                <form:option value="" selected="">Par cotation max</form:option>
-                                <c:forEach var="cot" items="${grades}">
-                                    <form:option value="${cot.id}">${cot.name}</form:option>
-                                </c:forEach>
-                            </form:select>
-                        </div> <!-- form-group end.// -->
-
-                    </li>
-                    <li>
-                        <div class="form-group input-group">
-                            <button class="search-btn" type="submit"><i class="fa fa-search"></i></button>
-                        </div>
-                    </li>
-
-                    </form:form>
-                </ul>
+                        </form:form>
+                    </ul>
+                </div>
+            </div>
 
             <div class="card-deck mb-5 mx-auto">
                 <!-- loop over and print our spots -->
                 <c:forEach var="spot" items="${spots}">
                     <!-- construct an "view" link with spot id -->
                     <c:url var="viewLink" value="/spots/${spot.id}" />
-                    <div class="card mb-5 d-inline-block">
+                    <div class="card shadow mb-5 d-inline-block bg-light">
                         <a href="${viewLink}" class="text-decoration-none">
                             <h4 class="card-header">${spot.name}</h4>
                         </a>

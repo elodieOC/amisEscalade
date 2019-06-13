@@ -8,11 +8,19 @@ import com.elo.oc.service.EmailService;
 import com.elo.oc.service.RoleService;
 import com.elo.oc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.social.connect.Connection;
+import org.springframework.social.connect.ConnectionKey;
+import org.springframework.social.facebook.api.Facebook;
+import org.springframework.social.facebook.api.UserOperations;
+import org.springframework.social.facebook.api.impl.FacebookTemplate;
+import org.springframework.social.facebook.connect.FacebookConnectionFactory;
+import org.springframework.social.oauth2.AccessGrant;
+import org.springframework.social.oauth2.OAuth2Operations;
+import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -105,9 +113,50 @@ public class UserController {
     public String showLoginForm(Model theModel){
         User theUser = new User();
         theModel.addAttribute("user", theUser);
+
+        FacebookConnectionFactory connectionFactory = new FacebookConnectionFactory("451914258939804", "c2cc4a19482f127c2b134ab28b94279a");
+        OAuth2Operations oauthOperations = connectionFactory.getOAuthOperations();
+        /*OAuth2Parameters params = new OAuth2Parameters();
+        params.setRedirectUri("http://localhost:8080/amisEscalade_war_exploded/user/login");
+        params.setScope("email");
+        String authorizeUrl = oauthOperations.buildAuthorizeUrl(params);
+        AccessGrant accessGrant = oauthOperations.exchangeForAccess("c2cc4a19482f127c2b134ab28b94279a","http://localhost:8080/amisEscalade_war_exploded/user/fb-login",null);
+        Connection<Facebook> connection = connectionFactory.createConnection(accessGrant);
+
+        ConnectionKey connectionKey = connection.getKey();
+        Facebook facebook=connection!=null?connection.getApi():new FacebookTemplate("c2cc4a19482f127c2b134ab28b94279a");
+        UserOperations userOperations = facebook.userOperations();
+        String [] fields = { "email" };
+        org.springframework.social.facebook.api.User profile = facebook.fetchObject
+                ("me", org.springframework.social.facebook.api.User.class, fields);*/
+
         return "login";
     }
+    /**
+     * <p>Process called after the submit button is clicked on login page</p>
+     * @param theUser user being logged in
+     * @param theBindingResult the result of validation of the form
+     * @param request servlet request
+     * @return page to show depending on process result
+     */
+    @PostMapping("/log-user")
+    public String connectUser(@ModelAttribute("user") User theUser, BindingResult theBindingResult,  HttpServletRequest request) {
 
+        userLoginValidator.validate(theUser, theBindingResult);
+        HttpSession session = request.getSession();
+
+        if (theBindingResult.hasErrors()) {
+            return "login";
+        }
+        else{
+            User userToLogIn = userService.findUserByUsername(theUser.getUsername());
+            session.setAttribute("loggedInUserEmail", userToLogIn.getEmail());
+            session.setAttribute("loggedInUserId", userToLogIn.getId());
+            session.setAttribute("loggedInUserRole", userToLogIn.getUserRole().getId());
+            String redirectString = "/user/"+userToLogIn.getId();
+            return "redirect:"+redirectString;
+        }
+    }
     /**
      * <p>Page that displays a form to reset a password for a user</p>
      * @param theModel attribute passed to jsp page
@@ -158,31 +207,7 @@ public class UserController {
             return "reset-password-user";
         }
     }
-    /**
-     * <p>Process called after the submit button is clicked on login page</p>
-     * @param theUser user being logged in
-     * @param theBindingResult the result of validation of the form
-     * @param request servlet request
-     * @return page to show depending on process result
-     */
-    @PostMapping("/log-user")
-    public String connectUser(@ModelAttribute("user") User theUser, BindingResult theBindingResult,  HttpServletRequest request) {
 
-        userLoginValidator.validate(theUser, theBindingResult);
-        HttpSession session = request.getSession();
-
-        if (theBindingResult.hasErrors()) {
-            return "login";
-        }
-        else{
-            User userToLogIn = userService.findUserByUsername(theUser.getUsername());
-            session.setAttribute("loggedInUserEmail", userToLogIn.getEmail());
-            session.setAttribute("loggedInUserId", userToLogIn.getId());
-            session.setAttribute("loggedInUserRole", userToLogIn.getUserRole().getId());
-            String redirectString = "/user/"+userToLogIn.getId();
-            return "redirect:"+redirectString;
-        }
-    }
     /*
      **************************************
      * User Infos

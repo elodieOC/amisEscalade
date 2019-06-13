@@ -17,29 +17,25 @@
 <c:import url="inc/choose-navbar.jsp" />
 <main role="main" class="flex-shrink-0 mt-5">
     <div class="container col-md-10 mt-5">
-        <div class="col-md-offset-1 col-md-10 col-lg-6 mx-auto">
-            <h2 class="mb-5">Spot ${spot.name} - Ajouter un commentaire</h2>
-            <hr />
-            <form:form action="add-comment" cssClass="form-horizontal"  method="post" modelAttribute="comment">
-                <form:hidden path="id" />
+        <div class="col-lg-6 mx-auto">
+            <div class="card shadow bg-light p-4 ">
+                <h2 class="mt-3 mb-5">Spot ${spot.name} - Ajouter un commentaire</h2>
+                <form:form action="add-comment" cssClass="form-horizontal"  method="post" modelAttribute="comment">
+                    <form:hidden path="id" />
 
-                <form:errors path="content" cssClass="error"/>
-                <div class="form-group">
-                    <label for="content">Votre commentaire:</label>
-                    <form:textarea path="content" cssClass="form-control p-4" placeholder="Commentaire" rows="3" />
-                </div>
-                <div class="row mb-2">
-                    <button class="btn btn-lg btn-primary mb-2 ml-4" type="submit">Ajouter</button>
-                </div>
-            </form:form>
+                    <form:errors path="content" cssClass="error"/>
+                    <div class="form-group">
+                        <label for="content">Votre commentaire:</label>
+                        <form:textarea path="content" cssClass="form-control p-4" placeholder="Commentaire" rows="3" />
+                    </div>
+                    <div class="row mb-2">
+                        <button class="btn btn-lg btn-primary mb-2 ml-4" type="submit">Ajouter</button>
+                    </div>
+                </form:form>
             </div>
         </div>
-    </main>
-</div>
-
-
-
+    </div>
+</main>
 </body>
-
 <c:import url="inc/footer.jsp"/>
 </html>

@@ -33,7 +33,7 @@
             <div class="container mt-5">
                 <div class="row">
                     <div class="col-md-4 mb-3 mb-md-0 mt-5">
-                        <div class="card py-4 h-100 bg-dark text-white">
+                        <div class="card shadow py-4 h-100 bg-dark text-white">
                             <div class="card-body text-center">
                                 <i class="fas fa-map-marked-alt text-primary mb-2"></i>
                                 <h4 class="text-uppercase m-0">Address</h4>
@@ -44,7 +44,7 @@
                     </div>
 
                     <div class="col-md-4 mb-3 mb-md-0 mt-5">
-                        <div class="card py-4 h-100 bg-dark text-white">
+                        <div class="card shadow py-4 h-100 bg-dark text-white">
                             <div class="card-body text-center">
                                 <i class="fas fa-envelope text-primary mb-2"></i>
                                 <h4 class="text-uppercase m-0">Email</h4>
@@ -57,7 +57,7 @@
                     </div>
 
                     <div class="col-md-4 mb-3 mb-md-0 mt-5">
-                        <div class="card py-4 h-100 bg-dark text-white">
+                        <div class="card shadow py-4 h-100 bg-dark text-white">
                             <div class="card-body text-center">
                                 <i class="fas fa-mobile-alt text-primary mb-2"></i>
                                 <h4 class="text-uppercase m-0">Phone</h4>

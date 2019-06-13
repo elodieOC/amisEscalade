@@ -17,7 +17,7 @@
 <main role="main" class="flex-shrink-0 mt-5">
     <div class="container col-md-10 mt-5">
         <div class="col-lg-6 mx-auto">
-            <div class="card bg-light p-4 ">
+            <div class="card shadow bg-light p-4 ">
                 <h2 class="mt-3 mb-3 ">Editer Topo</h2>
                 <form:form action="update" cssClass="form-horizontal"  method="post" modelAttribute="topo" enctype="multipart/form-data">
 

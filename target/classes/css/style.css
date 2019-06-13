@@ -107,11 +107,14 @@ input:-moz-read-only{
 
 #search-list li{
     display: inline-block;
-    margin-left: 2vh;
+    margin-left: 1vh;
 }
-.bg-light-gray{
-    background-color: #DCDCDC;
+
+#search-list input, #search-list select{
+    font-size: 12px;
 }
+
+
 
 #search-header button{
     display: none;

@@ -17,10 +17,8 @@
 <main role="main" class="flex-shrink-0 mt-5">
     <div class="container col-md-10 mt-5">
         <div class="col-lg-6 mx-auto">
-            <br />
-            <br />
-            <br />
-            <div class="card bg-light p-4 ">
+
+            <div class="card shadow bg-light p-4 mt-5 mb-5">
                 <h2 class="mt-3 mb-3 text-center">Ajouter Topo</h2>
                 <form:form action="add-topo" cssClass="form-horizontal"  method="post" modelAttribute="topo" enctype="multipart/form-data">
 

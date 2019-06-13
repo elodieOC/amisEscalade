@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col-lg-8 mx-auto">
                 <h1 class="mb-6">A propos de nous</h1>
-                <h2 class="mb-4">Les amis de l'escalade</h2>
+                <h2 class="mb-4 mt-5">Les amis de l'escalade</h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse in efficitur elit.
                     Suspendisse id faucibus mi. Donec a felis volutpat massa tincidunt malesuada nec non urna. Pellentesque ut
                     pellentesque quam, a rhoncus mi.

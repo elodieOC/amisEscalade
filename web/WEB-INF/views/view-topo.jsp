@@ -63,9 +63,9 @@
                    class="btn btn-secondary ml-4 ml-sm-0 mb-5 mb-sm-0" />
         </c:if>
 
-        <div class="panel panel-info mt-5">
+        <div class="mt-5">
             <h2 class="d-inline-block col-md-8 mb-5">Informations</h2>
-            <div class="panel-body mb-5">
+            <div class="mb-5">
                 <table class="mb-5">
                     <tr>
                         <td class="col-lg-2">Pays: </td><td class="col-lg-7">${topo.country}</td>
@@ -87,7 +87,7 @@
         </div>
 
         <c:if test="${!empty topo.image}" >
-            <div class="panel panel-info mt-5 mb-5 col-md-8">
+            <div class="mt-5 mb-5 col-md-8">
                 <div class="img offset-md-1">
                     <img src='data:image/jpg;base64,${topo.base64}' class="img-fluid d-block"/>
                 </div>

@@ -56,8 +56,8 @@
                    class="btn btn-secondary ml-4 ml-sm-0 mb-5 mb-sm-0" />
         </c:if>
 
-        <div class="panel panel-info mt-5">
-            <div class="panel-body mb-5">
+        <div class="mt-5">
+            <div class="mb-5">
                 <h2 class="d-inline-block col-md-8 mb-5">Informations</h2>
                 <c:choose>
                     <c:when test="${empty route.lengths}">
@@ -66,11 +66,11 @@
                     <c:otherwise>
                         <ul class="list-unstyled">
                             <c:forEach var="length" items="${route.lengths}">
-                                    <li class="ml-4"><strong>Longueur ${route.lengths.indexOf(length)+1}:  </strong>
+                                    <li class="ml-4 mb-4"><strong>Longueur ${route.lengths.indexOf(length)+1}:  </strong>
                                         <span class=" route-li">cotation ${length.grade.name} (${length.grade.rating.name}), ${length.bolts} spits, hauteur ${length.height}m</span>
-                                    </li>
-                                    <c:if test="${userRole eq '1' || userId eq spot.user.id && userId ne null}">
-                                        <li>
+
+                                    <c:if test="${userRole eq '1' || userId eq length.user.id && userId ne null}">
+
                                             <!-- construct an "update" link with spot id -->
                                             <c:url var="updateLink" value="/spots/${spot.id}/sector/${sector.id}/route/${route.id}/length/${length.id}/editer" />
                                             <!-- construct an "delete" link with spot id -->
@@ -78,7 +78,7 @@
                                             <!-- display the update link -->
                                             <input type="button" value="Editer"
                                                    onclick="window.location.href='${updateLink}'; return false;"
-                                                   class="btn btn-secondary ml-4 ml-sm-0 mb-5 mb-sm-0" />
+                                                   class="btn btn-secondary ml-sm-5 mb-5 mb-sm-0" />
                                             <!-- display the delete link -->
                                             <input type="button" value="Supprimer"
                                                    onclick="window.location.href='${deleteLink}'; return false;"

@@ -18,15 +18,13 @@
     <div class="container col-md-10 mt-5">
         <div class="col-lg-6 mx-auto">
             <br />
-            <br />
-            <br />
             <c:if test="${success == 1}">
-                <div class="alert alert-success" role="alert">
+                <div class="mt-5 alert alert-success" role="alert">
                     Un nouveau mot de passe vous a été envoyé <a href="<c:url value="/user/login" /> " class="alert-link">Connectez vous ici</a>.
                 </div>
             </c:if>
 
-            <div class="card bg-light p-4">
+            <div class="card mt-5 shadow mb-5 bg-light p-4">
                 <h2 class="mt-3 mb-5 text-center">Réinitialisation Mot de Passe</h2>
 
                 <form:form action="reset-password" cssClass="form-horizontal"  method="post" modelAttribute="user">

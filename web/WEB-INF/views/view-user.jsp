@@ -52,7 +52,7 @@
                             <c:url var="updateLink" value="/spots/${spot.id}/editer" />
                             <!-- construct an "delete" link with spot id -->
                             <c:url var="deleteLink" value="/spots/${spot.id}/delete" />
-                            <div class="card mb-5 d-inline-block">
+                            <div class="card shadow mb-5 d-inline-block">
                                 <a href="${viewLink}" class="text-decoration-none">
                                     <h4 class="card-header">${spot.name}</h4>
                                 </a>
@@ -101,7 +101,7 @@
                             <c:url var="updateLink" value="/topos/${topo.id}/editer" />
                             <!-- construct an "delete" link with topo id -->
                             <c:url var="deleteLink" value="/topos/${topo.id}/delete" />
-                            <div class="card mb-5 d-inline-block">
+                            <div class="card shadow mb-5 d-inline-block">
                                 <a href="${viewLink}" class="text-decoration-none">
                                     <h4 class="card-header">${topo.name}</h4>
                                 </a>
@@ -139,7 +139,7 @@
         </div>
         <input type="button" value="Supprimer Mon Compte"
                onclick="window.location.href='delete'; return false;"
-               class="btn btn-danger ml-5 mb-5" />
+               class="btn btn-danger ml-5 mb-5 mt-5" />
     </div>
     </div>
     </div>
