@@ -14,7 +14,8 @@
 <script src="<c:url value="/resources/vendor/jquery/jquery.min.js" />"></script>
 <script src="<c:url value="/resources/vendor/bootstrap/js/bootstrap.bundle.min.js" />"></script>
 <script src="<c:url value="/resources/vendor/bootstrap/js/bootstrap.min.js" />"></script>
-
+<!-- Custom javascript for this template -->
+<script src="<c:url value="/resources/js/ratings-toggle.js" />"></script>
 <!-- Custom fonts for this template -->
 <link href="<c:url value="/resources/vendor/fontawesome-free/css/all.css"/>" rel="stylesheet">
 <link href="<c:url value="https://fonts.googleapis.com/css?family=Varela+Round"/>" rel="stylesheet">

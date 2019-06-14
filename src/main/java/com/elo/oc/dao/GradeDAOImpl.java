@@ -41,6 +41,15 @@ public class GradeDAOImpl implements GradeDAO {
     }
 
     @Override
+    public List<Grade> findGradeByRatingId(Integer id) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query<Grade> query = currentSession.createNamedQuery("findGradeByRatingId", Grade.class);
+        query.setParameter("rating_fk", id);
+        List <Grade> grades = query.getResultList();
+        return grades;
+    }
+
+    @Override
     public List<Grade> getGrades() {
         Session session = sessionFactory.getCurrentSession();
         CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -52,7 +61,7 @@ public class GradeDAOImpl implements GradeDAO {
     }
 
     @Override
-    public Grade findById(Integer id) {
+    public Grade findGradeById(Integer id) {
         Session currentSession = sessionFactory.getCurrentSession();
         Grade theGrade = currentSession.get(Grade.class, id);
         return theGrade;

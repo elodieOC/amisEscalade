@@ -14,7 +14,9 @@ import java.util.List;
 @Immutable
 @org.hibernate.annotations.NamedQueries({
         @org.hibernate.annotations.NamedQuery(name = "findGradeByName",
-                query = "from Grade where name = :name")
+                query = "from Grade where name = :name"),
+        @org.hibernate.annotations.NamedQuery(name = "findGradeByRatingId",
+                query = "from Grade where rating_fk = :rating_fk")
 })
 public class Grade {
     @Id

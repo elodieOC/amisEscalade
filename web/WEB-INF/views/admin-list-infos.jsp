@@ -16,107 +16,75 @@
 <main role="main" class="flex-shrink-0 mt-5">
     <div class="container col-md-10 mt-5">
         <div class="container col-md-offset-1 col-md-10">
-            <h2>Utilisateurs</h2>
-            
-            <div class="panel panel-info">
-                <div class="panel-body">
-                    <table class="table table-striped table-bordered">
-                        <thead class="thead-dark">
-                        <tr>
-                            <th>Pseudo</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
+            <div class="card shadow mb-5 bg-light">
+                <div class="card-header">
+                    <h3>Utilisateurs</h3>
+                </div>
+                <div class="card-body">
+                    <div class="card-deck mx-auto">
                         <c:forEach var="tempUser" items="${users}">
-                            <!-- construct an "view" link with user id -->
-                            <c:url var="viewLink" value="/admin/user/${tempUser.id}/profile" />
-                            <tr>
-                                <td>${tempUser.username}</td>
-                                <td>${tempUser.email}</td>
-                                <td>${tempUser.userRole.roleName}</td>
-                                <td>
-                                    <!-- display the view link -->
-                                    <a href="${viewLink}">View</a>
-                                </td>
-                            </tr>
+                            <div class="card shadow mb-3 bg-light">
+                                <div class="card-body">
+                                    <ul class="list-unstyled">
+
+                                        <!-- construct an "view" link with user id -->
+                                        <c:url var="viewLink" value="/admin/user/${tempUser.id}/profile" />
+                                        <li><strong>Pseudo: </strong>${tempUser.username}</li>
+                                        <li><strong>Email: </strong>${tempUser.email}</li>
+                                        <li><strong>Role: </strong>${tempUser.userRole.roleName}</li>
+                                        <li>
+                                            <!-- display the view link -->
+                                            <a href="${viewLink}">Profil</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </c:forEach>
-                    </table>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="container col-md-offset-1 col-md-10">
-            <h2 class="mt-5">Roles</h2>
-            
-            <div class="panel panel-info">
-                <div class="panel-body">
-                    <table class="table table-striped table-bordered">
-                        <thead class="thead-dark">
-                        <tr>
-                            <th>Id</th>
-                            <th>Nom</th>
-                        </tr>
-                        </thead>
+            <div class="card shadow mb-5 bg-light">
+                <div class="card-header">
+                    <h3>Roles</h3>
+                </div>
+                <div class="card-body">
+                    <div class="card-deck mx-auto">
                         <c:forEach var="userRole" items="${roles}" >
-                            <tr>
-                                <td>${userRole.id}</td>
-                                <td>${userRole.roleName}</td>
-                            </tr>
+                            <div class="card shadow mb-3 bg-light">
+                                <div class="card-body">
+                                    <ul class="list-unstyled">
+                                        <li><strong>Id: </strong>${userRole.id}</li>
+                                        <li><strong>Nom: </strong>${userRole.roleName}</li>
+                                    </ul>
+                                </div>
+                            </div>
                         </c:forEach>
-                    </table>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="container col-md-offset-1 col-md-10">
-            <h2 class="mt-5">Spots</h2>
-            
-            <div class="panel panel-info">
-                <div class="panel-body">
-                    <table class="table table-striped table-bordered">
-                        <thead class="thead-dark">
-                        <tr>
-                            <th>Id</th>
-                            <th>Nom</th>
-                            <th>Ville</th>
-                            <th>Région</th>
-                        </tr>
-                        </thead>
+            <div class="card shadow mb-5 bg-light">
+                <div class="card-header">
+                    <h3>Spots</h3>
+                </div>
+                <div class="card-body">
+                    <div class="card-deck mx-auto">
                         <c:forEach var="spot" items="${spots}" >
-                            <tr>
-                                <td>${spot.id}</td>
-                                <td>${spot.name}</td>
-                                <td>${spot.city}</td>
-                                <td>${spot.county}</td>
-                            </tr>
+                            <div class="card shadow mb-3 bg-light">
+                                <div class="card-body">
+                                    <ul class="list-unstyled">
+                                        <li><strong>Id: </strong>${spot.id}</li>
+                                        <li><strong>Nom: </strong>${spot.name}</li>
+                                        <li><strong>Ville: </strong>${spot.city}</li>
+                                        <li><strong>Région: </strong>${spot.county}</li>
+                                    </ul>
+                                </div>
+                            </div>
                         </c:forEach>
-                    </table>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="container col-md-offset-1 col-md-10">
-            <h2 class="mt-5">Cotations</h2>
-            <div class="panel panel-info">
-                <div class="panel-body">
-                    <table class="table table-striped table-bordered">
-                        <thead class="thead-dark">
-                        <tr>
-                            <th>Id</th>
-                            <th>Cotation</th>
-                            <th>Niveau</th>
-                        </tr>
-                        </thead>
-                        <c:forEach var="cot" items="${grades}" >
-                            <tr>
-                                <td>${cot.id}</td>
-                                <td>${cot.name}</td>
-                                <td>${cot.rating.name}</td>
-                            </tr>
-                        </c:forEach>
-                    </table>
-                </div>
-            </div>
-        </div></div>
+    </div>
 </main>
 </body>
 <c:import url="inc/footer.jsp"/>

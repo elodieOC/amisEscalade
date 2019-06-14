@@ -25,6 +25,21 @@
                    onclick="window.location.href='ajout-spot'; return false;"
                    class="btn btn-primary" />
 
+
+            <div class="mt-5 alert alert-info" role="alert">
+                <div class="rating-list-header">
+                    <button class="navbar-toggler " type="button" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="glyphicon glyphicon-question-sign"></i>
+                    </button>
+                    <strong>Les niveaux et cotations</strong>
+                </div>
+                <ul class="list-unstyled ratinglist">
+                    <c:forEach var="rating" items="${ratings}" >
+                        <li><strong>Niveau: </strong>${rating.name} (Cotations: ${rating.gradeList})</li>
+                    </c:forEach>
+                </ul>
+            </div>
+
             <div class="mt-5 mb-5 col-12 card shadow bg-light">
                 <div class="card-header" id="search-header">
                     <button class="navbar-toggler " type="button" aria-expanded="false" aria-label="Toggle navigation">

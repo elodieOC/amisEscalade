@@ -14,12 +14,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 //TODO ajouter suppression image?
 /**
@@ -48,6 +47,8 @@ public class SpotController {
     private SpotRegistrationValidator spotRegistrationValidator;
     @Autowired
     private LengthFormValidator lengthFormValidator;
+    @Autowired
+    private RatingService ratingService;
 
     /**
      * <p>Page that displays a list of all the spots in database</p>
@@ -57,11 +58,14 @@ public class SpotController {
     @GetMapping("")
     public String listSpots(Model theModel) {
         List<Spot> theSpots = spotService.search("", "", "", null, "", "", "");
+        List<Rating> theRatings = ratingService.getRatings();
         spotService.displayGrade(theSpots);
+        ratingService.displayGradeList(theRatings);
         SearchForm searchForm = new SearchForm();
         theModel.addAttribute("spots", theSpots);
         theModel.addAttribute("grades", gradeService.getGrades());
         theModel.addAttribute("searchForm", searchForm);
+        theModel.addAttribute("ratings", theRatings);
         return "list-spots";
     }
 
@@ -71,12 +75,12 @@ public class SpotController {
      * @param theModel attribute passed to jsp page
      * @return page with filtered list of spots
      */
-   @PostMapping("/recherche")
+    @PostMapping("/recherche")
     public String searchSpots(@ModelAttribute("searchForm") SearchForm searchForm, Model theModel) {
         Integer nbrSectors = null;
         if(!searchForm.getNbrSector().equals("")){
             nbrSectors = Integer.parseInt(searchForm.getNbrSector());
-       }
+        }
 
         List<Spot> theSpots = spotService.search(searchForm.getCity(), searchForm.getCounty(), searchForm.getName(), nbrSectors, searchForm.getUsername(), searchForm.getGradeMin(), searchForm.getGradeMax());
         spotService.displayGrade(theSpots);
@@ -86,9 +90,9 @@ public class SpotController {
     }
 
     /*
-    **************************************
-    * Spots CRUD
-    * ************************************
+     **************************************
+     * Spots CRUD
+     * ************************************
      */
 
     /**
@@ -169,6 +173,7 @@ public class SpotController {
         theModel.addAttribute("spot", theSpot);
         theModel.addAttribute("comments", theSpot.getComments());
         theModel.addAttribute("sectors", theSpot.getSectors());
+
         return "view-spot";
     }
 
@@ -336,6 +341,9 @@ public class SpotController {
         }
         Spot theSpot = spotService.findSpotWithAllInfosById(spotId);
         Sector theSector = sectorService.findSectorById(sectorId);
+        List<Rating> theRatings = ratingService.getRatings();
+        ratingService.displayGradeList(theRatings);
+        theModel.addAttribute("ratings", theRatings);
         List<Route> routes = theSector.getRoutes();
         theModel.addAttribute("routes", routes);
         for(Route r : routes) {
@@ -596,7 +604,7 @@ public class SpotController {
      */
     @GetMapping("/{spotId}/sector/{sectorId}/ajout-voie")
     public String addRouteToSector(@PathVariable("spotId") Integer spotId, @PathVariable("sectorId") Integer sectorId,
-                                  Model theModel, HttpServletRequest request) {
+                                   Model theModel, HttpServletRequest request) {
         HttpSession session = request.getSession();
         if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
             return "redirect:/user/login";
@@ -679,7 +687,9 @@ public class SpotController {
         Spot theSpot = spotService.findSpotById(spotId);
         Sector theSector = sectorService.findSectorById(sectorId);
         Route theRoute = routeService.findRouteById(routeId);
-
+        List<Rating> theRatings = ratingService.getRatings();
+        ratingService.displayGradeList(theRatings);
+        theModel.addAttribute("ratings", theRatings);
         theModel.addAttribute("route", theRoute);
         theModel.addAttribute("sector", theSector);
         theModel.addAttribute("spot", theSpot);
@@ -759,7 +769,7 @@ public class SpotController {
      */
     @GetMapping("/{spotId}/sector/{sectorId}/route/{routeId}/delete")
     public String deleteRouteFromSector(@PathVariable("spotId") Integer theSpotId,@PathVariable("sectorId") Integer theSectorId,@PathVariable("routeId") Integer theRouteId,
-                                       HttpServletRequest request) {
+                                        HttpServletRequest request) {
         HttpSession  session = request.getSession();
         if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
             return "redirect:/user/login";
@@ -778,9 +788,9 @@ public class SpotController {
     }
 
     /*
-    ******************************************
-    * Lengths
-    ******************************************
+     ******************************************
+     * Lengths
+     ******************************************
      */
 
     /**
@@ -794,8 +804,8 @@ public class SpotController {
      */
     @GetMapping("/{spotId}/sector/{sectorId}/route/{routeId}/ajout-longueur")
     public String addLengthToRoute(@PathVariable("spotId") Integer spotId, @PathVariable("sectorId") Integer sectorId,
-                                  @PathVariable("routeId") Integer routeId,
-                                  Model theModel, HttpServletRequest request) {
+                                   @PathVariable("routeId") Integer routeId,
+                                   Model theModel, HttpServletRequest request) {
         HttpSession session = request.getSession();
         if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
             return "redirect:/user/login";
@@ -828,7 +838,7 @@ public class SpotController {
      */
     @PostMapping("/{spotId}/sector/{sectorId}/route/{routeId}/add-length")
     public String saveLength(@PathVariable("spotId") Integer spotId, @PathVariable("sectorId") Integer sectorId, @PathVariable("routeId") Integer routeId,
-                            @Valid @ModelAttribute("lengthForm") LengthForm theLengthForm,
+                             @Valid @ModelAttribute("lengthForm") LengthForm theLengthForm,
                              BindingResult theBindingResult, HttpServletRequest request,   Model theModel) {
         HttpSession session = request.getSession();
 
@@ -855,7 +865,7 @@ public class SpotController {
                 theLength.setRoute(routeService.findRouteById(routeId));
                 theLength.setBolts(bolts);
                 theLength.setHeight(height);
-                theLength.setGrade(gradeService.findById(theLengthForm.getGrade()));
+                theLength.setGrade(gradeService.findGradeById(theLengthForm.getGrade()));
 
                 lengthService.saveLength(theLength);
 
@@ -878,7 +888,7 @@ public class SpotController {
     @GetMapping("/{spotId}/sector/{sectorId}/route/{routeId}/length/{lengthId}/editer")
     public String formForLengthUpdate(@PathVariable("spotId") Integer theSpotId,@PathVariable("sectorId") Integer theSectorId,
                                       @PathVariable("routeId") Integer theRouteId,@PathVariable("lengthId") Integer theLengthId,
-                                     Model theModel,  HttpServletRequest request) {
+                                      Model theModel,  HttpServletRequest request) {
         HttpSession session = request.getSession();
         if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
             return "redirect:/user/login";
@@ -919,7 +929,7 @@ public class SpotController {
     @PostMapping("/{spotId}/sector/{sectorId}/route/{routeId}/length/{lengthId}/update")
     public String updateLength(@PathVariable("spotId") Integer theSpotId,  @PathVariable("sectorId") Integer theSectorId,
                                @PathVariable("routeId") Integer theRouteId,@PathVariable("lengthId") Integer theLengthId,
-                              @Valid @ModelAttribute("lengthForm") LengthForm theLengthForm, BindingResult theBindingResult, Model theModel) {
+                               @Valid @ModelAttribute("lengthForm") LengthForm theLengthForm, BindingResult theBindingResult, Model theModel) {
         lengthFormValidator.validate(theLengthForm, theBindingResult);
 
         if (theBindingResult.hasErrors()) {
@@ -936,7 +946,7 @@ public class SpotController {
 
             theLengthToUpdate.setBolts(bolts);
             theLengthToUpdate.setHeight(height);
-            theLengthToUpdate.setGrade(gradeService.findById(theLengthForm.getGrade()));
+            theLengthToUpdate.setGrade(gradeService.findGradeById(theLengthForm.getGrade()));
 
             lengthService.updateLength(theLengthToUpdate);
 

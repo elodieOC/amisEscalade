@@ -10,8 +10,8 @@ public interface RatingService {
     void deleteRating(Integer id);
 
     List < Rating > getRatings();
-    Rating findById(Integer id);
-
+    Rating findRatingById(Integer id);
+    void displayGradeList (List<Rating> theRatings);
 
 
 

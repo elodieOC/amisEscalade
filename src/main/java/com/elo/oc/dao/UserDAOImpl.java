@@ -106,21 +106,10 @@ public class UserDAOImpl implements UserDAO {
    @Override
     public User findUserByIdWithAllInfos(Integer id){
         Session currentSession = sessionFactory.getCurrentSession();
-
-       User theUser = currentSession.get(User.class, id);
+        User theUser = currentSession.get(User.class, id);
         Hibernate.initialize(theUser.getSpots());
         Hibernate.initialize(theUser.getComments());
         Hibernate.initialize(theUser.getTopos());
-        /*
-        CriteriaBuilder cb = currentSession.getCriteriaBuilder();
-        CriteriaQuery q = cb.createQuery(User.class);
-        Root o = q.from(User.class);
-        o.fetch("spots", JoinType.INNER);
-        q.select(o);
-        q.where(cb.equal(o.get("id"), id));
-
-        User theUser = (User)currentSession.createQuery(q).getSingleResult();
-        */
         return theUser;
     }
 

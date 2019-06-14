@@ -5,6 +5,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -21,12 +22,20 @@ public class Rating {
     @NotBlank
     private String name;
 
-    @OneToMany (mappedBy = "rating", fetch = FetchType.EAGER)
+    @OneToMany (mappedBy = "rating")
     private List<Grade> grades = new ArrayList<>();
 
-      public Rating() {
+    public Rating() {
     }
 
+    @Transient
+    private String gradeList;
+
+    public String getGradeList(){return gradeList;}
+
+    public void setGradeList(String gradeList) {
+        this.gradeList = gradeList;
+    }
 
     public Integer getId() {
         return id;

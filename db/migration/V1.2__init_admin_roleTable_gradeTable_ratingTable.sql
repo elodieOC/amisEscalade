@@ -16,7 +16,7 @@ insert into climb_user (username, password, email, role_fk) values ('admin', MD5
 -- init
 ------------------------------------------------------------
 
-insert into rating (name) values ('facile'), ('perfectionnement'), ('difficile'), ('très difficile'), ('très haut rating');
+insert into rating (name) values ('facile'), ('perfectionnement'), ('difficile'), ('très difficile'), ('très haut niveau');
 insert into grade (name, rating_fk) values ('3', 1), ('3+', 1), ('4a', 1), ('4b', 1), ('4c', 1), ('5a', 1);
 insert into grade (name, rating_fk) values ('5b', 2), ('5c', 2), ('6a', 2), ('6a+', 2);
 insert into grade (name, rating_fk) values ('6b', 3), ('6b+', 3), ('6c', 3), ('6c+', 3);

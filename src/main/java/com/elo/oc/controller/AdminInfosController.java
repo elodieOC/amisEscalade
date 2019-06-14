@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -63,14 +65,11 @@ public class AdminInfosController {
                 List<User> theUsers = userService.getUsers();
                 List<Role> theRoles = roleService.getRoles();
                 List<Spot> theSpots = spotService.getSpots();
-                List<Grade> theGrades = gradeService.getGrades();
-                List<Rating> theRatings = ratingService.getRatings();
+
                 //adding attributes to Model to display on jsp
                 theModel.addAttribute("roles", theRoles);
                 theModel.addAttribute("users", theUsers);
                 theModel.addAttribute("spots", theSpots);
-                theModel.addAttribute("grades", theGrades);
-                theModel.addAttribute("ratings", theRatings);
                 return "admin-list-infos";
             }
         }

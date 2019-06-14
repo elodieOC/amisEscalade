@@ -34,10 +34,22 @@ public class UserRegistrationValidator implements Validator {
             errors.rejectValue("username", "registration.username.duplicate");
         }
 
+        if(user.getPassword().contains(" ")){
+            System.out.println("password contains whitespace");
+            errors.rejectValue("password", "registration.password.whitespace");
+        }
+        if(user.getPassword().length() < 8){
+            System.out.println("password < 8");
+            errors.rejectValue("password", "registration.password.tooshort");
+        }
+
+
         if(!user.getPassword().equals(user.getPasswordConfirm())){
             System.out.println("passwords don't match");
             errors.rejectValue("passwordConfirm", "registration.password.noMatch");
         }
+
+
 
     }
 }

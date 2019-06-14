@@ -105,6 +105,9 @@ input:-moz-read-only{
     font-size: 14px;
 }
 
+.ratinglist{
+    display: none;
+}
 #search-list li{
     display: inline-block;
     margin-left: 1vh;

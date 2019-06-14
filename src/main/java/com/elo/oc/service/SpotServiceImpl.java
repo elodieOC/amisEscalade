@@ -127,13 +127,13 @@ public class SpotServiceImpl implements SpotService {
     public void displayGrade(List<Spot> theSpots) {
         for (Spot s : theSpots) {
             if (s.getGradeMaxId() != 0) {
-                s.setGradeMax(gradeService.findById(s.getGradeMaxId()).getName());
+                s.setGradeMax(gradeService.findGradeById(s.getGradeMaxId()).getName());
             } else {
                 s.setGradeMax("n/a");
             }
 
             if(s.getGradeMinId() != 0) {
-                s.setGradeMin(gradeService.findById(s.getGradeMinId()).getName());
+                s.setGradeMin(gradeService.findGradeById(s.getGradeMinId()).getName());
             }
             else{
                 s.setGradeMin("n/a");

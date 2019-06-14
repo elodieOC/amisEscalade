@@ -10,8 +10,9 @@ public interface GradeDAO {
     void deleteGrade(Integer id);
 
     List < Grade > getGrades();
-    Grade findById(Integer id);
+    Grade findGradeById(Integer id);
     Grade findGradeByName(String name);
+    List < Grade > findGradeByRatingId(Integer id);
 
 
 

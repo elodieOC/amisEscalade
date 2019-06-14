@@ -16,6 +16,21 @@
 <c:import url="inc/choose-navbar.jsp" />
 <main role="main" class="flex-shrink-0 mt-5 col-md-12">
     <div class="container col-md-10 mt-5 offset-md-2">
+
+        <div class="mt-5 mb-5 alert alert-info col-md-10 " role="alert">
+            <div class="rating-list-header">
+                <button class="navbar-toggler " type="button" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="glyphicon glyphicon-question-sign"></i>
+                </button>
+                <strong>Les niveaux et cotations</strong>
+            </div>
+            <ul class="list-unstyled ratinglist">
+                <c:forEach var="rating" items="${ratings}" >
+                    <li><strong>Niveau: </strong>${rating.name} (Cotations: ${rating.gradeList})</li>
+                </c:forEach>
+            </ul>
+        </div>
+
         <h1 class="d-inline-block col-md-8">Secteur ${sector.name}
             <span class="text-muted ml-1 small">(Ajouté par:
                 <c:choose>
@@ -54,8 +69,8 @@
                    class="btn btn-secondary ml-4 ml-sm-0 mb-5 mb-sm-0" />
         </c:if>
 
-        <div class="panel panel-info mt-5 col-md-10">
-            <div class="panel-body mb-5">
+        <div class="mt-5 col-md-10">
+            <div class="mb-5">
                 <h3><strong>Informations</strong></h3>
                 <ul class="list-unstyled">
                     <li>Situation:</li>

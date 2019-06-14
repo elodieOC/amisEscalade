@@ -36,7 +36,12 @@ public class GradeServiceImpl implements GradeService {
     }
 
     @Override
-    public Grade findById(Integer id) {
-        return gradeDAO.findById(id);
+    public Grade findGradeById(Integer id) {
+        return gradeDAO.findGradeById(id);
+    }
+
+    @Override
+    public List<Grade> findGradeByRatingId(Integer id) {
+        return gradeDAO.findGradeByRatingId(id);
     }
 }
