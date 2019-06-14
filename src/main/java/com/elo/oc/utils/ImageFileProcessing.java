@@ -3,7 +3,9 @@ package com.elo.oc.utils;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
 import java.io.IOException;
+import java.io.InputStream;
 
 
 public class ImageFileProcessing {
@@ -30,5 +32,29 @@ public class ImageFileProcessing {
             }
 
         return bytes;
+    }
+
+    public static boolean checkIfImageIsRightFormat(MultipartFile file){
+        boolean format = false;
+            try (InputStream input = file.getInputStream()) {
+                try {
+                    ImageIO.read(input).toString();
+                    // It's an image (only BMP, GIF, JPG and PNG are recognized).
+                    format = true;
+                } catch (Exception e) {
+                    format = false;
+                }
+            } catch (IOException e) {
+                format = false;
+            }
+        return format;
+    }
+
+    public static boolean checkIfImageSizeOk(MultipartFile file){
+        boolean size = false;
+        if(file.getSize() < 5 * 1024 * 1024){
+            size = true;
+        }
+        return size;
     }
 }

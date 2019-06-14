@@ -9,6 +9,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import javax.imageio.ImageIO;
+import java.io.IOException;
+import java.io.InputStream;
+
 @Component
 public class TopoRegistrationValidator implements Validator {
 
@@ -33,6 +37,12 @@ public class TopoRegistrationValidator implements Validator {
             System.out.println("Date format invalid");
             errors.rejectValue("dateRelease", "registration.topo.date");
         }
+        if(!ImageFileProcessing.checkIfImageSizeOk(topo.getImageFile())){
+            errors.rejectValue("imageFile", "image.too.large");
+        }
 
+        if(!ImageFileProcessing.checkIfImageIsRightFormat(topo.getImageFile()) && topo.getImageFile().getSize() > 0){
+            errors.rejectValue("imageFile", "image.wrong.format");
+        }
     }
 }

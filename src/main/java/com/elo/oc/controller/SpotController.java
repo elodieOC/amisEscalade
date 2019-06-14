@@ -651,7 +651,7 @@ public class SpotController {
                 return "add-route-toSector";
             } else {
                 System.out.println("form is validated");
-
+ 
                 theRoute.setImage(ImageFileProcessing.getImageForEntityAddFromForm(theRoute.getImageFile()));
                 theRoute.setUser(userService.findUserByEmail(sessionEmail));
                 theRoute.setSector(sectorService.findSectorById(sectorId));
