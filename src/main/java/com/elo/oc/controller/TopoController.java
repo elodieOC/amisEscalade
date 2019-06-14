@@ -64,15 +64,11 @@ public class TopoController {
     public String showFormForTopoAdd(Model theModel, HttpServletRequest request) {
         HttpSession session = request.getSession();
 
-        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
-            return "redirect:/user/login";
-        }
-        else {
-            String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
-            System.out.println("user "+ userService.findUserByEmail(sessionEmail).getUsername()+" logged in");
-            Topo theTopo = new Topo();
-            theModel.addAttribute("topo", theTopo);
-            return "add-topo";}
+        String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
+        System.out.println("user "+ userService.findUserByEmail(sessionEmail).getUsername()+" logged in");
+        Topo theTopo = new Topo();
+        theModel.addAttribute("topo", theTopo);
+        return "add-topo";
     }
 
     /**
@@ -87,24 +83,21 @@ public class TopoController {
     @PostMapping("/add-topo")
     public String saveTopo(@Valid @ModelAttribute("topo") Topo theTopo, BindingResult theBindingResult, HttpServletRequest request) {
         HttpSession session = request.getSession();
-        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
-            return "redirect:/user/login";
+
+        String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
+        System.out.println("user "+ userService.findUserByEmail(sessionEmail).getUsername()+" logged in");
+        topoRegistrationValidator.validate(theTopo, theBindingResult);
+        if (theBindingResult.hasErrors()) {
+            System.out.println("form has errors");
+            return "add-topo";
+        } else {
+            System.out.println("form is validated");
+            theTopo.setImage(ImageFileProcessing.getImageForEntityAddFromForm(theTopo.getImageFile()));
+            theTopo.setUser(userService.findUserByEmail(sessionEmail));
+            topoService.saveTopo(theTopo);
+            return "redirect:/topos/"+theTopo.getId();
         }
-        else {
-            String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
-            System.out.println("user "+ userService.findUserByEmail(sessionEmail).getUsername()+" logged in");
-            topoRegistrationValidator.validate(theTopo, theBindingResult);
-            if (theBindingResult.hasErrors()) {
-                System.out.println("form has errors");
-                return "add-topo";
-            } else {
-                System.out.println("form is validated");
-                theTopo.setImage(ImageFileProcessing.getImageForEntityAddFromForm(theTopo.getImageFile()));
-                theTopo.setUser(userService.findUserByEmail(sessionEmail));
-                topoService.saveTopo(theTopo);
-                return "redirect:/topos/"+theTopo.getId();
-            }
-        }
+
     }
 
     /**
@@ -138,10 +131,7 @@ public class TopoController {
     public String formForTopoUpdate(@PathVariable("topoId") Integer theTopoId, Model theModel,
                                     HttpServletRequest request) {
         HttpSession session = request.getSession();
-        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
-            return "redirect:/user/login";
-        }
-        else {
+
             Topo theTopo = topoService.findTopoById(theTopoId);
             String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
             User theUpdater = userService.findUserByEmail(sessionEmail);
@@ -152,7 +142,7 @@ public class TopoController {
             }
             theModel.addAttribute("topo", theTopo);
             return "edit-topo";
-        }
+
     }
 
     /**
@@ -166,7 +156,6 @@ public class TopoController {
     @PostMapping("/{topoId}/update")
     public String updateTopo(@PathVariable("topoId") Integer topoId, @Valid @ModelAttribute("topo") Topo theTopo, BindingResult theBindingResult) {
         topoRegistrationValidator.validate(theTopo, theBindingResult);
-
         if (theBindingResult.hasErrors()) {
             System.out.println("form has errors");
             return "edit-topo";
@@ -175,14 +164,12 @@ public class TopoController {
             Topo topoToUpdate = topoService.findTopoById(topoId);
             User topoUser =  userService.findUserById(topoToUpdate.getUser().getId());
             theTopo.setUser(topoUser);
-
             if(!theTopo.getImageFile().isEmpty()){
                 theTopo.setImage(ImageFileProcessing.getImageForEntityEditFromForm(theTopo.getImageFile()));
             }
             else {
                 theTopo.setImage(topoToUpdate.getImage());
             }
-
             topoService.updateTopo(theTopo);
             return "redirect:/topos/"+topoId;
         }
@@ -197,9 +184,6 @@ public class TopoController {
     @GetMapping("/{topoId}/delete")
     public String deleteCustomer(@PathVariable("topoId") Integer theTopoId, HttpServletRequest request) {
         HttpSession session = request.getSession();
-        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
-            return "redirect:/user/login";
-        }
         Topo theTopo = topoService.findTopoById(theTopoId);
         String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
         User theDeleter = userService.findUserByEmail(sessionEmail);
@@ -227,17 +211,12 @@ public class TopoController {
     @GetMapping("/{topoId}/book")
     public String askForTopo(@PathVariable("topoId") Integer theTopoId, HttpServletRequest request){
         HttpSession session = request.getSession();
-        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
-            return "redirect:/user/login";
-        }
         Topo theTopo = topoService.findTopoById(theTopoId);
         String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
         User theBooker = userService.findUserByEmail(sessionEmail);
         User theOwner = theTopo.getUser();
-
         theTopo.setAvailable(false);
         topoService.updateTopo(theTopo);
-
         String mailTo = theOwner.getEmail();
         String subject = "Un grimpeur a réservé votre Topo";
         String text ="Bonjour ami grimpeur!" +
@@ -258,10 +237,6 @@ public class TopoController {
     @GetMapping("/{topoId}/make-available")
     public String makeTopoAvailableAgain(@PathVariable("topoId") Integer theTopoId, HttpServletRequest request){
         HttpSession session = request.getSession();
-        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
-            return "redirect:/user/login";
-        }
-
         String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
         Topo theTopo = topoService.findTopoById(theTopoId);
         User theUser = userService.findUserByEmail(sessionEmail);

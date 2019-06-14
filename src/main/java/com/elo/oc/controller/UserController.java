@@ -276,6 +276,7 @@ public class UserController {
      * @param request servlet request
      * @return page to show depending on result of process
      */
+    //TODO probleme avec editer user
     @PostMapping("/{userId}/update")
     public String updateUserProfile(@PathVariable("userId") Integer userId, @ModelAttribute("user") User theUser, Model theModel, BindingResult theBindingResult, HttpServletRequest request) {
         User theUserToUpdate = userService.findUserById(userId);

@@ -8,10 +8,7 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
@@ -53,4 +50,10 @@ public class WebMvcConfig implements WebMvcConfigurer{
         return new StandardServletMultipartResolver();
     }
 
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        // LogInterceptor apply to all URLs.
+        registry.addInterceptor(new LogInterceptor()).addPathPatterns("/ajout");
+
+    }
 }

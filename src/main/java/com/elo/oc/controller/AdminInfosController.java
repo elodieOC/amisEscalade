@@ -49,34 +49,24 @@ public class AdminInfosController {
     @GetMapping("/infos")
     public String createInit(Model theModel, HttpServletRequest request) {
         HttpSession session = request.getSession();
-
-        //if no user is connected: back to login page
-        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
-            return "redirect:/user/login";
+        String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
+        User theAccessor = userService.findUserByEmail(sessionEmail);
+        //if the user is not an admin: back to homepage
+        if(!SessionCheck.checkIfUserIsAdmin(theAccessor)){
+            return "redirect:/home";
         }
-        //if a user is connected:
         else {
-            String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
-            User theAccessor = userService.findUserByEmail(sessionEmail);
-            //if the user is not an admin: back to homepage
-            if(!SessionCheck.checkIfUserIsAdmin(theAccessor)){
-                return "redirect:/home";
-            }
-            else {
-                //fetches the lists in Services
-                List<User> theUsers = userService.getUsers();
-                List<Role> theRoles = roleService.getRoles();
-                List<Spot> theSpots = spotService.getSpots();
-                List<Topo> theTopos = topoService.getTopos();
-
-                //adding attributes to Model to display on jsp
-                theModel.addAttribute("roles", theRoles);
-                theModel.addAttribute("users", theUsers);
-                theModel.addAttribute("spots", theSpots);
-                theModel.addAttribute("topos", theTopos);
-
-                return "admin-list-infos";
-            }
+            //fetches the lists in Services
+            List<User> theUsers = userService.getUsers();
+            List<Role> theRoles = roleService.getRoles();
+            List<Spot> theSpots = spotService.getSpots();
+            List<Topo> theTopos = topoService.getTopos();
+            //adding attributes to Model to display on jsp
+            theModel.addAttribute("roles", theRoles);
+            theModel.addAttribute("users", theUsers);
+            theModel.addAttribute("spots", theSpots);
+            theModel.addAttribute("topos", theTopos);
+            return "admin-list-infos";
         }
     }
 
@@ -92,29 +82,24 @@ public class AdminInfosController {
     @GetMapping("/user/{userId}/profile")
     public String showUserProfile(@PathVariable("userId") Integer userId, Model theModel,
                                   HttpServletRequest request) {
-           HttpSession session = request.getSession();
-        //if no user is connected: back to login page
-        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
-            return "redirect:/user/login";
+        HttpSession session = request.getSession();
+
+        String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
+        User theAccessor = userService.findUserByEmail(sessionEmail);
+        //if the user is not an admin: back to homepage
+        if(!SessionCheck.checkIfUserIsAdmin(theAccessor)){
+            return "redirect:/home";
         }
-        //if a user is connected:
+        //fetches the User with its id, and adds attributes to Model to display on jsp
         else {
-            String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
-            User theAccessor = userService.findUserByEmail(sessionEmail);
-            //if the user is not an admin: back to homepage
-            if(!SessionCheck.checkIfUserIsAdmin(theAccessor)){
-                return "redirect:/home";
-            }
-            //fetches the User with its id, and adds attributes to Model to display on jsp
-            else {
-                    User theUser = userService.findUserByIdWithSpots(userId);
-                    theModel.addAttribute("user", theUser);
-                    theModel.addAttribute("spots", theUser.getSpots());
-                    theModel.addAttribute("topos", theUser.getTopos());
-                    return "admin-view-user";
-                }
-            }
+            User theUser = userService.findUserByIdWithSpots(userId);
+            theModel.addAttribute("user", theUser);
+            theModel.addAttribute("spots", theUser.getSpots());
+            theModel.addAttribute("topos", theUser.getTopos());
+            return "admin-view-user";
         }
+    }
+
 
     /**
      * <p>Page admin//user/{userId}/updateForm</p>
@@ -128,29 +113,24 @@ public class AdminInfosController {
     @GetMapping("/user/{userId}/editer")
     public String showFormForUpdate(@PathVariable("userId") Integer userId, Model theModel,
                                     HttpServletRequest request) {
-       HttpSession session = request.getSession();
-        //if no user is connected: back to login page
-        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
-            return "redirect:/user/login";
+        HttpSession session = request.getSession();
+
+        String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
+        User theUpdater = userService.findUserByEmail(sessionEmail);
+        //if the user is not an admin: back to homepage
+        if(!SessionCheck.checkIfUserIsAdmin(theUpdater)){
+            return "redirect:/home";
         }
-        //if a user is connected:
-         else {
-            String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
-            User theUpdater = userService.findUserByEmail(sessionEmail);
-            //if the user is not an admin: back to homepage
-            if(!SessionCheck.checkIfUserIsAdmin(theUpdater)){
-                return "redirect:/home";
-            }
-            //fetches the User with its id, and adds attributes to Model to display on jsp
-            else {
-                User theUser = userService.findUserById(userId);
-                List<Role> roles = roleService.getRoles();
-                theModel.addAttribute("roles", roles);
-                theModel.addAttribute("user", theUser);
-                return "admin-edit-user";
-            }
+        //fetches the User with its id, and adds attributes to Model to display on jsp
+        else {
+            User theUser = userService.findUserById(userId);
+            List<Role> roles = roleService.getRoles();
+            theModel.addAttribute("roles", roles);
+            theModel.addAttribute("user", theUser);
+            return "admin-edit-user";
         }
     }
+
 
     /**
      * <p>Page admin/user/{userId}/update</p>
@@ -184,21 +164,16 @@ public class AdminInfosController {
      */
     @GetMapping("/user/{userId}/delete")
     public String deleteCustomer(@PathVariable("userId") Integer userId, HttpServletRequest request) {
-      HttpSession session = request.getSession();
-
-        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
-            return "redirect:/user/login";
+        HttpSession session = request.getSession();
+        String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
+        User theDeleter = userService.findUserByEmail(sessionEmail);
+        if(!SessionCheck.checkIfUserIsAdmin(theDeleter)){
+            return "redirect:/home";
         }
         else {
-            String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
-            User theDeleter = userService.findUserByEmail(sessionEmail);
-            if(!SessionCheck.checkIfUserIsAdmin(theDeleter)){
-                return "redirect:/home";
-            }
-            else {
-                userService.deleteUser(userId);
-                return "redirect:/admin/infos";
-            }
+            userService.deleteUser(userId);
+            return "redirect:/admin/infos";
         }
     }
+
 }

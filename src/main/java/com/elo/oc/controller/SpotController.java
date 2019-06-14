@@ -104,16 +104,11 @@ public class SpotController {
     @GetMapping("/ajout-spot")
     public String showFormForSpotAdd(Model theModel, HttpServletRequest request) {
         HttpSession session = request.getSession();
-
-        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
-            return "redirect:/user/login";
-        }
-        else {
-            String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
-            System.out.println("user "+ userService.findUserByEmail(sessionEmail).getUsername()+" logged in");
-            Spot theSpot = new Spot();
-            theModel.addAttribute("spot", theSpot);
-            return "add-spot";}
+        String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
+        System.out.println("user "+ userService.findUserByEmail(sessionEmail).getUsername()+" logged in");
+        Spot theSpot = new Spot();
+        theModel.addAttribute("spot", theSpot);
+        return "add-spot";
     }
 
     /**
@@ -128,25 +123,18 @@ public class SpotController {
     public String saveSpot(@Valid @ModelAttribute("spot") Spot theSpot, BindingResult theBindingResult,
                            HttpServletRequest request) {
         HttpSession session = request.getSession();
-        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
-            return "redirect:/user/login";
-        }
-        else {
-            String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
-            System.out.println("user "+ userService.findUserByEmail(sessionEmail).getUsername()+" logged in");
-            spotRegistrationValidator.validate(theSpot, theBindingResult);
-
-            if (theBindingResult.hasErrors()) {
-                System.out.println("form has errors");
-                return "add-spot";
-            } else {
-                System.out.println("form is validated");
-                theSpot.setImage(ImageFileProcessing.getImageForEntityAddFromForm(theSpot.getImageFile()));
-                theSpot.setUser(userService.findUserByEmail(sessionEmail));
-                System.out.println(theSpot.toString());
-                spotService.saveSpot(theSpot);
-                return "redirect:/spots/"+theSpot.getId();
-            }
+        String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
+        spotRegistrationValidator.validate(theSpot, theBindingResult);
+        if (theBindingResult.hasErrors()) {
+            System.out.println("form has errors");
+            return "add-spot";
+        } else {
+            System.out.println("form is validated");
+            theSpot.setImage(ImageFileProcessing.getImageForEntityAddFromForm(theSpot.getImageFile()));
+            theSpot.setUser(userService.findUserByEmail(sessionEmail));
+            System.out.println(theSpot.toString());
+            spotService.saveSpot(theSpot);
+            return "redirect:/spots/"+theSpot.getId();
         }
     }
 
@@ -159,7 +147,6 @@ public class SpotController {
      */
     @GetMapping("/{spotId}")
     public String viewSpot(@PathVariable("spotId") Integer spotId, Model theModel, HttpServletRequest request){
-        /* Récupération de la session depuis la requête */
         HttpSession session = request.getSession();
         if(session.getAttribute("loggedInUserEmail") != null) {
             String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
@@ -183,21 +170,16 @@ public class SpotController {
     @GetMapping("/{spotId}/editer")
     public String formForSpotUpdate(@PathVariable("spotId") Integer theSpotId, Model theModel, HttpServletRequest request) {
         HttpSession session = request.getSession();
-        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
-            return "redirect:/user/login";
+        Spot theSpot = spotService.findSpotById(theSpotId);
+        String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
+        User theUpdater = userService.findUserByEmail(sessionEmail);
+        if(theUpdater.getUserRole().getId()!= 1 && theUpdater.getId() != theSpot.getUser().getId()){
+            System.out.println("User trying to update is neither the owner of the spot, or an admin");
+            System.out.println("User is: ["+theUpdater.getId()+ ", "+theUpdater.getUsername()+"]");
+            return "redirect:/home";
         }
-        else {
-            Spot theSpot = spotService.findSpotById(theSpotId);
-            String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
-            User theUpdater = userService.findUserByEmail(sessionEmail);
-            if(theUpdater.getUserRole().getId()!= 1 && theUpdater.getId() != theSpot.getUser().getId()){
-                System.out.println("User trying to update is neither the owner of the spot, or an admin");
-                System.out.println("User is: ["+theUpdater.getId()+ ", "+theUpdater.getUsername()+"]");
-                return "redirect:/home";
-            }
-            theModel.addAttribute("spot", theSpot);
-            return "edit-spot";
-        }
+        theModel.addAttribute("spot", theSpot);
+        return "edit-spot";
     }
 
     /**
@@ -238,9 +220,6 @@ public class SpotController {
     @GetMapping("/{spotId}/delete")
     public String deleteCustomer(@PathVariable("spotId") Integer theSpotId, HttpServletRequest request) {
         HttpSession session = request.getSession();
-        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
-            return "redirect:/user/login";
-        }
         Spot theSpot = spotService.findSpotById(theSpotId);
         String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
         User theDeleter = userService.findUserByEmail(sessionEmail);
@@ -268,16 +247,12 @@ public class SpotController {
     @GetMapping("/{spotId}/ajout-secteur")
     public String addSectorToSpot(@PathVariable("spotId") Integer theSpotId, Model theModel, HttpServletRequest request) {
         HttpSession session = request.getSession();
-        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
-            return "redirect:/user/login";
-        }
-        else {
             Spot theSpot = spotService.findSpotById(theSpotId);
             Sector theSector = new Sector();
             theModel.addAttribute("spot", theSpot);
             theModel.addAttribute("sector", theSector);
             return "add-sector-toSpot";
-        }
+
     }
 
     /**
@@ -292,14 +267,8 @@ public class SpotController {
     public String saveSector(@PathVariable("spotId") Integer theSpotId, @Valid @ModelAttribute("sector") Sector theSector, BindingResult theBindingResult,
                              HttpServletRequest request) {
         HttpSession session = request.getSession();
-
-        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
-            return "redirect:/user/login";
-        }
-        else {
             String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
             System.out.println("user "+ userService.findUserByEmail(sessionEmail).getUsername()+" logged in");
-
             if (theBindingResult.hasErrors()) {
                 System.out.println("form has errors");
                 return "add-sector-toSpot";
@@ -313,7 +282,6 @@ public class SpotController {
                 String redirectingString = "/spots/"+theSpotId+"/sector/"+theSector.getId();
                 return "redirect:"+redirectingString;
             }
-        }
     }
 
     /**
@@ -362,10 +330,6 @@ public class SpotController {
     public String formForSectorUpdate(@PathVariable("spotId") Integer theSpotId,@PathVariable("sectorId") Integer theSectorId, Model theModel,
                                       HttpServletRequest request) {
         HttpSession session = request.getSession();
-        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
-            return "redirect:/user/login";
-        }
-        else {
             Sector theSector = sectorService.findSectorById(theSectorId);
             String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
             User theUpdater = userService.findUserByEmail(sessionEmail);
@@ -376,7 +340,6 @@ public class SpotController {
             }
             theModel.addAttribute("sector", theSector);
             return "edit-sector";
-        }
     }
 
     /**
@@ -404,7 +367,6 @@ public class SpotController {
                 theSector.setImage(theSectorToUpdate.getImage());
             }
             sectorService.updateSector(theSector);
-
             String redirectingString = "/spots/"+spotId+"/sector/"+theSector.getId();
             return "redirect:"+redirectingString;
         }
@@ -421,9 +383,6 @@ public class SpotController {
     public String deleteSectorFromSpot(@PathVariable("spotId") Integer theSpotId,@PathVariable("sectorId") Integer theSectorId,
                                        HttpServletRequest request) {
         HttpSession session = request.getSession();
-        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
-            return "redirect:/user/login";
-        }
         Sector theSector = sectorService.findSectorById(theSectorId);
         String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
         User theDeleter = userService.findUserByEmail(sessionEmail);
@@ -452,10 +411,6 @@ public class SpotController {
     @GetMapping("/{spotId}/commenter")
     public String addCommentToSpot(@PathVariable("spotId") Integer spotId, Model theModel, HttpServletRequest request) {
         HttpSession session = request.getSession();
-        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
-            return "redirect:/user/login";
-        }
-        else {
             String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
             Spot theSpot = spotService.findSpotById(spotId);
             Comment theComment = new Comment();
@@ -465,7 +420,6 @@ public class SpotController {
             theModel.addAttribute("comment", theComment);
             theModel.addAttribute("user", theUser);
             return "add-comment-toSpot";
-        }
     }
 
     /**
@@ -480,14 +434,8 @@ public class SpotController {
     public String saveComment(@PathVariable("spotId") Integer spotId, @Valid @ModelAttribute("comment") Comment theComment, BindingResult theBindingResult,
                               HttpServletRequest request) {
         HttpSession session = request.getSession();
-
-        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
-            return "redirect:/user/login";
-        }
-        else {
             String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
             System.out.println("user "+ userService.findUserByEmail(sessionEmail).getUsername()+" logged in");
-
             if (theBindingResult.hasErrors()) {
                 System.out.println("form has errors");
                 return "add-comment-toSpot";
@@ -497,7 +445,6 @@ public class SpotController {
                 theComment.setSpot(spotService.findSpotById(spotId));
                 commentService.saveComment(theComment);
                 return "redirect:/spots/"+spotId;
-            }
         }
     }
 
@@ -513,10 +460,6 @@ public class SpotController {
     public String formForCommentUpdate(@PathVariable("spotId") Integer theSpotId,@PathVariable("commentId") Integer theCommentId, Model theModel,
                                        HttpServletRequest request) {
         HttpSession  session = request.getSession();
-        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
-            return "redirect:/user/login";
-        }
-        else {
             Spot theSpot = spotService.findSpotById(theSpotId);
             Comment theComment = commentService.findCommentById(theCommentId);
             String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
@@ -528,7 +471,6 @@ public class SpotController {
             }
             theModel.addAttribute("comment", theComment);
             return "edit-comment";
-        }
     }
 
     /**
@@ -566,9 +508,6 @@ public class SpotController {
     public String deleteCommentFromSpot(@PathVariable("spotId") Integer theSpotId,@PathVariable("commentId") Integer theCommentId,
                                         HttpServletRequest request) {
         HttpSession session = request.getSession();
-        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
-            return "redirect:/user/login";
-        }
         Comment theComment = commentService.findCommentById(theCommentId);
         String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
         User theDeleter = userService.findUserByEmail(sessionEmail);
@@ -599,22 +538,15 @@ public class SpotController {
     public String addRouteToSector(@PathVariable("spotId") Integer spotId, @PathVariable("sectorId") Integer sectorId,
                                    Model theModel, HttpServletRequest request) {
         HttpSession session = request.getSession();
-        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
-            return "redirect:/user/login";
-        }
-        else {
             Spot theSpot = spotService.findSpotById(spotId);
             List<Grade>grades = gradeService.getGrades();
             Sector theSector = sectorService.findSectorById(sectorId);
             Route form = new Route();
-
             theModel.addAttribute("grades", grades );
             theModel.addAttribute("spot", theSpot);
             theModel.addAttribute("sector", theSector);
             theModel.addAttribute("routeForm", form);
-
             return "add-route-toSector";
-        }
     }
 
     /**
@@ -631,31 +563,21 @@ public class SpotController {
                             @Valid @ModelAttribute("routeForm") Route theRoute,  BindingResult theBindingResult,
                             HttpServletRequest request) {
         HttpSession session = request.getSession();
-
-        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
-            return "redirect:/user/login";
-        }
-        else {
             String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
             System.out.println("user "+ userService.findUserByEmail(sessionEmail).getUsername()+" logged in");
-
             if (theBindingResult.hasErrors()) {
                 System.out.println("form has errors");
                 return "add-route-toSector";
             } else {
                 System.out.println("form is validated");
-
                 theRoute.setImage(ImageFileProcessing.getImageForEntityAddFromForm(theRoute.getImageFile()));
                 theRoute.setUser(userService.findUserByEmail(sessionEmail));
                 theRoute.setSector(sectorService.findSectorById(sectorId));
                 theRoute.setName(theRoute.getName());
-
                 routeService.saveRoute(theRoute);
-
                 String redirectingString = "/spots/"+spotId+"/sector/"+sectorId+"/route/"+theRoute.getId();
                 return "redirect:"+redirectingString;
             }
-        }
     }
 
     /**
@@ -670,7 +592,6 @@ public class SpotController {
     @GetMapping("/{spotId}/sector/{sectorId}/route/{routeId}")
     public String viewRoute(@PathVariable("spotId") Integer spotId,@PathVariable("sectorId") Integer sectorId, @PathVariable("routeId") Integer routeId,
                             Model theModel, HttpServletRequest request){
-        /* Récupération de la session depuis la requête */
         HttpSession session = request.getSession();
         if(session.getAttribute("loggedInUserEmail") != null) {
             String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
@@ -702,10 +623,6 @@ public class SpotController {
     public String formForRouteUpdate(@PathVariable("spotId") Integer theSpotId,@PathVariable("sectorId") Integer theSectorId,@PathVariable("routeId") Integer theRouteId,
                                      Model theModel,  HttpServletRequest request) {
         HttpSession session = request.getSession();
-        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
-            return "redirect:/user/login";
-        }
-        else {
             Route theRoute = routeService.findRouteById(theRouteId);
             String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
             User theUpdater = userService.findUserByEmail(sessionEmail);
@@ -716,7 +633,6 @@ public class SpotController {
             }
             theModel.addAttribute("route", theRoute);
             return "edit-route";
-        }
     }
 
     /**
@@ -746,7 +662,6 @@ public class SpotController {
                 theRoute.setImage(theRouteToUpdate.getImage());
             }
             routeService.updateRoute(theRoute);
-
             String redirectingString = "/spots/"+theSpotId+"/sector/"+theSectorId+"/route/"+theRouteId;
             return "redirect:"+redirectingString;
         }
@@ -764,9 +679,6 @@ public class SpotController {
     public String deleteRouteFromSector(@PathVariable("spotId") Integer theSpotId,@PathVariable("sectorId") Integer theSectorId,@PathVariable("routeId") Integer theRouteId,
                                         HttpServletRequest request) {
         HttpSession  session = request.getSession();
-        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
-            return "redirect:/user/login";
-        }
         Route theRoute = routeService.findRouteById(theRouteId);
         String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
         User theDeleter = userService.findUserByEmail(sessionEmail);
@@ -797,25 +709,17 @@ public class SpotController {
      */
     @GetMapping("/{spotId}/sector/{sectorId}/route/{routeId}/ajout-longueur")
     public String addLengthToRoute(@PathVariable("spotId") Integer spotId, @PathVariable("sectorId") Integer sectorId,
-                                   @PathVariable("routeId") Integer routeId,
-                                   Model theModel, HttpServletRequest request) {
+                                   @PathVariable("routeId") Integer routeId, Model theModel, HttpServletRequest request) {
         HttpSession session = request.getSession();
-        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
-            return "redirect:/user/login";
-        }
-        else {
             List<Grade>grades = gradeService.getGrades();
             LengthForm form = new LengthForm();
             Route theRoute = routeService.findRouteById(routeId);
             Sector theSector = sectorService.findSectorById(sectorId);
-
             theModel.addAttribute("route", theRoute);
             theModel.addAttribute("sector", theSector);
             theModel.addAttribute("grades", grades );
             theModel.addAttribute("lengthForm", form);
-
             return "add-length-toRoute";
-        }
     }
 
     /**
@@ -834,14 +738,8 @@ public class SpotController {
                              @Valid @ModelAttribute("lengthForm") LengthForm theLengthForm,
                              BindingResult theBindingResult, HttpServletRequest request,   Model theModel) {
         HttpSession session = request.getSession();
-
-        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
-            return "redirect:/user/login";
-        }
-        else {
             String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
             lengthFormValidator.validate(theLengthForm, theBindingResult);
-
             if (theBindingResult.hasErrors()) {
                 System.out.println("form has errors");
                 List<Grade> grades = gradeService.getGrades();
@@ -849,23 +747,18 @@ public class SpotController {
                 return "add-length-toRoute";
             } else {
                 System.out.println("form is validated");
-
                 Double height = Double.parseDouble(theLengthForm.getHeight());
                 Integer bolts = Integer.parseInt(theLengthForm.getBolts());
-
                 Length theLength = new Length();
                 theLength.setUser(userService.findUserByEmail(sessionEmail));
                 theLength.setRoute(routeService.findRouteById(routeId));
                 theLength.setBolts(bolts);
                 theLength.setHeight(height);
                 theLength.setGrade(gradeService.findGradeById(theLengthForm.getGrade()));
-
                 lengthService.saveLength(theLength);
-
                 String redirectingString = "/spots/"+spotId+"/sector/"+sectorId+"/route/"+routeId;
                 return "redirect:"+redirectingString;
             }
-        }
     }
 
     /**
@@ -883,18 +776,12 @@ public class SpotController {
                                       @PathVariable("routeId") Integer theRouteId,@PathVariable("lengthId") Integer theLengthId,
                                       Model theModel,  HttpServletRequest request) {
         HttpSession session = request.getSession();
-        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
-            return "redirect:/user/login";
-        }
-        else {
             Length theLength = lengthService.findLengthById(theLengthId);
             LengthForm form = new LengthForm();
             List<Grade>grades = gradeService.getGrades();
-
             form.setBolts(String.valueOf(theLength.getBolts()));
             form.setHeight(String.valueOf(theLength.getHeight()));
             form.setGrade(theLength.getGrade().getId());
-
             String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
             User theUpdater = userService.findUserByEmail(sessionEmail);
             if(theUpdater.getUserRole().getId()!= 1 && theUpdater.getId() != theLength.getUser().getId()){
@@ -905,7 +792,6 @@ public class SpotController {
             theModel.addAttribute("lengthForm", form);
             theModel.addAttribute("grades", grades);
             return "edit-length";
-        }
     }
 
     /**
@@ -924,7 +810,6 @@ public class SpotController {
                                @PathVariable("routeId") Integer theRouteId,@PathVariable("lengthId") Integer theLengthId,
                                @Valid @ModelAttribute("lengthForm") LengthForm theLengthForm, BindingResult theBindingResult, Model theModel) {
         lengthFormValidator.validate(theLengthForm, theBindingResult);
-
         if (theBindingResult.hasErrors()) {
             System.out.println("form has errors");
             List<Grade> grades = gradeService.getGrades();
@@ -933,16 +818,12 @@ public class SpotController {
         } else {
             System.out.println("form is validated");
             Length theLengthToUpdate = lengthService.findLengthById(theLengthId);
-
             Double height = Double.parseDouble(theLengthForm.getHeight());
             Integer bolts = Integer.parseInt(theLengthForm.getBolts());
-
             theLengthToUpdate.setBolts(bolts);
             theLengthToUpdate.setHeight(height);
             theLengthToUpdate.setGrade(gradeService.findGradeById(theLengthForm.getGrade()));
-
             lengthService.updateLength(theLengthToUpdate);
-
             String redirectingString = "/spots/"+theSpotId+"/sector/"+theSectorId+"/route/"+theRouteId;
             return "redirect:"+redirectingString;
         }
@@ -962,9 +843,6 @@ public class SpotController {
                                         @PathVariable("routeId") Integer theRouteId,@PathVariable("lengthId") Integer theLengthId,
                                         HttpServletRequest request) {
         HttpSession session = request.getSession();
-        if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
-            return "redirect:/user/login";
-        }
         Length theLength = lengthService.findLengthById(theLengthId);
         String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
         User theDeleter = userService.findUserByEmail(sessionEmail);
