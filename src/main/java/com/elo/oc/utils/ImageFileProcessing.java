@@ -7,9 +7,15 @@ import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.io.InputStream;
 
-
+/**
+ * <p>Class processes different methods for imageFiles</p>
+ */
 public class ImageFileProcessing {
-
+    /**
+     * <p>Method gets image file from add-form</p>
+     * @param file the file from the add-form
+     * @return bytes of file
+     */
     public static byte[] getImageForEntityAddFromForm(MultipartFile file){
         byte[] bytes = null;
         if(!file.isEmpty()){
@@ -22,6 +28,11 @@ public class ImageFileProcessing {
         return bytes;
     }
 
+    /**
+     * <p>Method gets image file from update-form</p>
+     * @param file the file from the update-form
+     * @return bytes of file
+     */
     public static byte[] getImageForEntityEditFromForm(MultipartFile file){
         byte[] bytes = null;
 
@@ -34,6 +45,11 @@ public class ImageFileProcessing {
         return bytes;
     }
 
+    /**
+     * <p>Method checks if the file has defined image format (BMP, GIF, JPG and PNG)</p>
+     * @param file from form
+     * @return false if wrong format, true if valid
+     */
     public static boolean checkIfImageIsRightFormat(MultipartFile file){
         boolean format = false;
             try (InputStream input = file.getInputStream()) {
@@ -50,6 +66,11 @@ public class ImageFileProcessing {
         return format;
     }
 
+    /**
+     * <p>Method checks if the file isn't bigger than 5mb</p>
+     * @param file from form
+     * @return false if bigger, true if valid
+     */
     public static boolean checkIfImageSizeOk(MultipartFile file){
         boolean size = false;
         if(file.getSize() < 5 * 1024 * 1024){

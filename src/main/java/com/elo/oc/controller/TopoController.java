@@ -55,9 +55,10 @@ public class TopoController {
 
     /**
      * <p>Page that displays a form to add a new topo</p>
-     * @param theModel attribute passed to jsp page 
+     * <p>Redirects to login page if user not logged in</p>
+     * @param theModel attribute passed to jsp page
      * @param request  servlet request 
-     * @return page to show depending on user on user on the page
+     * @return web page
      */
     @GetMapping("/ajout-topo")
     public String showFormForTopoAdd(Model theModel, HttpServletRequest request) {
@@ -76,17 +77,16 @@ public class TopoController {
 
     /**
      * <p>Process called after the submit button is clicked on the ajoutTopo page</p>
+     * <p>Redirects to login page if user not logged in</p>
      * <p>Processes the saving of the topo in db</p>
      * @param theTopo the topo being added
      * @param theBindingResult the result of validation of the form 
      * @param request  servlet request  
-     * @return page to show depending on user on the page
+     * @return web page
      */
     @PostMapping("/add-topo")
-    public String saveTopo(@Valid @ModelAttribute("topo") Topo theTopo, BindingResult theBindingResult,
-                           HttpServletRequest request) {
+    public String saveTopo(@Valid @ModelAttribute("topo") Topo theTopo, BindingResult theBindingResult, HttpServletRequest request) {
         HttpSession session = request.getSession();
-
         if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
             return "redirect:/user/login";
         }
@@ -94,16 +94,12 @@ public class TopoController {
             String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
             System.out.println("user "+ userService.findUserByEmail(sessionEmail).getUsername()+" logged in");
             topoRegistrationValidator.validate(theTopo, theBindingResult);
-
-
             if (theBindingResult.hasErrors()) {
                 System.out.println("form has errors");
                 return "add-topo";
             } else {
                 System.out.println("form is validated");
-
                 theTopo.setImage(ImageFileProcessing.getImageForEntityAddFromForm(theTopo.getImageFile()));
-
                 theTopo.setUser(userService.findUserByEmail(sessionEmail));
                 topoService.saveTopo(theTopo);
                 return "redirect:/topos/"+theTopo.getId();
@@ -136,7 +132,7 @@ public class TopoController {
      * @param theTopoId param in address -> id of the topo being updated
      * @param theModel theModel attribute passed to jsp page
      * @param request  servlet request
-     * @return page to show depending on user on the page
+     * @return web page
      */
     @GetMapping("/{topoId}/editer")
     public String formForTopoUpdate(@PathVariable("topoId") Integer theTopoId, Model theModel,

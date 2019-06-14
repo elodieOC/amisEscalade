@@ -11,9 +11,7 @@
 <html>
 <head>
     <title>Edition de profil</title>
-
     <c:import url="inc/headContent.jsp"/>
-
 </head>
 <c:import url="inc/choose-navbar.jsp" />
 <main role="main" class="flex-shrink-0 mt-5">
@@ -22,11 +20,9 @@
             <br />
             <div class="card shadow mt-5 bg-light p-4 ">
                 <h2 class="mt-3 mb-3 text-center">Edition de profil</h2>
-
                 <form:form action="update" cssClass="form-horizontal"  method="post" modelAttribute="user">
                     <!-- need to associate this data with user id -->
                     <form:hidden path="id" />
-
                     <form:errors path="username" cssClass="error"/>
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
@@ -34,7 +30,6 @@
                         </div>
                         <form:input path="username" cssClass="form-control p-4" placeholder="Pseudo" type="text" />
                     </div> <!-- form-group// -->
-
 
                     <form:errors path="email" cssClass="error"/>
                     <div class="form-group input-group">
@@ -72,8 +67,6 @@
                             </c:forEach>
                         </form:select>
                     </div> <!-- form-group end.// -->
-
-
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block"> Envoyer </button>
                     </div> <!-- form-group// -->

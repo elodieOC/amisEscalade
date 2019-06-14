@@ -16,7 +16,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 
-
+/**
+ * <p>Class validates the add and update forms for Spots</p>
+ */
 @Component
 public class SpotRegistrationValidator implements Validator {
 
@@ -29,22 +31,23 @@ public class SpotRegistrationValidator implements Validator {
         return Spot.class.equals(aClass);
     }
 
-
+    /**
+     * <p>Method adds error to bindingresult if image is too large or in wrong format, or if spot's name already exists in db</p>
+     * @param o the spot being added or updated
+     * @param errors error values will be added to bindingresult for messages on form
+     */
     @Override
     public void validate(Object o, Errors errors) {
         Spot spot = (Spot) o;
-
         if (spotService.findSpotWithThisName(spot.getName()).isPresent()) {
             System.out.println("spot already exists in database");
             errors.rejectValue("name", "registration.spot.duplicate");
         } else {
             System.out.println("spot not found in database, ready to validate");
         }
-
         if(!ImageFileProcessing.checkIfImageSizeOk(spot.getImageFile())){
             errors.rejectValue("imageFile", "image.too.large");
         }
-
         if(!ImageFileProcessing.checkIfImageIsRightFormat(spot.getImageFile()) && spot.getImageFile().getSize() > 0){
             System.out.println(spot.getImageFile());
             errors.rejectValue("imageFile", "image.wrong.format");

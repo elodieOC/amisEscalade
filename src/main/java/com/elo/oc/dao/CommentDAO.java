@@ -4,6 +4,7 @@ import com.elo.oc.entity.Comment;
 
 import java.util.List;
 
+
 public interface CommentDAO {
 
     List <Comment> getComments();

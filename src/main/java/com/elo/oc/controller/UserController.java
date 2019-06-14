@@ -160,7 +160,7 @@ public class UserController {
         else{
             User theUser = userService.findUserByEmail(resetPassForm.getEmail());
 
-            String generatedString = getAlphaNumericString(7);
+            String generatedString = getAlphaNumericString(8);
 
             String mailTo = theUser.getEmail();
             String subject = "Réinitialisation Mot de Passe";
@@ -236,6 +236,14 @@ public class UserController {
      * User update and delete
      * ************************************
      */
+
+    /**
+     * <p>Page displaying the form to update a user</p>
+     * @param theId id of user to update
+     * @param theModel theModel attribute passed to jsp page
+     * @param request servlet request
+     * @return page to show depending on user on the page
+     */
     @GetMapping("/{userId}/editer")
     public String showFormForUpdate(@PathVariable("userId") Integer theId, Model theModel, HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -258,19 +266,26 @@ public class UserController {
         }
     }
 
+    /**
+     * <p>Process called after the submit button is clicked on the updateFormUser page</p>
+     * <p>Processes the updating of the user in db</p>
+     * @param userId id of user to update
+     * @param theUser Entity User
+     * @param theBindingResult the result of validation of the form
+     * @param theModel theModel attribute passed to jsp page
+     * @param request servlet request
+     * @return page to show depending on result of process
+     */
     @PostMapping("/{userId}/update")
-    public String updateUserProfile(@PathVariable("userId") Integer userId, @Valid @ModelAttribute("user") User theUser, Model theModel, BindingResult theBindingResult, HttpServletRequest request) {
+    public String updateUserProfile(@PathVariable("userId") Integer userId, @ModelAttribute("user") User theUser, Model theModel, BindingResult theBindingResult, HttpServletRequest request) {
         User theUserToUpdate = userService.findUserById(userId);
-
         if(!theUser.getEmail().equals(theUserToUpdate.getEmail())){
             userUpdateEmailValidator.validate(theUser, theBindingResult);
         }
          if(!theUser.getUsername().equals(theUserToUpdate.getUsername())){
             userUpdateUserNameValidator.validate(theUser, theBindingResult);
         }
-
         userCheckPasswordValidator.validate(theUser, theBindingResult);
-
         if (theBindingResult.hasErrors()) {
             System.out.println("form has errors");
             List<Role> roles = roleService.getRolesPublic();
@@ -281,13 +296,17 @@ public class UserController {
             HttpSession session = request.getSession();
             session.setAttribute("loggedInUserEmail", theUser.getEmail());
             userService.updateUser(theUser);
-
-            String redirectingString = "/user/"+theUser.getId()+"/profile";
+            String redirectingString = "/user/"+theUser.getId();
             return "redirect:"+redirectingString;
         }
     }
 
-
+    /**
+     * <p>Process called after the Supprimer button is clicked on the user profile page</p>
+     * @param theId of the user to delete
+     * @param request servlet request
+     * @return page to show depending on user of the page
+     */
     @GetMapping("/{userId}/delete")
     public String deleteCustomer(@PathVariable("userId") Integer theId, HttpServletRequest request) {
         userService.deleteUser(theId);

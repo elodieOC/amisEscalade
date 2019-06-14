@@ -67,6 +67,18 @@ public class UserDAOImpl implements UserDAO {
             s.setUser(null);
             session.saveOrUpdate(s);
         }
+        for (Length l:u.getLengths()){
+            l.setUser(null);
+            session.saveOrUpdate(l);
+        }
+        for (Route r: u.getRoutes()){
+            r.setUser(null);
+            session.saveOrUpdate(r);
+        }
+        for(Sector sector: u.getSectors()){
+            sector.setUser(null);
+            session.saveOrUpdate(sector);
+        }
         for (Comment c: u.getComments() ) {
             c.setUser(null);
             session.saveOrUpdate(c);
@@ -103,7 +115,7 @@ public class UserDAOImpl implements UserDAO {
         return theUser;
     }
 
-   @Override
+    @Override
     public User findUserByIdWithAllInfos(Integer id){
         Session currentSession = sessionFactory.getCurrentSession();
         User theUser = currentSession.get(User.class, id);

@@ -31,6 +31,8 @@ public class AdminInfosController {
     @Autowired
     private SpotService spotService;
     @Autowired
+    private TopoService topoService;
+    @Autowired
     private GradeService gradeService;
     @Autowired
     private RatingService ratingService;
@@ -65,11 +67,14 @@ public class AdminInfosController {
                 List<User> theUsers = userService.getUsers();
                 List<Role> theRoles = roleService.getRoles();
                 List<Spot> theSpots = spotService.getSpots();
+                List<Topo> theTopos = topoService.getTopos();
 
                 //adding attributes to Model to display on jsp
                 theModel.addAttribute("roles", theRoles);
                 theModel.addAttribute("users", theUsers);
                 theModel.addAttribute("spots", theSpots);
+                theModel.addAttribute("topos", theTopos);
+
                 return "admin-list-infos";
             }
         }

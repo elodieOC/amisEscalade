@@ -128,7 +128,6 @@ public class SpotController {
     public String saveSpot(@Valid @ModelAttribute("spot") Spot theSpot, BindingResult theBindingResult,
                            HttpServletRequest request) {
         HttpSession session = request.getSession();
-
         if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
             return "redirect:/user/login";
         }
@@ -142,9 +141,7 @@ public class SpotController {
                 return "add-spot";
             } else {
                 System.out.println("form is validated");
-
                 theSpot.setImage(ImageFileProcessing.getImageForEntityAddFromForm(theSpot.getImageFile()));
-
                 theSpot.setUser(userService.findUserByEmail(sessionEmail));
                 System.out.println(theSpot.toString());
                 spotService.saveSpot(theSpot);
@@ -173,7 +170,6 @@ public class SpotController {
         theModel.addAttribute("spot", theSpot);
         theModel.addAttribute("comments", theSpot.getComments());
         theModel.addAttribute("sectors", theSpot.getSectors());
-
         return "view-spot";
     }
 
@@ -185,8 +181,7 @@ public class SpotController {
      * @return page to show depending on user on the page
      */
     @GetMapping("/{spotId}/editer")
-    public String formForSpotUpdate(@PathVariable("spotId") Integer theSpotId, Model theModel,
-                                    HttpServletRequest request) {
+    public String formForSpotUpdate(@PathVariable("spotId") Integer theSpotId, Model theModel, HttpServletRequest request) {
         HttpSession session = request.getSession();
         if(!SessionCheck.checkIfUserIsLoggedIn(request, session)){
             return "redirect:/user/login";
@@ -223,14 +218,12 @@ public class SpotController {
             Spot spotToUpdate = spotService.findSpotById(spotId);
             User spotUser =  userService.findUserById(spotToUpdate.getUser().getId());
             theSpot.setUser(spotUser);
-
             if(!theSpot.getImageFile().isEmpty()){
                 theSpot.setImage(ImageFileProcessing.getImageForEntityEditFromForm(theSpot.getImageFile()));
             }
             else {
                 theSpot.setImage(spotToUpdate.getImage());
             }
-
             spotService.updateSpot(theSpot);
             return "redirect:/spots/"+spotId;
         }
@@ -651,7 +644,7 @@ public class SpotController {
                 return "add-route-toSector";
             } else {
                 System.out.println("form is validated");
- 
+
                 theRoute.setImage(ImageFileProcessing.getImageForEntityAddFromForm(theRoute.getImageFile()));
                 theRoute.setUser(userService.findUserByEmail(sessionEmail));
                 theRoute.setSector(sectorService.findSectorById(sectorId));

@@ -45,16 +45,18 @@
             </div>
             <div class="card shadow mb-5 bg-light">
                 <div class="card-header">
-                    <h3>Roles</h3>
+                    <h3>Spots</h3>
                 </div>
                 <div class="card-body">
                     <div class="card-deck mx-auto">
-                        <c:forEach var="userRole" items="${roles}" >
+                        <c:forEach var="spot" items="${spots}" >
                             <div class="card shadow mb-3 bg-light">
                                 <div class="card-body">
                                     <ul class="list-unstyled">
-                                        <li><strong>Id: </strong>${userRole.id}</li>
-                                        <li><strong>Nom: </strong>${userRole.roleName}</li>
+                                        <li><strong>Nom: </strong>${spot.name}</li>
+                                        <li><strong>Ville: </strong>${spot.city}</li>
+                                        <li><strong>Région: </strong>${spot.county}</li>
+                                        <li><strong>Grimpeur: </strong>${spot.user.username}</li>
                                     </ul>
                                 </div>
                             </div>
@@ -64,18 +66,18 @@
             </div>
             <div class="card shadow mb-5 bg-light">
                 <div class="card-header">
-                    <h3>Spots</h3>
+                    <h3>Topos</h3>
                 </div>
                 <div class="card-body">
                     <div class="card-deck mx-auto">
-                        <c:forEach var="spot" items="${spots}" >
+                        <c:forEach var="topo" items="${topos}" >
                             <div class="card shadow mb-3 bg-light">
                                 <div class="card-body">
                                     <ul class="list-unstyled">
-                                        <li><strong>Id: </strong>${spot.id}</li>
-                                        <li><strong>Nom: </strong>${spot.name}</li>
-                                        <li><strong>Ville: </strong>${spot.city}</li>
-                                        <li><strong>Région: </strong>${spot.county}</li>
+                                        <li><strong>Nom: </strong>${topo.name}</li>
+                                        <li><strong>Ville: </strong>${topo.city}</li>
+                                        <li><strong>Région: </strong>${topo.county}</li>
+                                        <li><strong>Grimpeur: </strong>${topo.user.username}</li>
                                     </ul>
                                 </div>
                             </div>

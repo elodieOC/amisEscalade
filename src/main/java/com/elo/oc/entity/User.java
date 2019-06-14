@@ -54,6 +54,15 @@ public class User {
     @OneToMany (mappedBy = "user")//attribut User user de Spot
     private List<Spot> spots = new ArrayList<>();
 
+    @OneToMany (mappedBy = "user")//attribut User user de Spot
+    private List<Sector> sectors = new ArrayList<>();
+
+    @OneToMany (mappedBy = "user")//attribut User user de Spot
+    private List<Route> routes = new ArrayList<>();
+
+    @OneToMany (mappedBy = "user")//attribut User user de Spot
+    private List<Length> lengths = new ArrayList<>();
+
     @OneToMany (mappedBy = "user")//attribut User user de Comment
     private List<Comment> comments = new ArrayList<>();
 
@@ -77,6 +86,30 @@ public class User {
     }
 
     public User() {
+    }
+
+    public List<Sector> getSectors() {
+        return sectors;
+    }
+
+    public void setSectors(List<Sector> sectors) {
+        this.sectors = sectors;
+    }
+
+    public List<Route> getRoutes() {
+        return routes;
+    }
+
+    public void setRoutes(List<Route> routes) {
+        this.routes = routes;
+    }
+
+    public List<Length> getLengths() {
+        return lengths;
+    }
+
+    public void setLengths(List<Length> lengths) {
+        this.lengths = lengths;
     }
 
     public Integer getMemberOrNot() {
