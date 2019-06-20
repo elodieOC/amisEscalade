@@ -35,6 +35,8 @@ public class AdminInfosController {
     @Autowired
     private RatingService ratingService;
     @Autowired
+    private NewletterSuscriberService suscriberService;
+    @Autowired
     private UserRegistrationValidator userRegistrationValidator;
 
     /**
@@ -59,11 +61,13 @@ public class AdminInfosController {
             List<Role> theRoles = roleService.getRoles();
             List<Spot> theSpots = spotService.getSpots();
             List<Topo> theTopos = topoService.getTopos();
+            List<NewsletterSuscriber> theSuscribers = suscriberService.getNewsletterSuscribers();
             //adding attributes to Model to display on jsp
             theModel.addAttribute("roles", theRoles);
             theModel.addAttribute("users", theUsers);
             theModel.addAttribute("spots", theSpots);
             theModel.addAttribute("topos", theTopos);
+            theModel.addAttribute("suscribers", theSuscribers);
             return "admin-list-infos";
         }
     }

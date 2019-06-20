@@ -8,6 +8,8 @@ import com.elo.oc.service.UserService;
 import com.elo.oc.utils.ImageFileProcessing;
 import com.elo.oc.utils.SessionCheck;
 import com.elo.oc.utils.TopoRegistrationValidator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +28,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/topos")
 public class TopoController {
+    private static final Logger logger = LogManager.getLogger(TopoController.class);
     @Autowired
     private TopoService topoService;
     @Autowired
@@ -65,7 +68,7 @@ public class TopoController {
         HttpSession session = request.getSession();
 
         String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
-        System.out.println("user "+ userService.findUserByEmail(sessionEmail).getUsername()+" logged in");
+        logger.info("user "+ userService.findUserByEmail(sessionEmail).getUsername()+" logged in");
         Topo theTopo = new Topo();
         theModel.addAttribute("topo", theTopo);
         return "add-topo";
@@ -85,13 +88,14 @@ public class TopoController {
         HttpSession session = request.getSession();
 
         String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
-        System.out.println("user "+ userService.findUserByEmail(sessionEmail).getUsername()+" logged in");
+        logger.info("user "+ userService.findUserByEmail(sessionEmail).getUsername()+" logged in");
         topoRegistrationValidator.validate(theTopo, theBindingResult);
         if (theBindingResult.hasErrors()) {
-            System.out.println("form has errors");
+            logger.warn("form has errors");
+            logger.warn(theBindingResult);
             return "add-topo";
         } else {
-            System.out.println("form is validated");
+            logger.info("form is validated");
             theTopo.setImage(ImageFileProcessing.getImageForEntityAddFromForm(theTopo.getImageFile()));
             theTopo.setUser(userService.findUserByEmail(sessionEmail));
             topoService.saveTopo(theTopo);
@@ -136,8 +140,8 @@ public class TopoController {
             String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
             User theUpdater = userService.findUserByEmail(sessionEmail);
             if(theUpdater.getUserRole().getId()!= 1 && theUpdater.getId() != theTopo.getUser().getId()){
-                System.out.println("User trying to update is neither the owner of the topo, or an admin");
-                System.out.println("User is: ["+theUpdater.getId()+ ", "+theUpdater.getUsername()+"]");
+                logger.warn("User trying to update is neither the owner of the topo, or an admin");
+                logger.warn("User is: ["+theUpdater.getId()+ ", "+theUpdater.getUsername()+"]");
                 return "redirect:/home";
             }
             theModel.addAttribute("topo", theTopo);
@@ -157,10 +161,11 @@ public class TopoController {
     public String updateTopo(@PathVariable("topoId") Integer topoId, @Valid @ModelAttribute("topo") Topo theTopo, BindingResult theBindingResult) {
         topoRegistrationValidator.validate(theTopo, theBindingResult);
         if (theBindingResult.hasErrors()) {
-            System.out.println("form has errors");
+            logger.warn("form has errors");
+            logger.warn(theBindingResult);
             return "edit-topo";
         } else {
-            System.out.println("form is validated");
+            logger.info("form is validated");
             Topo topoToUpdate = topoService.findTopoById(topoId);
             User topoUser =  userService.findUserById(topoToUpdate.getUser().getId());
             theTopo.setUser(topoUser);
@@ -188,8 +193,8 @@ public class TopoController {
         String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
         User theDeleter = userService.findUserByEmail(sessionEmail);
         if(theDeleter.getUserRole().getId()!= 1 && theDeleter.getId() != theTopo.getUser().getId()){
-            System.out.println("User trying to delete is neither the owner of the topo, or an admin");
-            System.out.println("User is: ["+theDeleter.getId()+ ", "+theDeleter.getUsername()+"]");
+            logger.warn("User trying to delete is neither the owner of the topo, or an admin");
+            logger.warn("User is: ["+theDeleter.getId()+ ", "+theDeleter.getUsername()+"]");
             return "redirect:/home";
         }
         topoService.deleteTopo(theTopoId);
@@ -241,8 +246,8 @@ public class TopoController {
         Topo theTopo = topoService.findTopoById(theTopoId);
         User theUser = userService.findUserByEmail(sessionEmail);
         if(theTopo.getUser().getId() != theUser.getId()){
-            System.out.println("User trying to change the topo availability is not the owner");
-            System.out.println("User is: ["+theUser.getId()+ ", "+theUser.getUsername()+"]");
+            logger.warn("User trying to change the topo availability is not the owner");
+            logger.warn("User is: ["+theUser.getId()+ ", "+theUser.getUsername()+"]");
             return "redirect:/home";
         }
         theTopo.setAvailable(true);

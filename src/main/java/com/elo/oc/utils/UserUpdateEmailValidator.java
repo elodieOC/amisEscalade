@@ -2,6 +2,8 @@ package com.elo.oc.utils;
 
 import com.elo.oc.entity.User;
 import com.elo.oc.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -12,7 +14,7 @@ import org.springframework.validation.Validator;
  */
 @Component
 public class UserUpdateEmailValidator implements Validator {
-
+    private static final Logger logger = LogManager.getLogger(UserUpdateEmailValidator.class);
 
     @Autowired
     private UserService userService;
@@ -33,7 +35,7 @@ public class UserUpdateEmailValidator implements Validator {
         User user = (User) o;
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"email", "NotBlank");
         if (userService.findUserWithThisEmail(user.getEmail()).isPresent()) {
-            System.out.println("email already exists in database");
+            logger.info("email already exists in database");
             errors.rejectValue("email", "registration.email.duplicate");
         }
 

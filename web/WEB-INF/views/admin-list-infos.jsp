@@ -85,6 +85,20 @@
                     </div>
                 </div>
             </div>
+            <div class="card shadow mb-5 bg-light">
+                <div class="card-header">
+                    <h3>Inscrits à la newsletter</h3>
+                </div>
+                <div class="card-body">
+                    <div class="mb-5 offset-md-1">
+                        <ul class="list-unstyled">
+                        <c:forEach var="suscriber" items="${suscribers}">
+                            <li>${suscriber.email}</li>
+                        </c:forEach>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </main>

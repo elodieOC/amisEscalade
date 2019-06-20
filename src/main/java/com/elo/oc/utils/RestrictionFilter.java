@@ -1,5 +1,8 @@
 package com.elo.oc.utils;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +12,7 @@ import java.io.IOException;
 
 @WebFilter(urlPatterns = {"/spots/*", "/topos/*", "/admin/*"})
 public class RestrictionFilter implements Filter {
+    private static final Logger logger = LogManager.getLogger(RestrictionFilter.class);
     public static final String LOGIN_PAGE = "/user/login";
 
     public void init( FilterConfig config ) throws ServletException {
@@ -33,7 +37,7 @@ public class RestrictionFilter implements Filter {
          */
         if ( session.getAttribute("loggedInUserEmail") == null ) {
             /* Redirect to login page */
-            System.out.println("Filtered back to login page with RestrictionFilter");
+            logger.info("Filtered back to login page with RestrictionFilter");
             response.sendRedirect( request.getContextPath() + LOGIN_PAGE);
         } else {
             /* Display requested page */

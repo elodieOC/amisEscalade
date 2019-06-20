@@ -2,6 +2,8 @@ package com.elo.oc.utils;
 
 import com.elo.oc.entity.User;
 import com.elo.oc.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -11,6 +13,7 @@ import org.springframework.validation.Validator;
  */
 @Component
 public class UserLoginValidator implements Validator {
+    private static final Logger logger = LogManager.getLogger(UserLoginValidator.class);
     @Autowired
     private UserService userService;
 
@@ -30,15 +33,15 @@ public class UserLoginValidator implements Validator {
         String formUsername = user.getUsername();
         String formPassword = user.getPassword();
             if (!formUsername.equals("") && !userService.findUserWithThisUsername(formUsername).isPresent()) {
-                System.out.println("Username does not exists in database");
+                logger.info("Username does not exists in database");
                 errors.rejectValue("username", "login.username.unknown");
             }
             if (!formPassword.equals("")&& userService.findUserWithThisUsername(formUsername).isPresent()) {
-                System.out.println("Username exists in database");
+                logger.info("Username exists in database");
                 User toBeChecked = userService.findUserByUsername(formUsername);
                 String loginPassword = Encryption.encrypt(formPassword);
                 if (!loginPassword.equals(toBeChecked.getPassword())) {
-                    System.out.println("password doesn't match username");
+                    logger.info("password doesn't match username");
                     errors.rejectValue("password", "login.password.noMatch");
                 }
             }

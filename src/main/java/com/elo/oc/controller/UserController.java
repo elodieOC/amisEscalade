@@ -7,6 +7,8 @@ import com.elo.oc.entity.User;
 import com.elo.oc.service.EmailService;
 import com.elo.oc.service.RoleService;
 import com.elo.oc.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +28,7 @@ import static com.elo.oc.utils.GeneratePassword.getAlphaNumericString;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+    private static final Logger logger = LogManager.getLogger(UserController.class);
     @Autowired
     private UserService userService;
     @Autowired
@@ -204,8 +207,8 @@ public class UserController {
             User theUser = userService.findUserByIdWithSpots(userId);
 
             if (userService.findUserByEmail(sessionEmail).getId() != userId && theUser.getUserRole().getId()!= 1 ) {
-                System.out.println("User trying to access prolie is neither the owner of the comment or an admin");
-                System.out.println("User is: ["+theUser.getId()+ ", "+theUser.getUsername()+"]");
+                logger.warn("User trying to access prolie is neither the owner of the comment or an admin");
+                logger.warn("User is: ["+theUser.getId()+ ", "+theUser.getUsername()+"]");
                 return "redirect:/home";
             }
             theModel.addAttribute("user", theUser);
@@ -254,8 +257,8 @@ public class UserController {
             String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
             User theUpdater = userService.findUserByEmail(sessionEmail);
             if(theUpdater.getId() != theId){
-                System.out.println("User trying to update the user is neither the user");
-                System.out.println("User is: ["+theUpdater.getId()+ ", "+theUpdater.getUsername()+"]");
+                logger.warn("User trying to update the user is neither the user");
+                logger.warn("User is: ["+theUpdater.getId()+ ", "+theUpdater.getUsername()+"]");
                 return "redirect:/home";
             }
             User theUser = userService.findUserById(theId);
@@ -288,12 +291,13 @@ public class UserController {
         }
         userCheckPasswordValidator.validate(theUser, theBindingResult);
         if (theBindingResult.hasErrors()) {
-            System.out.println("form has errors");
+            logger.warn("form has errors");
+            logger.warn(theBindingResult);
             List<Role> roles = roleService.getRolesPublic();
             theModel.addAttribute("roles", roles);
             return "edit-user";
         } else {
-            System.out.println("form is validated");
+            logger.info("form is validated");
             HttpSession session = request.getSession();
             session.setAttribute("loggedInUserEmail", theUser.getEmail());
             userService.updateUser(theUser);

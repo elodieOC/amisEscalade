@@ -9,6 +9,8 @@ import com.elo.oc.utils.ImageFileProcessing;
 import com.elo.oc.utils.LengthFormValidator;
 import com.elo.oc.utils.SessionCheck;
 import com.elo.oc.utils.SpotRegistrationValidator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +30,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/spots")
 public class SpotController {
+
+    private static final Logger logger = LogManager.getLogger(SpotController.class);
 
     @Autowired
     private SpotService spotService;
@@ -105,7 +109,7 @@ public class SpotController {
     public String showFormForSpotAdd(Model theModel, HttpServletRequest request) {
         HttpSession session = request.getSession();
         String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
-        System.out.println("user "+ userService.findUserByEmail(sessionEmail).getUsername()+" logged in");
+        logger.info("user "+ userService.findUserByEmail(sessionEmail).getUsername()+" logged in");
         Spot theSpot = new Spot();
         theModel.addAttribute("spot", theSpot);
         return "add-spot";
@@ -126,13 +130,14 @@ public class SpotController {
         String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
         spotRegistrationValidator.validate(theSpot, theBindingResult);
         if (theBindingResult.hasErrors()) {
-            System.out.println("form has errors");
+            logger.warn("form has errors");
+            logger.warn(theBindingResult);
             return "add-spot";
         } else {
-            System.out.println("form is validated");
+            logger.info("form is validated");
             theSpot.setImage(ImageFileProcessing.getImageForEntityAddFromForm(theSpot.getImageFile()));
             theSpot.setUser(userService.findUserByEmail(sessionEmail));
-            System.out.println(theSpot.toString());
+            logger.info(theSpot.toString());
             spotService.saveSpot(theSpot);
             return "redirect:/spots/"+theSpot.getId();
         }
@@ -174,8 +179,8 @@ public class SpotController {
         String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
         User theUpdater = userService.findUserByEmail(sessionEmail);
         if(theUpdater.getUserRole().getId()!= 1 && theUpdater.getUserRole().getId()!= 2 && theUpdater.getId() != theSpot.getUser().getId()){
-            System.out.println("User trying to update is neither the owner of the spot, or a member or an admin");
-            System.out.println("User is: ["+theUpdater.getId()+ ", "+theUpdater.getUsername()+"]");
+            logger.warn("User trying to update is neither the owner of the spot, or a member or an admin");
+            logger.warn("User is: ["+theUpdater.getId()+ ", "+theUpdater.getUsername()+"]");
             return "redirect:/home";
         }
         theModel.addAttribute("spot", theSpot);
@@ -193,10 +198,11 @@ public class SpotController {
     @PostMapping("/{spotId}/update")
     public String updateSpot(@PathVariable("spotId") Integer spotId, @Valid @ModelAttribute("spot") Spot theSpot, BindingResult theBindingResult) {
         if (theBindingResult.hasErrors()) {
-            System.out.println("form has errors");
+            logger.warn("form has errors");
+            logger.warn(theBindingResult);
             return "edit-spot";
         } else {
-            System.out.println("form is validated");
+            logger.info("form is validated");
             Spot spotToUpdate = spotService.findSpotById(spotId);
             User spotUser =  userService.findUserById(spotToUpdate.getUser().getId());
             theSpot.setUser(spotUser);
@@ -224,8 +230,8 @@ public class SpotController {
         String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
         User theDeleter = userService.findUserByEmail(sessionEmail);
         if(theDeleter.getUserRole().getId()!= 1 &&theDeleter.getUserRole().getId()!= 2 && theDeleter.getId() != theSpot.getUser().getId()){
-            System.out.println("User trying to delete is neither the owner of the spot, or a member or an admin");
-            System.out.println("User is: ["+theDeleter.getId()+ ", "+theDeleter.getUsername()+"]");
+            logger.warn("User trying to delete is neither the owner of the spot, or a member or an admin");
+            logger.warn("User is: ["+theDeleter.getId()+ ", "+theDeleter.getUsername()+"]");
             return "redirect:/home";
         }
         spotService.deleteSpot(theSpotId);
@@ -268,12 +274,13 @@ public class SpotController {
                              HttpServletRequest request) {
         HttpSession session = request.getSession();
             String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
-            System.out.println("user "+ userService.findUserByEmail(sessionEmail).getUsername()+" logged in");
+            logger.info("user "+ userService.findUserByEmail(sessionEmail).getUsername()+" logged in");
             if (theBindingResult.hasErrors()) {
-                System.out.println("form has errors");
+                logger.warn("form has errors");
+                logger.warn(theBindingResult);
                 return "add-sector-toSpot";
             } else {
-                System.out.println("form is validated");
+                logger.info("form is validated");
                 theSector.setImage(ImageFileProcessing.getImageForEntityAddFromForm(theSector.getImageFile()));
                 theSector.setUser(userService.findUserByEmail(sessionEmail));
                 theSector.setSpot(spotService.findSpotById(theSpotId));
@@ -334,8 +341,8 @@ public class SpotController {
             String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
             User theUpdater = userService.findUserByEmail(sessionEmail);
             if(theUpdater.getUserRole().getId()!= 1 && theUpdater.getUserRole().getId()!= 2 && theUpdater.getId() != theSector.getUser().getId()){
-                System.out.println("User trying to update the sector is neither the owner of the sector or a member or an admin");
-                System.out.println("User is: ["+theUpdater.getId()+ ", "+theUpdater.getUsername()+"]");
+                logger.warn("User trying to update the sector is neither the owner of the sector or a member or an admin");
+                logger.warn("User is: ["+theUpdater.getId()+ ", "+theUpdater.getUsername()+"]");
                 return "redirect:/home";
             }
             theModel.addAttribute("sector", theSector);
@@ -353,10 +360,11 @@ public class SpotController {
     @PostMapping("/{spotId}/sector/{sectorId}/update")
     public String updateSector(@PathVariable("spotId") Integer spotId,  @PathVariable("sectorId") Integer theSectorId,@Valid @ModelAttribute("sector") Sector theSector, BindingResult theBindingResult) {
         if (theBindingResult.hasErrors()) {
-            System.out.println("form has errors");
+            logger.warn("form has errors");
+            logger.warn(theBindingResult);
             return "edit-sector";
         } else {
-            System.out.println("form is validated");
+            logger.info("form is validated");
             Sector theSectorToUpdate = sectorService.findSectorById(theSectorId);
             theSector.setSpot(theSectorToUpdate.getSpot());
             theSector.setUser(theSectorToUpdate.getUser());
@@ -387,8 +395,8 @@ public class SpotController {
         String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
         User theDeleter = userService.findUserByEmail(sessionEmail);
         if(theDeleter.getUserRole().getId()!= 1 && theDeleter.getUserRole().getId()!= 2 && theDeleter.getId() != theSector.getUser().getId()){
-            System.out.println("User trying to delete sector is neither the owner of the comment or a member or an admin");
-            System.out.println("User is: ["+theDeleter.getId()+ ", "+theDeleter.getUsername()+"]");
+            logger.warn("User trying to delete sector is neither the owner of the comment or a member or an admin");
+            logger.warn("User is: ["+theDeleter.getId()+ ", "+theDeleter.getUsername()+"]");
             return "redirect:/home";
         }
         sectorService.deleteSector(theSectorId);
@@ -435,12 +443,13 @@ public class SpotController {
                               HttpServletRequest request) {
         HttpSession session = request.getSession();
             String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
-            System.out.println("user "+ userService.findUserByEmail(sessionEmail).getUsername()+" logged in");
+            logger.info("user "+ userService.findUserByEmail(sessionEmail).getUsername()+" logged in");
             if (theBindingResult.hasErrors()) {
-                System.out.println("form has errors");
+                logger.warn("form has errors");
+                logger.warn(theBindingResult);
                 return "add-comment-toSpot";
             } else {
-                System.out.println("form is validated");
+                logger.info("form is validated");
                 theComment.setUser(userService.findUserByEmail(sessionEmail));
                 theComment.setSpot(spotService.findSpotById(spotId));
                 commentService.saveComment(theComment);
@@ -465,8 +474,8 @@ public class SpotController {
             String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
             User theUpdater = userService.findUserByEmail(sessionEmail);
             if(theUpdater.getUserRole().getId()!= 1 && theUpdater.getUserRole().getId()!= 2 && theUpdater.getId() != theSpot.getUser().getId()){
-                System.out.println("User trying to update the comment is neither the owner of the spot, an admin or a member of the association");
-                System.out.println("User is: ["+theUpdater.getId()+ ", "+theUpdater.getUsername()+"]");
+                logger.warn("User trying to update the comment is neither the owner of the spot, an admin or a member of the association");
+                logger.warn("User is: ["+theUpdater.getId()+ ", "+theUpdater.getUsername()+"]");
                 return "redirect:/home";
             }
             theModel.addAttribute("comment", theComment);
@@ -484,10 +493,11 @@ public class SpotController {
     @PostMapping("/{spotId}/comment/{commentId}/update")
     public String updateComment(@PathVariable("spotId") Integer spotId,  @PathVariable("commentId") Integer theCommentId,@Valid @ModelAttribute("comment") Comment theComment, BindingResult theBindingResult) {
         if (theBindingResult.hasErrors()) {
-            System.out.println("form has errors");
+            logger.warn("form has errors");
+            logger.warn(theBindingResult);
             return "edit-comment";
         } else {
-            System.out.println("form is validated");
+            logger.info("form is validated");
             Comment theCommentToUpdate = commentService.findCommentById(theCommentId);
             theComment.setSpot(theCommentToUpdate.getSpot());
             theComment.setDate(theCommentToUpdate.getDate());
@@ -512,8 +522,8 @@ public class SpotController {
         String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
         User theDeleter = userService.findUserByEmail(sessionEmail);
         if(theDeleter.getUserRole().getId()!= 1 && theDeleter.getUserRole().getId()!= 2 && theDeleter.getId() != theComment.getUser().getId()){
-            System.out.println("User trying to delete comment is neither the owner of the comment, an admin, or a member of the association");
-            System.out.println("User is: ["+theDeleter.getId()+ ", "+theDeleter.getUsername()+"]");
+            logger.warn("User trying to delete comment is neither the owner of the comment, an admin, or a member of the association");
+            logger.warn("User is: ["+theDeleter.getId()+ ", "+theDeleter.getUsername()+"]");
             return "redirect:/home";
         }
         commentService.deleteComment(theCommentId);
@@ -564,12 +574,13 @@ public class SpotController {
                             HttpServletRequest request) {
         HttpSession session = request.getSession();
             String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
-            System.out.println("user "+ userService.findUserByEmail(sessionEmail).getUsername()+" logged in");
+            logger.info("user "+ userService.findUserByEmail(sessionEmail).getUsername()+" logged in");
             if (theBindingResult.hasErrors()) {
-                System.out.println("form has errors");
+                logger.warn("form has errors");
+                logger.warn(theBindingResult);
                 return "add-route-toSector";
             } else {
-                System.out.println("form is validated");
+                logger.info("form is validated");
                 theRoute.setImage(ImageFileProcessing.getImageForEntityAddFromForm(theRoute.getImageFile()));
                 theRoute.setUser(userService.findUserByEmail(sessionEmail));
                 theRoute.setSector(sectorService.findSectorById(sectorId));
@@ -627,8 +638,8 @@ public class SpotController {
             String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
             User theUpdater = userService.findUserByEmail(sessionEmail);
             if(theUpdater.getUserRole().getId()!= 1 &&theUpdater.getUserRole().getId()!= 2 && theUpdater.getId() != theRoute.getUser().getId()){
-                System.out.println("User trying to update the route is neither the owner of the sector or a member an admin");
-                System.out.println("User is: ["+theUpdater.getId()+ ", "+theUpdater.getUsername()+"]");
+                logger.warn("User trying to update the route is neither the owner of the sector or a member an admin");
+                logger.warn("User is: ["+theUpdater.getId()+ ", "+theUpdater.getUsername()+"]");
                 return "redirect:/home";
             }
             theModel.addAttribute("route", theRoute);
@@ -648,10 +659,11 @@ public class SpotController {
     public String updateRoute(@PathVariable("spotId") Integer theSpotId,  @PathVariable("sectorId") Integer theSectorId, @PathVariable("routeId") Integer theRouteId,
                               @Valid @ModelAttribute("route") Route theRoute, BindingResult theBindingResult) {
         if (theBindingResult.hasErrors()) {
-            System.out.println("form has errors");
+            logger.warn("form has errors");
+            logger.warn(theBindingResult);
             return "edit-route";
         } else {
-            System.out.println("form is validated");
+            logger.info("form is validated");
             Route theRouteToUpdate = routeService.findRouteById(theRouteId);
             theRoute.setUser(theRouteToUpdate.getUser());
             theRoute.setSector(theRouteToUpdate.getSector());
@@ -683,8 +695,8 @@ public class SpotController {
         String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
         User theDeleter = userService.findUserByEmail(sessionEmail);
         if(theDeleter.getUserRole().getId()!= 1 &&theDeleter.getUserRole().getId()!= 2 && theDeleter.getId() != theRoute.getUser().getId()){
-            System.out.println("User trying to delete route is neither the owner of the comment or a member an admin");
-            System.out.println("User is: ["+theDeleter.getId()+ ", "+theDeleter.getUsername()+"]");
+            logger.warn("User trying to delete route is neither the owner of the comment or a member an admin");
+            logger.warn("User is: ["+theDeleter.getId()+ ", "+theDeleter.getUsername()+"]");
             return "redirect:/home";
         }
         routeService.deleteRoute(theRouteId);
@@ -741,12 +753,13 @@ public class SpotController {
             String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
             lengthFormValidator.validate(theLengthForm, theBindingResult);
             if (theBindingResult.hasErrors()) {
-                System.out.println("form has errors");
+                logger.warn("form has errors");
+                logger.warn(theBindingResult);
                 List<Grade> grades = gradeService.getGrades();
                 theModel.addAttribute("grades", grades);
                 return "add-length-toRoute";
             } else {
-                System.out.println("form is validated");
+                logger.info("form is validated");
                 Double height = null;
                 if(!theLengthForm.getHeight().isEmpty()){
                     height = Double.parseDouble(theLengthForm.getHeight());
@@ -791,8 +804,8 @@ public class SpotController {
             String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
             User theUpdater = userService.findUserByEmail(sessionEmail);
             if(theUpdater.getUserRole().getId()!= 1 &&theUpdater.getUserRole().getId()!= 2 && theUpdater.getId() != theLength.getUser().getId()){
-                System.out.println("User trying to update the length is neither the owner of the sector or a member or an admin");
-                System.out.println("User is: ["+theUpdater.getId()+ ", "+theUpdater.getUsername()+"]");
+                logger.warn("User trying to update the length is neither the owner of the sector or a member or an admin");
+                logger.warn("User is: ["+theUpdater.getId()+ ", "+theUpdater.getUsername()+"]");
                 return "redirect:/home";
             }
             theModel.addAttribute("lengthForm", form);
@@ -817,12 +830,13 @@ public class SpotController {
                                @Valid @ModelAttribute("lengthForm") LengthForm theLengthForm, BindingResult theBindingResult, Model theModel) {
         lengthFormValidator.validate(theLengthForm, theBindingResult);
         if (theBindingResult.hasErrors()) {
-            System.out.println("form has errors");
+            logger.warn("form has errors");
+            logger.warn(theBindingResult);
             List<Grade> grades = gradeService.getGrades();
             theModel.addAttribute("grades", grades);
             return "edit-length";
         } else {
-            System.out.println("form is validated");
+            logger.info("form is validated");
             Length theLengthToUpdate = lengthService.findLengthById(theLengthId);
             Double height = null;
             if(!theLengthForm.getHeight().isEmpty()){
@@ -859,8 +873,8 @@ public class SpotController {
         String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
         User theDeleter = userService.findUserByEmail(sessionEmail);
         if(theDeleter.getUserRole().getId()!= 1 &&theDeleter.getUserRole().getId()!= 2 && theDeleter.getId() != theLength.getUser().getId()){
-            System.out.println("User trying to delete length is neither the owner of the comment or a member or an admin");
-            System.out.println("User is: ["+theDeleter.getId()+ ", "+theDeleter.getUsername()+"]");
+            logger.warn("User trying to delete length is neither the owner of the comment or a member or an admin");
+            logger.warn("User is: ["+theDeleter.getId()+ ", "+theDeleter.getUsername()+"]");
             return "redirect:/home";
         }
         lengthService.deleteLength(theLengthId);

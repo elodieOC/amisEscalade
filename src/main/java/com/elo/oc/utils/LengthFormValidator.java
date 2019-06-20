@@ -2,6 +2,8 @@ package com.elo.oc.utils;
 
 import com.elo.oc.dto.LengthForm;
 import com.elo.oc.entity.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -12,6 +14,7 @@ import org.springframework.validation.Validator;
 @Component
 public class LengthFormValidator implements Validator {
 
+    private static final Logger logger = LogManager.getLogger(LengthFormValidator.class);
 
     @Override
     public boolean supports(Class<?> aClass) {
@@ -29,11 +32,11 @@ public class LengthFormValidator implements Validator {
         String formHeight = ((LengthForm) o).getHeight();
         String formBolts = ((LengthForm) o).getBolts();
             if (!formHeight.matches("^\\d*\\.?\\d*$") && !formHeight.equals("")) {
-                System.out.println("entered data for height: "+formHeight);
+                logger.info("entered data for height: "+formHeight);
                 errors.rejectValue("height", "route.height.error");
             }
             if(!formBolts.matches("^\\d+$") && !formBolts.equals("")){
-                System.out.println("entered data for bolts: "+formBolts);
+                logger.info("entered data for bolts: "+formBolts);
                 errors.rejectValue("bolts", "route.bolts.error");
             }
         }
