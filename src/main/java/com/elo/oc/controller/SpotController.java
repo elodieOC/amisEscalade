@@ -824,8 +824,14 @@ public class SpotController {
         } else {
             System.out.println("form is validated");
             Length theLengthToUpdate = lengthService.findLengthById(theLengthId);
-            Double height = Double.parseDouble(theLengthForm.getHeight());
-            Integer bolts = Integer.parseInt(theLengthForm.getBolts());
+            Double height = null;
+            if(!theLengthForm.getHeight().isEmpty()){
+                height = Double.parseDouble(theLengthForm.getHeight());
+            }
+            Integer bolts = null;
+            if(!theLengthForm.getBolts().isEmpty()) {
+                bolts = Integer.parseInt(theLengthForm.getBolts());
+            }
             theLengthToUpdate.setBolts(bolts);
             theLengthToUpdate.setHeight(height);
             theLengthToUpdate.setGrade(gradeService.findGradeById(theLengthForm.getGrade()));
