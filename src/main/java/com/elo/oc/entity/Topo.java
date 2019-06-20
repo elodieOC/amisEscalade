@@ -47,7 +47,7 @@ public class Topo {
     private String name;
 
     @NotBlank
-    @Size(max = 255, message = "maximum 255 caractères")
+    @Size(max = 600, message = "maximum 600 caractères")
     @Column(name = "description")
     private String description;
 

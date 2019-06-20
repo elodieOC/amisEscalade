@@ -3,6 +3,7 @@ package com.elo.oc.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "comment")
@@ -13,6 +14,7 @@ public class Comment {
     private Integer id;
 
     @Column(name = "content")
+    @Size(max = 600, message = "maximum 600 caractères")
     @NotEmpty
     private String content;
 

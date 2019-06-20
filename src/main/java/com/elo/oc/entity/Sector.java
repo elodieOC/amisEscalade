@@ -38,7 +38,7 @@ public class Sector {
     private String location;
 
     @NotBlank
-    @Size(max = 255, message = "maximum 255 caractères")
+    @Size(max = 500, message = "maximum 500 caractères")
     @Column(name = "access")
     private String access;
 
