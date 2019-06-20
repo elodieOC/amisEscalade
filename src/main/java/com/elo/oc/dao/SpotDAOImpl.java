@@ -45,9 +45,9 @@ public class SpotDAOImpl implements SpotDAO {
         Query<Spot> query = currentSession.createQuery("select distinct s from Spot s " +
                 "left join fetch s.sectors sectors " +
                 "left join fetch sectors.routes routes  " +
-                "where(s.name like '%'||:name||'%' or s.name is null) " +
-                "and (s.city like '%'||:city||'%' or s.city is null) " +
-                "and (s.county like '%'||:county||'%' or s.county is null) ");
+                "where(lower(s.name) like '%'||lower(:name)||'%' or s.name is null) " +
+                "and (lower(s.city) like '%'||lower(:city)||'%' or s.city is null) " +
+                "and (lower(s.county) like '%'||lower(:county)||'%' or s.county is null) ");
 
         query.setParameter("city", city);
         query.setParameter("county", county);
