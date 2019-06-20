@@ -5,9 +5,9 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class LengthForm {
-    @NotBlank
+
     private String height;
-    @NotBlank
+
     private String bolts;
     @NotNull
     private Integer grade;

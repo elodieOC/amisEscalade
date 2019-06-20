@@ -15,11 +15,9 @@ public class Length {
     @Column(name = "id")
     private Integer id;
 
-    @NotNull
     @Column(name = "height")
     private Double height;
 
-    @NotNull
     @Column(name = "bolts")
     private Integer bolts;
 

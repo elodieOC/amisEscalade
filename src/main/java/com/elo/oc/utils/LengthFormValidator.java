@@ -32,7 +32,7 @@ public class LengthFormValidator implements Validator {
                 System.out.println("entered data for height: "+formHeight);
                 errors.rejectValue("height", "route.height.error");
             }
-            if(!formBolts.matches("^\\d+$")&& !formBolts.equals("")){
+            if(!formBolts.matches("^\\d+$") && !formBolts.equals("")){
                 System.out.println("entered data for bolts: "+formBolts);
                 errors.rejectValue("bolts", "route.bolts.error");
             }

@@ -52,7 +52,7 @@
         <c:set var="userRole" value="${sessionScope['loggedInUserRole']}" />
         <c:set var="userId" value="${sessionScope['loggedInUserId']}" />
 
-        <c:if test="${userRole eq '1' || userId eq route.user.id && userId ne null}">
+        <c:if test="${userRole eq '1' || userRole eq '2' || userId eq route.user.id && userId ne null}">
             <div class="d-inline-block col-md-8 mt-3">
                 <p class="text-muted small">Vous êtes administrateur ou vous avez ajouté cette voie. Vous pouvez l'éditer ou la supprimer.</p>
             </div>
@@ -81,9 +81,17 @@
                         <ul class="list-unstyled">
                             <c:forEach var="length" items="${route.lengths}">
                                     <li class="ml-4 mb-4"><strong>Longueur ${route.lengths.indexOf(length)+1}:  </strong>
-                                        <span class=" route-li">cotation ${length.grade.name} (${length.grade.rating.name}), ${length.bolts} spits, hauteur ${length.height}m</span>
+                                        <span class=" route-li">cotation ${length.grade.name} (${length.grade.rating.name}),
+                                                <c:choose>
+                                                    <c:when test="${length.bolts ne null}">${length.bolts} spits,</c:when>
+                                                    <c:otherwise>nombre de spits inconnu,</c:otherwise>
+                                                </c:choose>
+                                            <c:choose>
+                                                <c:when test="${length.height ne null}">${length.height}m,</c:when>
+                                                <c:otherwise>hauteur inconnue,</c:otherwise>
+                                            </c:choose></span>
 
-                                    <c:if test="${userRole eq '1' || userId eq length.user.id && userId ne null}">
+                                    <c:if test="${userRole eq '1' ||userRole eq '2' || userId eq length.user.id && userId ne null}">
 
                                             <!-- construct an "update" link with spot id -->
                                             <c:url var="updateLink" value="/spots/${spot.id}/sector/${sector.id}/route/${route.id}/length/${length.id}/editer" />

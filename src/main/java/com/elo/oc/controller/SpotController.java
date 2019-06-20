@@ -173,8 +173,8 @@ public class SpotController {
         Spot theSpot = spotService.findSpotById(theSpotId);
         String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
         User theUpdater = userService.findUserByEmail(sessionEmail);
-        if(theUpdater.getUserRole().getId()!= 1 && theUpdater.getId() != theSpot.getUser().getId()){
-            System.out.println("User trying to update is neither the owner of the spot, or an admin");
+        if(theUpdater.getUserRole().getId()!= 1 && theUpdater.getUserRole().getId()!= 2 && theUpdater.getId() != theSpot.getUser().getId()){
+            System.out.println("User trying to update is neither the owner of the spot, or a member or an admin");
             System.out.println("User is: ["+theUpdater.getId()+ ", "+theUpdater.getUsername()+"]");
             return "redirect:/home";
         }
@@ -223,8 +223,8 @@ public class SpotController {
         Spot theSpot = spotService.findSpotById(theSpotId);
         String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
         User theDeleter = userService.findUserByEmail(sessionEmail);
-        if(theDeleter.getUserRole().getId()!= 1 && theDeleter.getId() != theSpot.getUser().getId()){
-            System.out.println("User trying to delete is neither the owner of the spot, or an admin");
+        if(theDeleter.getUserRole().getId()!= 1 &&theDeleter.getUserRole().getId()!= 2 && theDeleter.getId() != theSpot.getUser().getId()){
+            System.out.println("User trying to delete is neither the owner of the spot, or a member or an admin");
             System.out.println("User is: ["+theDeleter.getId()+ ", "+theDeleter.getUsername()+"]");
             return "redirect:/home";
         }
@@ -333,8 +333,8 @@ public class SpotController {
             Sector theSector = sectorService.findSectorById(theSectorId);
             String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
             User theUpdater = userService.findUserByEmail(sessionEmail);
-            if(theUpdater.getUserRole().getId()!= 1 && theUpdater.getId() != theSector.getUser().getId()){
-                System.out.println("User trying to update the sector is neither the owner of the sector or an admin");
+            if(theUpdater.getUserRole().getId()!= 1 && theUpdater.getUserRole().getId()!= 2 && theUpdater.getId() != theSector.getUser().getId()){
+                System.out.println("User trying to update the sector is neither the owner of the sector or a member or an admin");
                 System.out.println("User is: ["+theUpdater.getId()+ ", "+theUpdater.getUsername()+"]");
                 return "redirect:/home";
             }
@@ -386,8 +386,8 @@ public class SpotController {
         Sector theSector = sectorService.findSectorById(theSectorId);
         String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
         User theDeleter = userService.findUserByEmail(sessionEmail);
-        if(theDeleter.getUserRole().getId()!= 1 && theDeleter.getId() != theSector.getUser().getId()){
-            System.out.println("User trying to delete sector is neither the owner of the comment or an admin");
+        if(theDeleter.getUserRole().getId()!= 1 && theDeleter.getUserRole().getId()!= 2 && theDeleter.getId() != theSector.getUser().getId()){
+            System.out.println("User trying to delete sector is neither the owner of the comment or a member or an admin");
             System.out.println("User is: ["+theDeleter.getId()+ ", "+theDeleter.getUsername()+"]");
             return "redirect:/home";
         }
@@ -626,8 +626,8 @@ public class SpotController {
             Route theRoute = routeService.findRouteById(theRouteId);
             String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
             User theUpdater = userService.findUserByEmail(sessionEmail);
-            if(theUpdater.getUserRole().getId()!= 1 && theUpdater.getId() != theRoute.getUser().getId()){
-                System.out.println("User trying to update the route is neither the owner of the sector or an admin");
+            if(theUpdater.getUserRole().getId()!= 1 &&theUpdater.getUserRole().getId()!= 2 && theUpdater.getId() != theRoute.getUser().getId()){
+                System.out.println("User trying to update the route is neither the owner of the sector or a member an admin");
                 System.out.println("User is: ["+theUpdater.getId()+ ", "+theUpdater.getUsername()+"]");
                 return "redirect:/home";
             }
@@ -682,8 +682,8 @@ public class SpotController {
         Route theRoute = routeService.findRouteById(theRouteId);
         String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
         User theDeleter = userService.findUserByEmail(sessionEmail);
-        if(theDeleter.getUserRole().getId()!= 1 && theDeleter.getId() != theRoute.getUser().getId()){
-            System.out.println("User trying to delete route is neither the owner of the comment or an admin");
+        if(theDeleter.getUserRole().getId()!= 1 &&theDeleter.getUserRole().getId()!= 2 && theDeleter.getId() != theRoute.getUser().getId()){
+            System.out.println("User trying to delete route is neither the owner of the comment or a member an admin");
             System.out.println("User is: ["+theDeleter.getId()+ ", "+theDeleter.getUsername()+"]");
             return "redirect:/home";
         }
@@ -747,8 +747,14 @@ public class SpotController {
                 return "add-length-toRoute";
             } else {
                 System.out.println("form is validated");
-                Double height = Double.parseDouble(theLengthForm.getHeight());
-                Integer bolts = Integer.parseInt(theLengthForm.getBolts());
+                Double height = null;
+                if(!theLengthForm.getHeight().isEmpty()){
+                    height = Double.parseDouble(theLengthForm.getHeight());
+                }
+                Integer bolts = null;
+                if(!theLengthForm.getBolts().isEmpty()) {
+                    bolts = Integer.parseInt(theLengthForm.getBolts());
+                }
                 Length theLength = new Length();
                 theLength.setUser(userService.findUserByEmail(sessionEmail));
                 theLength.setRoute(routeService.findRouteById(routeId));
@@ -784,8 +790,8 @@ public class SpotController {
             form.setGrade(theLength.getGrade().getId());
             String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
             User theUpdater = userService.findUserByEmail(sessionEmail);
-            if(theUpdater.getUserRole().getId()!= 1 && theUpdater.getId() != theLength.getUser().getId()){
-                System.out.println("User trying to update the length is neither the owner of the sector or an admin");
+            if(theUpdater.getUserRole().getId()!= 1 &&theUpdater.getUserRole().getId()!= 2 && theUpdater.getId() != theLength.getUser().getId()){
+                System.out.println("User trying to update the length is neither the owner of the sector or a member or an admin");
                 System.out.println("User is: ["+theUpdater.getId()+ ", "+theUpdater.getUsername()+"]");
                 return "redirect:/home";
             }
@@ -846,8 +852,8 @@ public class SpotController {
         Length theLength = lengthService.findLengthById(theLengthId);
         String sessionEmail = session.getAttribute("loggedInUserEmail").toString();
         User theDeleter = userService.findUserByEmail(sessionEmail);
-        if(theDeleter.getUserRole().getId()!= 1 && theDeleter.getId() != theLength.getUser().getId()){
-            System.out.println("User trying to delete length is neither the owner of the comment or an admin");
+        if(theDeleter.getUserRole().getId()!= 1 &&theDeleter.getUserRole().getId()!= 2 && theDeleter.getId() != theLength.getUser().getId()){
+            System.out.println("User trying to delete length is neither the owner of the comment or a member or an admin");
             System.out.println("User is: ["+theDeleter.getId()+ ", "+theDeleter.getUsername()+"]");
             return "redirect:/home";
         }
