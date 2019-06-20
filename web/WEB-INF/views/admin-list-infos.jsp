@@ -21,9 +21,9 @@
                     <h3>Utilisateurs</h3>
                 </div>
                 <div class="card-body">
-                    <div class="card-deck mx-auto">
+                    <div class="mb-5 mx-auto">
                         <c:forEach var="tempUser" items="${users}">
-                            <div class="card shadow mb-3 bg-light">
+                            <div class="card col-md-3 mr-md-5 shadow mb-5 d-inline-block bg-light">
                                 <div class="card-body">
                                     <ul class="list-unstyled">
 
@@ -48,9 +48,9 @@
                     <h3>Spots</h3>
                 </div>
                 <div class="card-body">
-                    <div class="card-deck mx-auto">
+                    <div class="mb-5 offset-md-1">
                         <c:forEach var="spot" items="${spots}" >
-                            <div class="card shadow mb-3 bg-light">
+                            <div class="card col-md-5 shadow mb-5 mr-5 d-inline-block bg-light">
                                 <div class="card-body">
                                     <ul class="list-unstyled">
                                         <li><strong>Nom: </strong>${spot.name}</li>
@@ -69,9 +69,9 @@
                     <h3>Topos</h3>
                 </div>
                 <div class="card-body">
-                    <div class="card-deck mx-auto">
+                    <div class="mb-5 offset-md-1">
                         <c:forEach var="topo" items="${topos}" >
-                            <div class="card shadow mb-3 bg-light">
+                            <div class="card col-md-5 shadow mb-5 mr-5 d-inline-block bg-light">
                                 <div class="card-body">
                                     <ul class="list-unstyled">
                                         <li><strong>Nom: </strong>${topo.name}</li>

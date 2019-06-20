@@ -119,7 +119,8 @@
                         </a>
                         <div class="card-body">
 
-                            <h5 class="card-subtitle mb-3 text-muted">${spot.county}, ${spot.city}</h5>
+                            <h5 class="card-subtitle mb-3 text-muted">${spot.county}</h5>
+                            <h5 class="card-subtitle mb-3 text-muted">${spot.city}</h5>
                             <a href="${viewLink}" class="text-decoration-none">
                                 <div class="thumbnail">
                                     <c:choose>

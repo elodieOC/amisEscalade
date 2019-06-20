@@ -52,7 +52,7 @@
                             <p>Vous n'avez pas encore ajouté de spots
                         </c:when>
                         <c:otherwise>
-                            <div class="card-deck mb-5 mx-auto">
+                            <div class="mb-5 offset-md-1">
                                 <!-- loop over and print our spots -->
                                 <c:forEach var="spot" items="${spots}">
                                     <!-- construct an "view" link with spot id -->
@@ -61,7 +61,7 @@
                                     <c:url var="updateLink" value="/spots/${spot.id}/editer" />
                                     <!-- construct an "delete" link with spot id -->
                                     <c:url var="deleteLink" value="/spots/${spot.id}/delete" />
-                                    <div class="card shadow mb-5 d-inline-block">
+                                    <div class="card col-md-3 mr-md-5 shadow mb-5 d-inline-block bg-light">
                                         <a href="${viewLink}" class="text-decoration-none">
                                             <h4 class="card-header">${spot.name}</h4>
                                         </a>
@@ -100,7 +100,7 @@
                             <p class="ml-4 mb-5">Vous n'avez pas encore ajouté de topos
                         </c:when>
                         <c:otherwise>
-                            <div class="card-deck mb-5 mx-auto">
+                            <div class="mb-5 offset-md-1">
                                 <!-- loop over and print our spots -->
                                 <c:forEach var="topo" items="${topos}">
                                     <!-- construct an "view" link with spot id -->
@@ -109,7 +109,7 @@
                                     <c:url var="updateLink" value="/topos/${topo.id}/editer" />
                                     <!-- construct an "delete" link with topo id -->
                                     <c:url var="deleteLink" value="/topos/${topo.id}/delete" />
-                                    <div class="card shadow mb-5 d-inline-block">
+                                    <div class="card col-md-3 mr-md-5 shadow mb-5 d-inline-block bg-light">
                                         <a href="${viewLink}" class="text-decoration-none">
                                             <h4 class="card-header">${topo.name}</h4>
                                         </a>
