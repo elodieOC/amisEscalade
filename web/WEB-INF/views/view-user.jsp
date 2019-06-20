@@ -40,7 +40,7 @@
             <h3 class="ml-4 mt-5 mb-5">Mes Spots</h3>
             <c:choose>
                 <c:when test="${empty spots}">
-                   <p>Vous n'avez pas encore ajouté de spots
+                   <p class="ml-4 mb-5">Vous n'avez pas encore ajouté de spots
                 </c:when>
                 <c:otherwise>
                     <div class="card-deck mb-5 mx-auto">

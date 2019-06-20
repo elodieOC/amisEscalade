@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -52,7 +50,7 @@ public class AdminInfosController {
         String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
         User theAccessor = userService.findUserByEmail(sessionEmail);
         //if the user is not an admin: back to homepage
-        if(!SessionCheck.checkIfUserIsAdmin(theAccessor)){
+        if(!SessionCheck.checkIfUserIsAdminOrMember(theAccessor)){
             return "redirect:/home";
         }
         else {
@@ -87,7 +85,7 @@ public class AdminInfosController {
         String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
         User theAccessor = userService.findUserByEmail(sessionEmail);
         //if the user is not an admin: back to homepage
-        if(!SessionCheck.checkIfUserIsAdmin(theAccessor)){
+        if(!SessionCheck.checkIfUserIsAdminOrMember(theAccessor)){
             return "redirect:/home";
         }
         //fetches the User with its id, and adds attributes to Model to display on jsp
@@ -118,7 +116,7 @@ public class AdminInfosController {
         String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
         User theUpdater = userService.findUserByEmail(sessionEmail);
         //if the user is not an admin: back to homepage
-        if(!SessionCheck.checkIfUserIsAdmin(theUpdater)){
+        if(!SessionCheck.checkIfUserIsAdminOrMember(theUpdater)){
             return "redirect:/home";
         }
         //fetches the User with its id, and adds attributes to Model to display on jsp
@@ -167,7 +165,7 @@ public class AdminInfosController {
         HttpSession session = request.getSession();
         String sessionEmail = (session.getAttribute("loggedInUserEmail")).toString();
         User theDeleter = userService.findUserByEmail(sessionEmail);
-        if(!SessionCheck.checkIfUserIsAdmin(theDeleter)){
+        if(!SessionCheck.checkIfUserIsAdminOrMember(theDeleter)){
             return "redirect:/home";
         }
         else {

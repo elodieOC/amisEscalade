@@ -50,10 +50,5 @@ public class WebMvcConfig implements WebMvcConfigurer{
         return new StandardServletMultipartResolver();
     }
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        // LogInterceptor apply to all URLs.
-        registry.addInterceptor(new LogInterceptor()).addPathPatterns("/ajout");
 
-    }
 }

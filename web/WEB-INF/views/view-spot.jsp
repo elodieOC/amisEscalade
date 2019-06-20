@@ -38,7 +38,7 @@
         <c:set var="userRole" value="${sessionScope['loggedInUserRole']}" />
         <c:set var="userId" value="${sessionScope['loggedInUserId']}" />
 
-        <c:if test="${userRole eq '1' || userId eq spot.user.id && userId ne null}">
+        <c:if test="${userRole eq '1' ||userRole eq '2' || userId eq spot.user.id && userId ne null}">
 <%--            <div class="d-none d-sm-block">--%>
             <div class="d-inline-block col-md-8 mt-3">
                 <p class="text-muted small">Vous êtes administrateur ou vous avez ajouté ce spot. Vous pouvez l'éditer ou le supprimer.</p>
@@ -59,14 +59,14 @@
         </c:if>
 
         <c:if test="${!empty spot.image}" >
-        <div class="panel panel-info mt-5 col-md-8">
+        <div class="mt-5 col-md-8">
             <div class="img offset-md-1">
                 <img src='data:image/jpg;base64,${spot.base64}' class="img-fluid d-block"/>
             </div>
         </div>
         </c:if>
 
-        <div class="panel panel-info mt-5">
+        <div class="mt-5">
             <h2 class="d-inline-block col-md-8 mb-5">Les Secteurs</h2>
             <div class="panel-body mb-5">
                 <c:choose>
@@ -85,13 +85,13 @@
                 </ul>
             </div>
         </div>
-        <div class="panel panel-info mt-5">
+        <div class="mt-5">
             <h2 class="mt-5 mb-sm-5 d-inline-block col-md-8">Commentaires</h2>
             <input type="button" value="Ajouter Commentaire"
                    onclick="window.location.href='${spot.id}/commenter'; return false;"
                    class="btn btn-primary ml-4 ml-sm-0 mb-5 mb-sm-0" />
 
-            <div class="panel-body mb-5">
+            <div class="mb-5">
                 <c:choose>
                     <c:when test="${ empty comments }" >
                         <p class="col-md-8">Il n'y a pas encore de commentaire sur ce spot</p>

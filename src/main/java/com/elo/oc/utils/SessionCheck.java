@@ -29,9 +29,9 @@ public class SessionCheck {
      * @param theAccessor the logged in user
      * @return true if user is an admin
      */
-    public static boolean checkIfUserIsAdmin(User theAccessor){
-        if(theAccessor.getUserRole().getId()!=1){
-            System.out.println("User trying to access the admin actions is not an admin");
+    public static boolean checkIfUserIsAdminOrMember(User theAccessor){
+        if(theAccessor.getUserRole().getId()!=1 && theAccessor.getUserRole().getId()!=2 ){
+            System.out.println("User trying to access the admin actions is not an admin or a member");
             System.out.println("User is: ["+theAccessor.getId()+ ", "+theAccessor.getUsername()+"]");
             return false;
         }

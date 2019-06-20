@@ -15,10 +15,8 @@
 </head>
 <c:import url="inc/choose-navbar.jsp" />
 <main role="main" class="flex-shrink-0 mt-5 col-md-12">
-
     <c:set var="userRole" value="${sessionScope['loggedInUserRole']}" />
     <c:set var="userId" value="${sessionScope['loggedInUserId']}" />
-
     <div class="container col-md-10 mt-5 offset-md-2">
         <h1 class="d-inline-block col-md-8">${topo.name}
             <span class="text-muted ml-3 small">(Ajouté par:  ${topo.user.username}, Disponible:
@@ -26,26 +24,27 @@
                     <c:when test="${topo.available}">Oui</c:when>
                     <c:otherwise>Non</c:otherwise>
                 </c:choose>)</span></h1>
-        <c:choose>
-            <c:when test="${topo.available}">
-                <input type="button" value="Faire une demande de Réservation"
-                       onclick="window.location.href='${topo.id}/book'; return false;"
-                       class="btn btn-primary ml-4 ml-sm-0 mb-5 mb-sm-0" />
-            </c:when>
-            <c:otherwise>
                 <c:choose>
-                    <c:when test="${userId ne null && userId eq topo.user.id}">
-                        <input type="button" value="Rendre le Topo disponible à nouveau"
+                     <c:when test="${topo.available}">
+                         <input type="button" value="Faire une demande de Réservation"
+                         onclick="window.location.href='${topo.id}/book'; return false;"
+                         class="btn btn-primary ml-4 ml-sm-0 mb-5 mb-sm-0" />
+                     </c:when>
+                    <c:otherwise>
+                        <c:choose>
+                            <c:when test="${userId ne null && userId eq topo.user.id}">
+                                <input type="button" value="Rendre le Topo disponible à nouveau"
                                onclick="window.location.href='${topo.id}/make-available'; return false;"
                                class="btn btn-success ml-4 ml-sm-0 mb-5 mb-sm-0" />
-                    </c:when>
-                    <c:otherwise>
-                        <input type="button" value="Topo déjà réservé" class="btn btn-success"/></c:otherwise>
+                            </c:when>
+                        <c:otherwise>
+                            <input type="button" value="Topo déjà réservé" class="btn btn-success"/>
+                        </c:otherwise>
+                        </c:choose>
+                    </c:otherwise>
                 </c:choose>
-            </c:otherwise>
-        </c:choose>
 
-        <c:if test="${userRole eq '1' || userId eq topo.user.id && userId ne null}">
+        <c:if test="${userRole eq '1' ||userRole eq '2' || userId eq topo.user.id && userId ne null}">
             <div class="d-inline-block col-md-8 mt-3">
                 <p class="text-muted small">Vous êtes administrateur ou vous avez ajouté ce topo. Vous pouvez l'éditer ou le supprimer.</p>
             </div>
@@ -63,26 +62,16 @@
                    class="btn btn-secondary ml-4 ml-sm-0 mb-5 mb-sm-0" />
         </c:if>
 
-        <div class="mt-5">
-            <h2 class="d-inline-block col-md-8 mb-5">Informations</h2>
+        <div class="mt-5 col-md-8">
             <div class="mb-5">
-                <table class="mb-5">
-                    <tr>
-                        <td class="col-lg-2">Pays: </td><td class="col-lg-7">${topo.country}</td>
-                    </tr>
-                    <tr>
-                        <td class="col-lg-2">Région: </td><td class="col-lg-7">${topo.county}</td>
-                    </tr>
-                    <tr>
-                        <td class="col-lg-2">Ville: </td><td class="col-lg-7">${topo.city}</td>
-                    </tr>
-                    <tr>
-                        <td class="col-lg-2">Date de Parution: </td><td class="col-lg-7">${topo.dateRelease}</td>
-                    </tr>
-                    <tr>
-                        <td class="col-lg-2">Description: </td><td class="col-lg-7" style="white-space: pre-line;">${topo.description}</td>
-                    </tr>
-                </table>
+                <h3 class="mb-5"><strong>Informations</strong></h3>
+                <ul class="list-unstyled mt-5 text-left">
+                    <li class="mb-4"><div class="d-inline-block col-3 mr-5"><strong>Pays:</strong></div>${topo.country}</li>
+                    <li class="mb-4"><div class="d-inline-block col-3 mr-5"><strong>Région:</strong></div>${topo.county}</li>
+                    <li class="mb-4"><div class="d-inline-block col-3 mr-5"><strong>Ville: </strong></div>${topo.city}</li>
+                    <li class="mb-4"><div class="d-inline-block col-3 mr-5"><strong>Date de Parution:</strong></div>${topo.dateRelease}</li>
+                    <li class="mb-4" style="white-space: pre-line;"><div class="d-inline-block col-3 mr-4 align-top"><strong>Description: </strong></div><div class="d-inline-block col-md-6"> ${topo.description}</div></li>
+                </ul>
             </div>
         </div>
 

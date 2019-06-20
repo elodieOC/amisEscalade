@@ -14,12 +14,10 @@ public class RestrictionFilter implements Filter {
     public void init( FilterConfig config ) throws ServletException {
     }
 
-    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain ) throws IOException,
-            ServletException {
+    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain ) throws IOException, ServletException {
         /* Cast of objects request & response */
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
-
         /* Non-filtering of static resources */
         String path = request.getRequestURI().substring( request.getContextPath().length());
         if ( path.contains( "inc" ) || path.contains("resources") || path.equals("/spots/")|| path.equals("/topos/") ||

@@ -16,7 +16,6 @@
 <c:import url="inc/choose-navbar.jsp" />
 <main role="main" class="flex-shrink-0 mt-5 col-md-12">
     <div class="container col-md-10 mt-5 offset-md-2">
-
         <div class="mt-5 mb-5 alert alert-info col-md-10 " role="alert">
             <div class="rating-list-header">
                 <button class="navbar-toggler " type="button" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,7 +50,7 @@
         <c:set var="userRole" value="${sessionScope['loggedInUserRole']}" />
         <c:set var="userId" value="${sessionScope['loggedInUserId']}" />
 
-        <c:if test="${userRole eq '1' || userId eq sector.user.id && userId ne null}">
+        <c:if test="${userRole eq '1' ||userRole eq '2' || userId eq sector.user.id && userId ne null}">
             <div class="d-inline-block col-md-8 mt-3">
                 <p class="text-muted small">Vous êtes administrateur ou vous avez ajouté ce secteur. Vous pouvez l'éditer ou le supprimer.</p>
             </div>
@@ -69,14 +68,23 @@
                    class="btn btn-secondary ml-4 ml-sm-0 mb-5 mb-sm-0" />
         </c:if>
 
+
+        <c:if test="${!empty sector.image}" >
+            <div class="mt-5 col-md-8">
+                <div class="img offset-md-1">
+                    <img src='data:image/jpg;base64,${sector.base64}' class="img-fluid d-block"/>
+                </div>
+            </div>
+        </c:if>
+
         <div class="mt-5 col-md-10">
             <div class="mb-5">
                 <h3><strong>Informations</strong></h3>
-                <ul class="list-unstyled">
-                    <li>Situation:</li>
+                <ul class="list-unstyled mt-5">
+                    <li><strong>Situation:</strong></li>
                     <li style="white-space: pre-line;">${sector.location}</li>
 
-                    <li class="mt-5">Accès:</li>
+                    <li class="mt-5"><strong>Accès:</strong></li>
                     <li style="white-space: pre-line;">${sector.access}</li>
                 </ul>
                 <c:if test="${!empty sector.routes}">
