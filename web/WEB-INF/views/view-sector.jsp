@@ -44,7 +44,7 @@
         </h1>
         <input type="button" value="Ajouter une Voie"
                onclick="window.location.href='${sector.id}/ajout-voie'; return false;"
-               class="btn btn-primary ml-4 ml-sm-0 mb-5 mb-sm-0" />
+               class="btn btn-lg btn-primary ml-4 ml-sm-0 mb-5 mb-sm-0" />
         <br />
         <h3 class="col-md-8"><a href="<c:url value="/spots/${spot.id}" />">Spot ${spot.name}</a>, ${spot.county}, ${spot.city}</h3>
         <c:set var="userRole" value="${sessionScope['loggedInUserRole']}" />

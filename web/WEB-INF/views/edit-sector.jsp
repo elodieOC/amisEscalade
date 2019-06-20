@@ -60,7 +60,7 @@
                     </div> <!-- form-group// -->
 
                     <div class="row mb-2">
-                        <button class="btn btn-lg btn-primary mb-2 ml-4" type="submit">Editer</button>
+                        <button class="btn  btn-primary mb-2 ml-4" type="submit">Editer</button>
                     </div>
                 </form:form>
             </div>

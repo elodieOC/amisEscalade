@@ -44,7 +44,7 @@
         </h1>
         <input type="button" value="Ajouter une Longueur"
                onclick="window.location.href='${route.id}/ajout-longueur'; return false;"
-               class="btn btn-primary ml-4 ml-sm-0 mb-5 mb-sm-0" />
+               class="btn btn-lg btn-primary ml-4 ml-sm-0 mb-5 mb-sm-0" />
         <br />
         <h3 class="col-md-8">Spot <a href="<c:url value="/spots/${spot.id}" />">${spot.name}</a>,
             Secteur <a href="<c:url value="/spots/${spot.id}/sector/${sector.id}" />">${sector.name}</a>,
@@ -81,18 +81,17 @@
                         <ul class="list-unstyled">
                             <c:forEach var="length" items="${route.lengths}">
                                     <li class="ml-4 mb-4"><strong>Longueur ${route.lengths.indexOf(length)+1}:  </strong>
-                                        <span class=" route-li">cotation ${length.grade.name} (${length.grade.rating.name}),
+                                        <span class="route-li">cotation ${length.grade.name} (${length.grade.rating.name}),
                                                 <c:choose>
                                                     <c:when test="${length.bolts ne null}">${length.bolts} spits,</c:when>
                                                     <c:otherwise>nombre de spits inconnu,</c:otherwise>
                                                 </c:choose>
                                             <c:choose>
-                                                <c:when test="${length.height ne null}">${length.height}m,</c:when>
-                                                <c:otherwise>hauteur inconnue,</c:otherwise>
+                                                <c:when test="${length.height ne null}">${length.height}m</c:when>
+                                                <c:otherwise>hauteur inconnue</c:otherwise>
                                             </c:choose></span>
 
                                     <c:if test="${userRole eq '1' ||userRole eq '2' || userId eq length.user.id && userId ne null}">
-
                                             <!-- construct an "update" link with spot id -->
                                             <c:url var="updateLink" value="/spots/${spot.id}/sector/${sector.id}/route/${route.id}/length/${length.id}/editer" />
                                             <!-- construct an "delete" link with spot id -->

@@ -118,7 +118,6 @@
                             <h4 class="card-header">${spot.name}</h4>
                         </a>
                         <div class="card-body">
-
                             <h5 class="card-subtitle mb-3 text-muted">${spot.county}</h5>
                             <h5 class="card-subtitle mb-3 text-muted">${spot.city}</h5>
                             <a href="${viewLink}" class="text-decoration-none">

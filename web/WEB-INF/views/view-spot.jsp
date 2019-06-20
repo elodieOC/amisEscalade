@@ -30,7 +30,7 @@
         </h1>
         <input type="button" value="Ajouter un Secteur"
                onclick="window.location.href='${spot.id}/ajout-secteur'; return false;"
-               class="btn btn-primary ml-4 ml-sm-0 mb-5 mb-sm-0" />
+               class="btn btn-lg btn-primary ml-4 ml-sm-0 mb-5 mb-sm-0" />
         <c:if test="${spot.tagged}">
             <div class="col-md-8"><h3 class="official-tag">"Officiel Les amis de l’escalade" </h3></div>
         </c:if>

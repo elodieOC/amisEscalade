@@ -33,14 +33,19 @@
                     <c:url var="viewLink" value="/topos/${topo.id}" />
                     <div class="card col-md-3 mr-md-5 shadow mb-5 d-inline-block bg-light">
                         <a href="${viewLink}" class="text-decoration-none">
-                            <h4 class="card-header">${topo.name}, ${topo.county}, ${topo.city}</h4>
+                            <div class="card-header">
+                                <h4>${topo.name}</h4>
+                                <h4>${topo.county}</h4>
+                                <h4>${topo.city}</h4>
+                            </div>
                         </a>
                         <div class="card-body">
                             <h5 class="card-subtitle mb-3 text-muted">Disponible:
                                 <c:choose>
-                                    <c:when test="${topo.available}">Oui,</c:when>
-                                    <c:otherwise>Non,</c:otherwise>
-                                </c:choose>Date de parution: ${topo.dateRelease}</h5>
+                                    <c:when test="${topo.available}">Oui</c:when>
+                                    <c:otherwise>Non</c:otherwise>
+                                </c:choose></h5>
+                            <h5 class="card-subtitle mb-3 text-muted">Date de parution: ${topo.dateRelease}</h5>
                             <a href="${viewLink}" class="text-decoration-none">
                                 <div class="thumbnail">
                                     <c:choose>
@@ -53,7 +58,7 @@
                                     </c:choose>
                                 </div>
                             </a>
-                            <div class="card-text mt-5">
+                            <div class="card-text mt-5 text-truncate">
                                     ${topo.description}
                             </div>
                         </div>

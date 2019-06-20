@@ -24,25 +24,25 @@
                     <c:when test="${topo.available}">Oui</c:when>
                     <c:otherwise>Non</c:otherwise>
                 </c:choose>)</span></h1>
+        <c:choose>
+            <c:when test="${topo.available}">
+                <input type="button" value="Faire une demande de Réservation"
+                       onclick="window.location.href='${topo.id}/book'; return false;"
+                       class="btn btn-primary ml-4 ml-sm-0 mb-5 mb-sm-0" />
+            </c:when>
+            <c:otherwise>
                 <c:choose>
-                     <c:when test="${topo.available}">
-                         <input type="button" value="Faire une demande de Réservation"
-                         onclick="window.location.href='${topo.id}/book'; return false;"
-                         class="btn btn-primary ml-4 ml-sm-0 mb-5 mb-sm-0" />
-                     </c:when>
-                    <c:otherwise>
-                        <c:choose>
-                            <c:when test="${userId ne null && userId eq topo.user.id}">
-                                <input type="button" value="Rendre le Topo disponible à nouveau"
+                    <c:when test="${userId ne null && userId eq topo.user.id}">
+                        <input type="button" value="Rendre le Topo disponible à nouveau"
                                onclick="window.location.href='${topo.id}/make-available'; return false;"
                                class="btn btn-success ml-4 ml-sm-0 mb-5 mb-sm-0" />
-                            </c:when>
-                        <c:otherwise>
-                            <input type="button" value="Topo déjà réservé" class="btn btn-success"/>
-                        </c:otherwise>
-                        </c:choose>
+                    </c:when>
+                    <c:otherwise>
+                        <input type="button" value="Topo déjà réservé" class="btn btn-success"/>
                     </c:otherwise>
                 </c:choose>
+            </c:otherwise>
+        </c:choose>
 
         <c:if test="${userRole eq '1' ||userRole eq '2' || userId eq topo.user.id && userId ne null}">
             <div class="d-inline-block col-md-8 mt-3">
@@ -61,7 +61,20 @@
                    onclick="window.location.href='${deleteLink}'; return false;"
                    class="btn btn-secondary ml-4 ml-sm-0 mb-5 mb-sm-0" />
         </c:if>
-
+        <div class="card offset-2 offset-md-4 shadow mb-5 mt-5 d-inline-block bg-light">
+            <div class="card-body">
+                <div class="thumbnail">
+                    <c:choose>
+                        <c:when test="${empty topo.image}">
+                            <img src="<c:url value="/resources/img/noimage-thumbnail.png" />" class="card-img-top img-thumbnail">
+                        </c:when>
+                        <c:otherwise>
+                            <img src='data:image/jpg;base64,${topo.base64}' class="card-img-top img-thumbnail">
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </div>
+        </div>
         <div class="mt-5 col-md-8">
             <div class="mb-5">
                 <h3 class="mb-5"><strong>Informations</strong></h3>
@@ -70,18 +83,10 @@
                     <li class="mb-4"><div class="d-inline-block col-3 mr-5"><strong>Région:</strong></div>${topo.county}</li>
                     <li class="mb-4"><div class="d-inline-block col-3 mr-5"><strong>Ville: </strong></div>${topo.city}</li>
                     <li class="mb-4"><div class="d-inline-block col-3 mr-5"><strong>Date de Parution:</strong></div>${topo.dateRelease}</li>
-                    <li class="mb-4" style="white-space: pre-line;"><div class="d-inline-block col-3 mr-4 align-top"><strong>Description: </strong></div><div class="d-inline-block col-md-6"> ${topo.description}</div></li>
+                    <li class="mb-4" style="white-space: pre-line;"><div class="d-inline-block col-3 mr-4 align-top"><strong>Description: </strong></div><div class="d-inline-block col-md-8"> ${topo.description}</div></li>
                 </ul>
             </div>
         </div>
-
-        <c:if test="${!empty topo.image}" >
-            <div class="mt-5 mb-5 col-md-8">
-                <div class="img offset-md-1">
-                    <img src='data:image/jpg;base64,${topo.base64}' class="img-fluid d-block"/>
-                </div>
-            </div>
-        </c:if>
     </div>
 </main>
 <c:import url="inc/footer.jsp"/>

@@ -49,7 +49,8 @@ public class Route {
     @JoinColumn(name = "sector_fk")
     private Sector sector;
 
-    @OneToMany(mappedBy = "route", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    //fetchtype eager because routes are always called with their lengths
+    @OneToMany(mappedBy = "route", fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Length> lengths = new ArrayList<>();
 
     @Transient

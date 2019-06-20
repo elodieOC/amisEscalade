@@ -51,10 +51,7 @@ textarea{
     width: 5rem;
 }
 
-input:read-only{
-    font-size: 14px;
-}
-input:-moz-read-only{
+.profile-input{
     font-size: 14px;
 }
 
@@ -76,17 +73,6 @@ th, td{
     width: 100%;
     height: 10vw;
     object-fit: cover;
-}
-
-.card-deck {
-    display: flex;
-    justify-content: flex-start;
-    flex-flow: row wrap;
-    align-items: stretch;
-}
-.card-deck .card {
-    display: block;
-    flex-basis: 20%; /* change this value for each breakpoint*/
 }
 
 /* rating infos */
@@ -122,16 +108,6 @@ th, td{
     display: none;
 }
 
-/* Portrait tablets and small desktops */
-@media (min-width: 768px) and (max-width: 991px) {
-    .card-deck .card {
-        flex-basis: 40%; /* change this value for each breakpoint*/
-    }
-    .card-img-top {
-        height: 20vw;
-    }
-}
-
 /*MOBILE*/
 @media only screen and (max-width: 768px) {
     h1{
@@ -162,10 +138,7 @@ th, td{
         display: block;
         margin-bottom: 1vh;
     }
-    .card-deck .card {
-        flex-basis: 70%;
-        margin-left: 10vh;
-    }
+
     .card-img-top {
         height: 40vw;
     }

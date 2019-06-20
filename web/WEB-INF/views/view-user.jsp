@@ -26,14 +26,14 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                 </div>
-                <input  class="form-control p-4" placeholder="${user.username}" type="text" readonly="true"/>
+                <input  class="form-control p-4 profile-input" placeholder="${user.username}" type="text" readonly="true"/>
             </div> <!-- form-group// -->
 
             <div class="form-group input-group col-10 col-sm-8">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
                 </div>
-                <input  class="form-control p-4" placeholder="${user.email}" type="text" readonly="true"/>
+                <input  class="form-control p-4 profile-input" placeholder="${user.email}" type="text" readonly="true"/>
             </div> <!-- form-group// -->
 
 

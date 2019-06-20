@@ -29,8 +29,7 @@ public class RouteDAOImpl implements RouteDAO {
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<Route> cq = cb.createQuery(Route.class);
         Root<Route> root = cq.from(Route.class);
-        cq.select(root).distinct(true);
-        root.fetch("lengths", JoinType.INNER);
+        cq.select(root);
         Query query = session.createQuery(cq);
         return query.getResultList();
     }
