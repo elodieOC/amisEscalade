@@ -108,12 +108,12 @@
                 </div>
             </div>
 
-            <div class="card-deck mb-5 mx-auto">
+            <div class="col-md-11 mb-5 offset-md-1">
                 <!-- loop over and print our spots -->
                 <c:forEach var="spot" items="${spots}">
                     <!-- construct an "view" link with spot id -->
                     <c:url var="viewLink" value="/spots/${spot.id}" />
-                    <div class="card shadow mb-5 d-inline-block bg-light">
+                    <div class="card col-md-3 mr-md-5 shadow mb-5 d-inline-block bg-light">
                         <a href="${viewLink}" class="text-decoration-none">
                             <h4 class="card-header">${spot.name}</h4>
                         </a>

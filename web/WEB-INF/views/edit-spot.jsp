@@ -12,7 +12,6 @@
 <head>
     <title>Editer Spot</title>
     <c:import url="inc/headContent.jsp"/>
-
 </head>
 <c:import url="inc/choose-navbar.jsp" />
 <main role="main" class="flex-shrink-0 mt-5">

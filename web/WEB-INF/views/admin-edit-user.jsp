@@ -11,9 +11,7 @@
 <html>
 <head>
     <title>Edition de compte</title>
-
     <c:import url="inc/headContent.jsp"/>
-
 </head>
 <c:import url="inc/choose-navbar.jsp" />
 <main role="main" class="flex-shrink-0 mt-5">
@@ -26,7 +24,7 @@
                     <!-- need to associate this data with user id -->
                     <form:hidden path="id" />
 
-                                       <div class="form-group input-group">
+                    <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                         </div>
@@ -63,7 +61,7 @@
                         <form:select  path="memberOrNot" cssClass="form-control" >
                             <form:option value="" selected="">Editer le role utilisateur:</form:option>
                             <c:forEach var="role" items="${roles}">
-                            <form:option value="${role.id}">${role.roleName}</form:option>
+                                <form:option value="${role.id}">${role.roleName}</form:option>
                             </c:forEach>
                         </form:select>
                     </div> <!-- form-group end.// -->

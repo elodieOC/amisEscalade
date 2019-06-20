@@ -20,7 +20,7 @@
             <br />
             <div class="card mt-5 shadow-lg bg-light p-4">
                 <form:form action="log-user" cssClass="form-horizontal"  method="post" modelAttribute="user">
-                    <h2 class="mt-3 mb-3 text-center">Connexion</h2>
+                    <h2 class="mt-3 mb-5 text-center">Connexion</h2>
                     <form:errors path="username" cssClass="error"/>
                     <div class="form-group input-group">
                         <div class="input-group-prepend">

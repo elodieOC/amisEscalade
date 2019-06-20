@@ -26,17 +26,16 @@
             <c:set var="userRole" value="${sessionScope['loggedInUserRole']}" />
             <c:set var="userId" value="${sessionScope['loggedInUserId']}" />
 
-            <div class="card-deck mt-5 mb-5 mx-auto">
+            <div class="col-md-11 mb-5 offset-md-1">
                 <!-- loop over and print our spots -->
                 <c:forEach var="topo" items="${topos}">
                     <!-- construct an "view" link with spot id -->
                     <c:url var="viewLink" value="/topos/${topo.id}" />
-                    <div class="card shadow mb-5 d-inline-block bg-light">
+                    <div class="card col-md-3 mr-md-5 shadow mb-5 d-inline-block bg-light">
                         <a href="${viewLink}" class="text-decoration-none">
                             <h4 class="card-header">${topo.name}, ${topo.county}, ${topo.city}</h4>
                         </a>
                         <div class="card-body">
-
                             <h5 class="card-subtitle mb-3 text-muted">Disponible:
                                 <c:choose>
                                     <c:when test="${topo.available}">Oui,</c:when>

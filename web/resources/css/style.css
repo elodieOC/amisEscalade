@@ -50,6 +50,14 @@ textarea{
 .span-large-5{
     width: 5rem;
 }
+
+input:read-only{
+    font-size: 14px;
+}
+input:-moz-read-only{
+    font-size: 14px;
+}
+
 /*TABLES*/
 th, td{
     padding: 0.5rem;
@@ -62,22 +70,6 @@ th, td{
 .official-tag{
     color: #377ef2;
 }
-
-/* Style the submit search button */
-.search-btn {
-    width: 100%;
-    padding: 4px;
-    background: #2196F3;
-    color: white;
-    font-size: 17px;
-    border: 1px solid grey;
-    cursor: pointer;
-}
-
-.search-btn:hover {
-    background: #0b7dda;
-}
-
 
 /*IMAGES*/
 .card-img-top {
@@ -97,17 +89,26 @@ th, td{
     flex-basis: 20%; /* change this value for each breakpoint*/
 }
 
-
-input:read-only{
-    font-size: 14px;
-}
-input:-moz-read-only{
-    font-size: 14px;
-}
-
+/* rating infos */
 .ratinglist{
     display: none;
 }
+
+/* Style the submit search button */
+.search-btn {
+    width: 100%;
+    padding: 4px;
+    background: #2196F3;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    cursor: pointer;
+}
+
+.search-btn:hover {
+    background: #0b7dda;
+}
+
 #search-list li{
     display: inline-block;
     margin-left: 1vh;
@@ -117,11 +118,10 @@ input:-moz-read-only{
     font-size: 12px;
 }
 
-
-
 #search-header button{
     display: none;
 }
+
 /* Portrait tablets and small desktops */
 @media (min-width: 768px) and (max-width: 991px) {
     .card-deck .card {
