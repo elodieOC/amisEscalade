@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -39,6 +40,14 @@ public class TopoDAOImpl implements TopoDAO{
         return query.getResultList();
     }
 
+
+    public void capitalizeAttributes(Topo topo){
+        topo.setName(StringUtils.capitalize(topo.getName()));
+        topo.setCity(StringUtils.capitalize(topo.getCity()));
+        topo.setCountry(StringUtils.capitalize(topo.getCountry()));
+        topo.setCounty(StringUtils.capitalize(topo.getCounty()));
+    }
+
     /**
      * <p>creates a topo in db</p>
      * @param topo topo being created
@@ -46,6 +55,7 @@ public class TopoDAOImpl implements TopoDAO{
     @Override
     public void saveTopo(Topo topo) {
         Session currentSession = sessionFactory.getCurrentSession();
+        capitalizeAttributes(topo);
         currentSession.saveOrUpdate(topo);
     }
 
@@ -56,6 +66,7 @@ public class TopoDAOImpl implements TopoDAO{
     @Override
     public void updateTopo(Topo topo) {
         Session currentSession = sessionFactory.getCurrentSession();
+        capitalizeAttributes(topo);
         currentSession.update(topo);
     }
 

@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -32,12 +33,14 @@ public class SectorDAOImpl implements SectorDAO {
     @Override
     public void saveSector(Sector sector) {
         Session currentSession = sessionFactory.getCurrentSession();
+        sector.setName(StringUtils.capitalize(sector.getName()));
         currentSession.saveOrUpdate(sector);
     }
 
     @Override
     public void updateSector(Sector sector) {
         Session currentSession = sessionFactory.getCurrentSession();
+        sector.setName(StringUtils.capitalize(sector.getName()));
         currentSession.update(sector);
     }
 

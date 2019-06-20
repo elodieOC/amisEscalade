@@ -61,17 +61,24 @@ public class SpotDAOImpl implements SpotDAO {
         return query.getResultList();
     }
 
+    public void capitalizeAttributes(Spot spot){
+        spot.setName(StringUtils.capitalize(spot.getName()));
+        spot.setCity(StringUtils.capitalize(spot.getCity()));
+        spot.setCounty(StringUtils.capitalize(spot.getCounty()));
+    }
 
 
     @Override
     public void saveSpot(Spot spot) {
         Session currentSession = sessionFactory.getCurrentSession();
+        capitalizeAttributes(spot);
         currentSession.saveOrUpdate(spot);
     }
 
     @Override
     public void updateSpot(Spot spot) {
         Session currentSession = sessionFactory.getCurrentSession();
+        capitalizeAttributes(spot);
         currentSession.update(spot);
     }
 
