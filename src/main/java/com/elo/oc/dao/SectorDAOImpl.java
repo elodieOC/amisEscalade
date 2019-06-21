@@ -34,6 +34,8 @@ public class SectorDAOImpl implements SectorDAO {
     public void saveSector(Sector sector) {
         Session currentSession = sessionFactory.getCurrentSession();
         sector.setName(StringUtils.capitalize(sector.getName()));
+        sector.setLocation(StringUtils.replace(sector.getLocation(), "’", "'"));
+        sector.setAccess(StringUtils.replace(sector.getAccess(), "’", "'"));
         currentSession.saveOrUpdate(sector);
     }
 
@@ -41,6 +43,8 @@ public class SectorDAOImpl implements SectorDAO {
     public void updateSector(Sector sector) {
         Session currentSession = sessionFactory.getCurrentSession();
         sector.setName(StringUtils.capitalize(sector.getName()));
+        sector.setLocation(StringUtils.replace(sector.getLocation(), "’", "'"));
+        sector.setAccess(StringUtils.replace(sector.getAccess(), "’", "'"));
         currentSession.update(sector);
     }
 

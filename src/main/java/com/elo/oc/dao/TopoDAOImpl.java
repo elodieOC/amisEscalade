@@ -56,6 +56,7 @@ public class TopoDAOImpl implements TopoDAO{
     public void saveTopo(Topo topo) {
         Session currentSession = sessionFactory.getCurrentSession();
         capitalizeAttributes(topo);
+        topo.setDescription(StringUtils.replace(topo.getDescription(), "’", "'"));
         currentSession.saveOrUpdate(topo);
     }
 
@@ -66,6 +67,7 @@ public class TopoDAOImpl implements TopoDAO{
     @Override
     public void updateTopo(Topo topo) {
         Session currentSession = sessionFactory.getCurrentSession();
+        topo.setDescription(StringUtils.replace(topo.getDescription(), "’", "'"));
         capitalizeAttributes(topo);
         currentSession.update(topo);
     }
