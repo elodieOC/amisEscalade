@@ -24,7 +24,7 @@ public class RestrictionFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) resp;
         /* Non-filtering of static resources */
         String path = request.getRequestURI().substring( request.getContextPath().length());
-        if ( path.contains( "inc" ) || path.contains("resources") || path.equals("/spots/")|| path.equals("/topos/") ||
+        if ( path.contains( "inc" ) || path.contains("resources")|| path.contains("recherche") || path.equals("/spots/")|| path.equals("/topos/") ||
                 path.matches("^/spots/\\d+$")|| path.matches("^/spots/\\d+/sector/\\d+$")||
                 path.matches("^/spots/\\d+/sector/\\d+/route/\\d+$")|| path.matches("^/topos/\\d+$")) {
             /* Display requested page */
