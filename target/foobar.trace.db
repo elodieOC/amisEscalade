@@ -1,8 +1,0 @@
-2019-05-07 20:08:26 jdbc[4]: exception
-org.h2.jdbc.JdbcSQLException: Table "CLIMB_USER" non trouvée
-Table "CLIMB_USER" not found; SQL statement:
-------------------------------------------------------------
--- Tables: climb_user
--- init
-------------------------------------------------------------
-insert into climb_user (username, password, email, userRole) values ('admin', 'admin', 'admin@gmail.com', 1) [42102-197]
