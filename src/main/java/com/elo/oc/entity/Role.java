@@ -21,6 +21,9 @@ public class Role {
     @OneToMany (mappedBy = "userRole") //attribut User userRole de User
     private List<User> users = new ArrayList<>();
 
+    public Role() {
+    }
+
     public List<User> getUsers() {
         return users;
     }

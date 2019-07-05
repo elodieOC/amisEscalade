@@ -25,6 +25,9 @@ public class NewsletterSuscriber {
     @Column(name = "email", unique = true)
     private String email;
 
+    public NewsletterSuscriber() {
+    }
+
     public Integer getId() {
         return id;
     }

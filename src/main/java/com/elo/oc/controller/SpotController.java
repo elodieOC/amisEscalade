@@ -88,6 +88,7 @@ public class SpotController {
         List<Rating> theRatings = ratingService.getRatings();
         List<Spot> theSpots = spotService.search(searchForm.getCity(), searchForm.getCounty(), searchForm.getName(), nbrSectors, searchForm.getUsername(), searchForm.getGradeMin(), searchForm.getGradeMax());
         spotService.displayGrade(theSpots);
+        ratingService.displayGradeList(theRatings);
         theModel.addAttribute("spots", theSpots);
         theModel.addAttribute("grades", gradeService.getGrades());
         theModel.addAttribute("ratings", theRatings);
