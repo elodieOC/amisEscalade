@@ -47,6 +47,13 @@
       <li>votre mot de passe: jdbc.password = "password" </li>
    </ul>
    </li>
+ <li>A la racine du projet flyway.properties, modifier les champs suivants:
+  <ul>
+      <li>le nom de votre de données: flyway.url = jdbc:postgresql://localhost:5432/"nom-de-la-base-de-données" </li>
+      <li>votre username: flyway.user = "username" </li>
+      <li>votre mot de passe: flyway.password = "password" </li>
+   </ul>
+ </li>
 <li>Lancement de l'application:
    <ol>
       <li>Lancement directement depuis l'IDE (développé avec IntelliJ)
