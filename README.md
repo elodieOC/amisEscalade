@@ -25,7 +25,7 @@
 </ul>
 <p>Toutes les fonctions dans cette application respectent la logique de persistance des données (CRUD)
 
-####Les contraintes fonctionnelles
+#### Les contraintes fonctionnelles
 <ul>
     <li>Vocabulaire de l'escalade utilisé.</li>
     <li>Le site est responsive.</li>
@@ -47,24 +47,26 @@
       <li>votre mot de passe: jdbc.password = "password" </li>
    </ul>
    </li>
+<li>Lancement de l'application:
+   <ol>
+      <li>Lancement directement depuis l'IDE (développé avec IntelliJ)
+          <ul>
+              <li>Lancer le run du serveur</li>
+              <li>Dans la console de l'IDE, lancer la commande mvn flyway:baseline</li>
+              <li>Dans la console de l'IDE, lancer la commande mvn flyway:migrate</li>
+          </ul>
+      </li>
+      <li>Lancement avec le war
+          <ul>
+              <li>Récupérer le script sql dans db/migration et le lancer dans la base de données créée</li>
+              <li>Dans le terminal lancez la commande mvn package</li>
+              <li>Copier le fichier war généré dans le dossier target et le coller dans le dossier webapps de tomcat</li>
+              <li>Lancez le serveur tomcat et rendez vous à l'adresse http://localhost:8080/amisEscalade-1.0/</li>
+          </ul>
+      </li>
+   </ol>
+  </li>
  </ol>
-<ol>
-    <li>Lancement directement depuis l'IDE (développé avec IntelliJ)
-        <ul>
-            <li>Lancer le run du serveur</li>
-            <li>Dans la console de l'IDE, lancer la commande mvn flyway:baseline</li>
-            <li>Dans la console de l'IDE, lancer la commande mvn flyway:migrate</li>
-        </ul>
-    </li>
-    <li>Lancement avec le war
-        <ul>
-            <li>Récupérer le script sql dans db/migration et le lancer dans la base de données créée</li>
-            <li>Dans le terminal lancez la commande mvn package</li>
-            <li>Copier le fichier war généré dans le dossier target et le coller dans le dossier webapps de tomcat</li>
-            <li>Lancez le serveur tomcat et rendez vous à l'adresse http://localhost:8080/amisEscalade-1.0/</li>
-        </ul>
-    </li>
-</ol>
 <p> Vous pouvez maintenant accéder au site, pour vous connecter utilisez: login "admin", mdp "admin"
 
 
