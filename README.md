@@ -34,8 +34,8 @@
 
 ### Deploiement
 
-<p>Installer le JDK d'Oracle version minimum 8. 
 <ol>
+ <li>Installer le JDK d'Oracle version minimum 8. </li>
  <li>Cloner le répertoire</li>
    <li>Installer Maven version minimum 2.</li>
    <li>Installer Tomcat 9.0.14.</li>
@@ -58,7 +58,8 @@
       </li>
       <li>Lancement avec le war
           <ul>
-              <li>Récupérer le script sql dans db/migration et le lancer dans la base de données créée</li>
+              <li>Récupérer le script sql create_schema.sql à la racine du projet et le script sql dans db/migration</li>
+              <li>Lancer les scripts dans la base de données créée</li>
               <li>Dans le terminal lancez la commande mvn package</li>
               <li>Copier le fichier war généré dans le dossier target et le coller dans le dossier webapps de tomcat</li>
               <li>Lancez le serveur tomcat et rendez vous à l'adresse http://localhost:8080/amisEscalade-1.0/</li>
