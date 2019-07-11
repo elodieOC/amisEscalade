@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="amisEscalade:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>amisEscalade</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="amisEscalade-1.0.war">
+      <element id="artifact" artifact-name="amisEscalade:war exploded" />
+    </root>
+  </artifact>
+</component>

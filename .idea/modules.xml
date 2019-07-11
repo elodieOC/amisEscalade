@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/amisEscalade.iml" filepath="$PROJECT_DIR$/amisEscalade.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/amisEscalade.iml" filepath="$PROJECT_DIR$/.idea/amisEscalade.iml" />
     </modules>
   </component>
 </project>
