@@ -35,7 +35,7 @@
 ### Deploiement
 
 <ol>
- <li>Installer le JDK d'Oracle version minimum 8. </li>
+ <li>Installer le JDK d'Oracle 1.8 </li>
  <li>Cloner le répertoire</li>
    <li>Installer Maven version minimum 2.</li>
    <li>Installer Tomcat 9.0.14.</li>
