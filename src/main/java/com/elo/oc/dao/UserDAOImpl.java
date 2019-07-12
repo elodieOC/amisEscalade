@@ -100,11 +100,11 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User findUserByUsername(String username){
+    public List<User> findUserByUsername(String username){
         Session currentSession = sessionFactory.getCurrentSession();
         Query<User> query = currentSession.createNamedQuery("findUserByUserName", User.class);
         query.setParameter("username", username);
-        User result = query.getSingleResult();
+        List<User> result = query.getResultList();
         return result;
     }
 

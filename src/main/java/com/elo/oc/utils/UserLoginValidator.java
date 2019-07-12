@@ -46,7 +46,8 @@ public class UserLoginValidator implements Validator {
             }
             if (!formPassword.equals("")&& userService.findUserWithThisUsername(formUsername).isPresent()) {
                 logger.info("Username exists in database");
-                User toBeChecked = userService.findUserByUsername(formUsername);
+                User toBeChecked = userService.findUserByUsername(formUsername).get(0);
+                System.out.println("USERTOLOGIN"+toBeChecked);
                 String loginPassword = Encryption.encrypt(formPassword);
                 if (!loginPassword.equals(toBeChecked.getPassword())) {
                     logger.info("password doesn't match username");

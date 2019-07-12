@@ -126,7 +126,8 @@ public class UserController {
             return "login";
         }
         else{
-            User userToLogIn = userService.findUserByUsername(theUser.getUsername());
+            User userToLogIn = userService.findUserByUsername(theUser.getUsername()).get(0);
+            System.out.println("USERTOLOGIN"+userToLogIn);
             session.setAttribute("loggedInUserEmail", userToLogIn.getEmail());
             session.setAttribute("loggedInUserId", userToLogIn.getId());
             session.setAttribute("loggedInUserRole", userToLogIn.getUserRole().getId());
