@@ -28,9 +28,6 @@
                 </c:choose>)
             </span>
         </h1>
-        <input type="button" value="Ajouter un Secteur"
-               onclick="window.location.href='${spot.id}/ajout-secteur'; return false;"
-               class="btn btn-lg btn-primary ml-4 ml-sm-0 mb-5 mb-sm-0" />
         <c:if test="${spot.tagged}">
             <div class="col-md-8"><h3 class="official-tag">"Officiel Les amis de l’escalade" </h3></div>
         </c:if>
@@ -68,6 +65,10 @@
 
         <div class="mt-5">
             <h2 class="d-inline-block col-md-8 mb-5">Les Secteurs</h2>
+
+            <input type="button" value="Ajouter un Secteur"
+                   onclick="window.location.href='${spot.id}/ajout-secteur'; return false;"
+                   class="btn btn-lg btn-primary ml-4 ml-sm-0 mb-5 mb-sm-0" />
             <div class="panel-body mb-5">
                 <c:choose>
                 <c:when test="${empty sectors}">
@@ -111,7 +112,7 @@
                                     </c:choose>
                                 </strong>
                                     <span class="text-muted ml-2">posté le <c:out value="${comment.date}"/></span>
-                                    <c:if test="${userRole eq '1' ||userRole eq '2' || userId eq spot.user.id && userId ne null}">
+                                    <c:if test="${userRole eq '1' || userRole eq '2' || userId eq comment.user.id && userId ne null}">
                                                 <span class="comment-btn"><input type="button" value="Editer"
                                                                                  onclick="window.location.href='${spot.id}/comment/${comment.id}/editer'; return false;"
                                                                                  class="btn btn-primary mt-2 mt-sm-0" />
