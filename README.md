@@ -54,7 +54,7 @@
       <li>votre mot de passe: flyway.password = "password" </li>
    </ul>
  </li>
- <li>Dans le fichier \src\main\resources\log4j2.xml, dans <configuration><appenders><file>, modifier le champ "filename" avec le chemin désiré. </li>
+ <li>Dans le fichier \src\main\resources\log4j2.xml, dans configuration/appenders/file, modifier le champ "filename" avec le chemin désiré. </li>
 <li>Lancement de l'application:
    <ol>
       <li>Lancement directement depuis l'IDE (développé avec IntelliJ)
