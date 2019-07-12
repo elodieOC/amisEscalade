@@ -34,6 +34,12 @@ public class UserCheckPasswordValidator implements Validator {
     public void validate(Object o, Errors errors) {
         User user = (User) o;
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"password", "NotBlank");
+
+        if(user.getPassword().length() < 8 && !user.getPassword().isEmpty()){
+            logger.info("password < 8");
+            errors.rejectValue("password", "registration.password.tooshort");
+        }
+
         if(!user.getPassword().equals(user.getPasswordConfirm())){
             logger.info("passwords don't match");
             errors.rejectValue("passwordConfirm", "registration.password.noMatch");

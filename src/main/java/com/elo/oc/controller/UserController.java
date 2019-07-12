@@ -42,6 +42,8 @@ public class UserController {
     @Autowired
     private UserUpdateUserNameValidator userUpdateUserNameValidator;
     @Autowired
+    private UserUpdateUserRoleValidator userUpdateUserRoleValidator;
+    @Autowired
     private UserLoginValidator userLoginValidator;
     @Autowired
     private ResetPasswordValidator resetPasswordValidator;
@@ -290,6 +292,9 @@ public class UserController {
          if(!theUser.getUsername().equals(theUserToUpdate.getUsername())){
             userUpdateUserNameValidator.validate(theUser, theBindingResult);
         }
+
+            userUpdateUserRoleValidator.validate(theUser, theBindingResult);
+
         userCheckPasswordValidator.validate(theUser, theBindingResult);
         if (theBindingResult.hasErrors()) {
             logger.warn("form has errors");
