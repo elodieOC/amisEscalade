@@ -43,7 +43,7 @@ public class UserRegistrationValidator implements Validator {
             logger.info("password contains whitespace");
             errors.rejectValue("password", "registration.password.whitespace");
         }
-        if(user.getPassword().length() < 8){
+        if(user.getPassword().length() < 8 && !user.getPassword().isEmpty()){
             logger.info("password < 8");
             errors.rejectValue("password", "registration.password.tooshort");
         }
