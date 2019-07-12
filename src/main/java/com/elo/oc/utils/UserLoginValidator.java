@@ -32,6 +32,14 @@ public class UserLoginValidator implements Validator {
         User user = (User) o;
         String formUsername = user.getUsername();
         String formPassword = user.getPassword();
+            if (formUsername.equals("")) {
+                logger.info("login empty");
+                errors.rejectValue("username", "NotEmpty");
+            }
+            if (formPassword.equals("")) {
+                logger.info("password empty");
+                errors.rejectValue("password", "NotEmpty");
+            }
             if (!formUsername.equals("") && !userService.findUserWithThisUsername(formUsername).isPresent()) {
                 logger.info("Username does not exists in database");
                 errors.rejectValue("username", "login.username.unknown");
