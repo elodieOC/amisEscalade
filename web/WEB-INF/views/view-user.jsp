@@ -140,7 +140,7 @@
 
         </div>
         <input type="button" value="Supprimer Mon Compte"
-               onclick="window.location.href='delete'; return false;"
+               onclick="window.location.href='${user.id}/delete'; return false;"
                class="btn btn-danger ml-5 mb-5 mt-5" />
     </div>
     </div>
