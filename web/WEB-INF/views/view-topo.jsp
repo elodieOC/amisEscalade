@@ -38,7 +38,7 @@
                                class="btn btn-success ml-4 ml-sm-0 mb-5 mb-sm-0" />
                     </c:when>
                     <c:otherwise>
-                        <input type="button" value="Topo déjà réservé" class="btn btn-success"/>
+                        <input type="button" value="Topo non disponible" class="btn btn-success"/>
                     </c:otherwise>
                 </c:choose>
             </c:otherwise>

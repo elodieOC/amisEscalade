@@ -70,6 +70,14 @@
                    class="btn btn-secondary ml-4 ml-sm-0 mb-5 mb-sm-0" />
         </c:if>
 
+        <c:if test="${!empty route.image}" >
+            <div class="mt-5 col-md-8">
+                <div class="img offset-md-1">
+                    <img src='data:image/jpg;base64,${route.base64}' class="img-fluid d-block"/>
+                </div>
+            </div>
+        </c:if>
+
         <div class="mt-5">
             <div class="mb-5">
                 <h2 class="d-inline-block col-md-8 mb-5">Informations</h2>

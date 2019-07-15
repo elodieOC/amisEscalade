@@ -57,7 +57,7 @@
                     <c:set var="userRole" value="${sessionScope['loggedInUserRole']}" />
                     <c:set var="userId" value="${sessionScope['loggedInUserId']}" />
 
-                    <c:if test="${userRole eq '1' || userRole eq '2' && userId ne null}">
+                    <c:if test="${userRole eq 1 || userRole eq 2 && userId ne null}">
                         <form:errors path="tagged" cssClass="error" />
                         <div class="form-group input-group mb-5">
                             <form:label path="tagged" class="text-muted"> Tag "Officiel Les amis de l’escalade"?</form:label>
