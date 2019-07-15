@@ -1,9 +1,7 @@
 package com.elo.oc.utils;
 
 import com.elo.oc.entity.Route;
-import com.elo.oc.entity.Spot;
 import com.elo.oc.service.RouteService;
-import com.elo.oc.service.SpotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

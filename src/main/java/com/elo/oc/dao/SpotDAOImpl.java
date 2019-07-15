@@ -1,8 +1,6 @@
 package com.elo.oc.dao;
 
 import com.elo.oc.entity.*;
-import com.elo.oc.service.GradeService;
-import org.hibernate.FetchMode;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -11,14 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
-import javax.persistence.FetchType;
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 @Repository

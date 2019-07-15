@@ -1,9 +1,7 @@
 package com.elo.oc.utils;
 
 import com.elo.oc.entity.Topo;
-import com.elo.oc.service.SpotService;
 import com.elo.oc.service.TopoService;
-import jdk.nashorn.internal.runtime.regexp.joni.Regex;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +9,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import javax.imageio.ImageIO;
-import java.io.IOException;
-import java.io.InputStream;
 /**
  * <p>Class validates the add and update forms for topos</p>
  */

@@ -32,9 +32,8 @@ public class RestrictionFilter implements Filter {
             return;
         }
         HttpSession session = request.getSession();
-        /**
-         * if loggedInUserEmail doesn't exist in session, then user isn't connected
-         */
+
+         // if loggedInUserEmail doesn't exist in session, then user isn't connected
         if ( session.getAttribute("loggedInUserEmail") == null ) {
             /* Redirect to login page */
             logger.info("Filtered back to login page with RestrictionFilter");

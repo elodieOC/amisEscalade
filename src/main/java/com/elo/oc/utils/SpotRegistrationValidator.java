@@ -1,7 +1,6 @@
 package com.elo.oc.utils;
 
 import com.elo.oc.entity.Spot;
-import com.elo.oc.entity.User;
 import com.elo.oc.service.SpotService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -9,14 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-
-import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.Part;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Collection;
 
 /**
  * <p>Class validates the add and update forms for Spots</p>

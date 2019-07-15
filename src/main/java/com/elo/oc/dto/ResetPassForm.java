@@ -2,7 +2,6 @@ package com.elo.oc.dto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 public class ResetPassForm {
     @NotBlank

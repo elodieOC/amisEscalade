@@ -18,9 +18,7 @@ import java.util.Properties;
 @PropertySource("classpath:database.properties")
 @EnableTransactionManagement
 @ComponentScan(basePackages = {"com.elo.oc"})
-/**
- *
- */
+
 public class AppContext {
     @Autowired
     private Environment environment;

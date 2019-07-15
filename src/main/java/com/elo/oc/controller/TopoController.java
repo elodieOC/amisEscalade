@@ -6,7 +6,6 @@ import com.elo.oc.service.EmailService;
 import com.elo.oc.service.TopoService;
 import com.elo.oc.service.UserService;
 import com.elo.oc.utils.ImageFileProcessing;
-import com.elo.oc.utils.SessionCheck;
 import com.elo.oc.utils.TopoRegistrationValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

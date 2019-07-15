@@ -3,11 +3,9 @@ package com.elo.oc.controller;
 import com.elo.oc.dto.LengthForm;
 import com.elo.oc.dto.SearchForm;
 import com.elo.oc.entity.*;
-import com.elo.oc.entity.Sector;
 import com.elo.oc.service.*;
 import com.elo.oc.utils.ImageFileProcessing;
 import com.elo.oc.utils.LengthFormValidator;
-import com.elo.oc.utils.SessionCheck;
 import com.elo.oc.utils.SpotRegistrationValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,8 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 //TODO ajouter suppression image?
 /**

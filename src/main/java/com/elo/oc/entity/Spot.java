@@ -1,7 +1,6 @@
 package com.elo.oc.entity;
 
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
-import org.hibernate.annotations.Type;
 import org.springframework.lang.Nullable;
 import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.*;

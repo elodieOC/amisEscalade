@@ -1,8 +1,5 @@
 package com.elo.oc.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class SearchForm {
 
    private String name;

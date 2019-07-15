@@ -8,8 +8,6 @@ import java.io.File;
 
 public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
-    private int maxUploadSizeInMb = 5 * 1024 * 1024; // 5 MB
-
     @Override
     protected Class<?>[] getRootConfigClasses() {
         return new Class[]{AppContext.class};
@@ -30,6 +28,8 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
         // upload temp file will put here
         File uploadDirectory = new File(System.getProperty("java.io.tmpdir"));
         // register a MultipartConfigElement
+        // 5 MB
+        int maxUploadSizeInMb = 5 * 1024 * 1024;
         MultipartConfigElement multipartConfigElement =
                 new MultipartConfigElement(uploadDirectory.getAbsolutePath(),
                         maxUploadSizeInMb, maxUploadSizeInMb * 2, maxUploadSizeInMb / 2);

@@ -1,8 +1,5 @@
 package com.elo.oc.entity;
 
-import org.apache.commons.collections.ArrayStack;
-import org.hibernate.annotations.DynamicUpdate;
-
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.ArrayList;

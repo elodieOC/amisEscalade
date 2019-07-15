@@ -1,13 +1,11 @@
 package com.elo.oc.entity;
 
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
-import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.lang.Nullable;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;

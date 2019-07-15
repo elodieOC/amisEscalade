@@ -3,7 +3,6 @@ package com.elo.oc.dao;
 import com.elo.oc.entity.Grade;
 import com.elo.oc.entity.Length;
 import com.elo.oc.entity.Route;
-import com.elo.oc.service.GradeService;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -14,7 +13,6 @@ import org.springframework.util.StringUtils;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
