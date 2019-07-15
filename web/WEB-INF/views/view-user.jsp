@@ -21,7 +21,16 @@
             <input type="button" value="Editer Mon Profil"
                    onclick="window.location.href='${user.id}/editer'; return false;"
                    class="btn btn-primary ml-4 ml-sm-0 mb-5 mb-sm-0" />
-
+            <div class="col-md-8 mb-5">
+                <c:choose>
+                    <c:when test="${user.userRole.id eq 1 || user.userRole.id eq 2}">
+                        <h3 class="official-tag">Vous êtes membre de l'association </h3>
+                    </c:when>
+                    <c:otherwise>
+                        <h3 class="official-tag">Vous n'êtes pas encore membre de l'association </h3>
+                    </c:otherwise>
+                </c:choose>
+            </div>
             <div class="form-group input-group col-10 col-sm-8">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-user"></i> </span>
